@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BYB · Schadenmeldung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Farben (aus den Screens gesampelt) */
+    --blue:#00008f;            /* Primär-Navy */
+    --blue-hover:#1a1aa3;
+    --blue-mid:#4a78c8;        /* erledigte Stepper-Punkte / Linien */
+    --footer:#5f7cb5;          /* Footer-Blau */
+    --accent:#e23b4e;          /* BYB-Akzent (Coral) */
+    --green:#3aa55f;           /* Vorteile / Erfolg */
+    --bubble:#ecebf8;          /* User-Bubble */
+    --bubble-bd:#dcdaf2;
+    --ink:#1f1f2e;             /* Überschriften */
+    --text:#3c3c44;            /* Fliesstext */
+    --muted:#8c8c96;
+    --line:#e3e3e8;
+    --field-bd:#c7c7cf;
+    --bg:#ffffff;
+    --rail-bg:#ffffff;
+    --shadow:0 6px 24px rgba(20,20,60,.08);
+    --font-head:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --rail-w:248px;
+    --col:700px;
+    --header-h:64px;
+    --footer-h:46px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:var(--font-body);
+    color:var(--text);
+    background:var(--bg);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Header ---------- */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:30;
+    background:#fff;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;padding:0 26px;
+  }
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo .mark{width:36px;height:36px;border-radius:6px;flex:0 0 auto}
+  .logo .word{font-family:var(--font-head);font-weight:700;font-size:20px;color:var(--blue);letter-spacing:.3px}
+  .logo .word small{display:block;font-family:var(--font-body);font-weight:400;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:-3px}
+
+  /* ---------- Linke Schiene (Stepper + Live-Summary) ---------- */
+  .rail{
+    position:fixed;left:24px;top:calc(var(--header-h) + 22px);width:var(--rail-w);
+    bottom:calc(var(--footer-h) + 14px);overflow-y:auto;padding-right:6px;z-index:20;
+  }
+  .stepper{list-style:none;margin:0 0 26px;padding:0;position:relative}
+  .stepper li{position:relative;padding:0 0 22px 30px;color:var(--muted);font-size:14px}
+  .stepper li:last-child{padding-bottom:0}
+  .stepper li .dot{position:absolute;left:0;top:1px;width:15px;height:15px;border-radius:50%;background:#d7d7dd;transition:.3s}
+  .stepper li::after{content:"";position:absolute;left:7px;top:16px;bottom:2px;width:1.5px;background:#e0e0e6}
+  .stepper li:last-child::after{display:none}
+  .stepper li.done{color:var(--text)}
+  .stepper li.done .dot{background:var(--blue-mid)}
+  .stepper li.done::after{background:var(--blue-mid)}
+  .stepper li.active{color:var(--ink);font-weight:700}
+  .stepper li.active .dot{background:#fff;border:4px solid var(--blue);width:17px;height:17px;left:-1px;top:0}
+
+  .summary{border:1px solid var(--line);border-radius:12px;padding:14px 14px 6px;background:#fcfcff}
+  .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:6px}
+  .summary .empty{color:var(--muted);font-size:13px;padding-bottom:10px}
+  .sum-row{padding:0 0 11px;animation:fadeUp .35s ease both}
+  .sum-row .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+  .sum-row .v{font-size:14px;color:var(--ink);font-weight:600;line-height:1.35}
+
+  /* ---------- Bühne / Chat ---------- */
+  .stage{position:fixed;top:var(--header-h);bottom:var(--footer-h);left:0;right:0}
+  .scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
+  .thread{max-width:var(--col);margin:0 auto;padding:26px 24px 150px}
+  .page-title{text-align:center;font-family:var(--font-head);font-weight:600;color:var(--ink);font-size:22px;margin:6px 0 30px}
+
+  .msg{display:flex;margin:0 0 18px;animation:fadeUp .4s ease both}
+  .msg.bot{align-items:flex-start;gap:12px}
+  .avatar{width:30px;height:30px;border-radius:50%;flex:0 0 auto;margin-top:2px}
+  .bot .body{max-width:90%;color:var(--text)}
+  .bot .body p{margin:0 0 10px}
+  .bot .body p:last-child{margin-bottom:0}
+  .bot .body strong{color:var(--ink)}
+  .bot .body h4{font-family:var(--font-body);font-size:16px;color:var(--ink);margin:14px 0 8px}
+  .bot .body .lead{font-family:var(--font-head);font-size:22px;font-weight:600;color:var(--ink);line-height:1.25}
+  .benefits{list-style:none;margin:6px 0 0;padding:0}
+  .benefits li{position:relative;padding:0 0 12px 28px;line-height:1.45}
+  .benefits li::before{content:"";position:absolute;left:0;top:3px;width:18px;height:18px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233aa55f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")}
+  .info-list{margin:6px 0 0;padding-left:20px}
+  .info-list li{margin-bottom:9px}
+
+  /* User-Bubble rechts */
+  .msg.user{justify-content:flex-end;align-items:center;gap:8px}
+  .bubble{position:relative;background:var(--bubble);border:1px solid var(--bubble-bd);color:#2a2a3a;
+    padding:11px 18px;border-radius:22px;max-width:78%;line-height:1.4}
+  .bubble::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
+    width:0;height:0;border:8px solid transparent;border-left-color:var(--bubble);border-right:0}
+  .edit-btn{background:none;border:none;cursor:pointer;color:#b6b6c4;padding:4px;border-radius:6px;flex:0 0 auto;transition:.15s}
+  .edit-btn:hover{color:var(--blue);background:#f0f0f8}
+  .edit-btn svg{display:block}
+
+  /* Tipp-Indikator */
+  .typing{display:inline-flex;gap:5px;background:#f2f2f7;border-radius:16px;padding:13px 16px;align-items:center}
+  .typing span{width:7px;height:7px;border-radius:50%;background:#b9b9c6;animation:blink 1.3s infinite both}
+  .typing span:nth-child(2){animation-delay:.18s}
+  .typing span:nth-child(3){animation-delay:.36s}
+  .analyze{display:inline-flex;gap:10px;align-items:center;background:#f4f5ff;border:1px solid #e4e6ff;color:var(--blue);border-radius:14px;padding:11px 16px;font-size:14px;font-weight:600}
+  .analyze .spin{width:16px;height:16px;border:2.5px solid #c9ccff;border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+
+  /* Eingabe-Zone (Chips / Karten) */
+  .inputzone{margin:2px 0 20px;padding-left:42px;animation:fadeUp .4s ease both}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);
+    padding:10px 18px;border-radius:24px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+  .chip:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+  .chip.rec{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
+  .chip .star{color:var(--accent)}
+  .chip .ic{font-size:17px}
+
+  .stack{display:flex;flex-direction:column;gap:10px;max-width:420px}
+  .opt{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);
+    padding:14px 18px;border-radius:8px;cursor:pointer;transition:.15s;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .opt:hover{border-color:var(--blue);color:var(--blue);background:#fafaff}
+  .opt.rec{border-color:var(--blue)}
+  .opt .tag{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.3px}
+
+  .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;max-width:430px;margin-bottom:14px;background:#fcfcff;box-shadow:var(--shadow)}
+  .card .ct{font-weight:700;color:var(--ink);font-size:16px;margin-bottom:3px}
+  .card .cs{color:var(--text);font-size:14px}
+
+  .fieldrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .field{font-family:var(--font-body);font-size:15px;border:1.5px solid var(--field-bd);border-radius:8px;padding:11px 14px;color:var(--ink);background:#fff;min-width:180px}
+  .field:focus{outline:none;border-color:var(--blue)}
+  .mini{font-family:var(--font-body);font-size:14px;border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:8px;padding:10px 18px;cursor:pointer;font-weight:600}
+  .mini:hover{background:var(--blue);color:#fff}
+  .mini.ghost{border-color:var(--field-bd);color:var(--text)}
+  .mini.ghost:hover{border-color:var(--blue);color:var(--blue);background:#fff}
+
+  .drop{border:2px dashed var(--field-bd);border-radius:10px;padding:22px;text-align:center;color:var(--muted);max-width:430px;margin-bottom:12px;cursor:pointer;transition:.15s}
+  .drop:hover{border-color:var(--blue);color:var(--blue)}
+  .filelist{list-style:none;margin:0 0 12px;padding:0;max-width:430px}
+  .filelist li{display:flex;align-items:center;gap:8px;background:#f4f5ff;border:1px solid #e4e6ff;border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:14px;color:var(--ink)}
+
+  /* ---------- Composer ---------- */
+  .composer{position:fixed;bottom:var(--footer-h);left:0;right:0;background:linear-gradient(180deg,rgba(255,255,255,0) 0%, #fff 22%);padding:14px 24px 16px;z-index:25}
+  .composer-inner{max-width:var(--col);margin:0 auto;display:flex;gap:10px;align-items:flex-end;
+    border:1.5px solid var(--field-bd);border-radius:26px;padding:6px 6px 6px 18px;background:#fff;box-shadow:var(--shadow)}
+  .composer-inner:focus-within{border-color:var(--blue)}
+  .composer textarea{flex:1;border:none;outline:none;resize:none;font-family:var(--font-body);font-size:15px;color:var(--ink);
+    line-height:1.4;max-height:120px;padding:9px 0;background:transparent}
+  .send{width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;cursor:pointer;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;transition:.15s}
+  .send:hover{background:var(--blue-hover)}
+  .send:disabled{background:#cfcfd8;cursor:default}
+  .composer .hint{max-width:var(--col);margin:7px auto 0;font-size:12px;color:var(--muted);text-align:center}
+
+  /* ---------- Abschluss ---------- */
+  .dl{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:700;text-decoration:none;letter-spacing:.3px;margin:6px 0 4px;cursor:pointer}
+  .dl:hover{text-decoration:underline}
+  .btn-out{display:inline-block;font-family:var(--font-body);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;
+    border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:6px;padding:13px 22px;cursor:pointer;margin-top:8px}
+  .btn-out:hover{background:var(--blue);color:#fff}
+  .check-big{width:46px;height:46px;margin:4px 0 2px}
+
+  /* ---------- Footer ---------- */
+  .footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-h);z-index:30;background:var(--footer);color:#fff;
+    display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:12.5px}
+  .footer .langs span{margin-right:8px;opacity:.8;cursor:pointer}
+  .footer .langs span.on{font-weight:700;opacity:1}
+  .footer .legal span{opacity:.85;margin-left:14px}
+
+  /* ---------- Toast ---------- */
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
+    padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:50;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  @media (max-width:1080px){
+    .rail{display:none}
+    .thread,.composer-inner,.composer .hint{max-width:640px}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+    <a class="logo" href="#" onclick="return false">
+      <svg class="mark" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-label="BYB">
+        <rect width="36" height="36" rx="6" fill="#00008f"/>
+        <path d="M7 28 L29 8" stroke="#e23b4e" stroke-width="4.5" stroke-linecap="round"/>
+        <text x="18" y="23.5" text-anchor="middle" font-family="Source Serif 4, serif" font-size="14.5" font-weight="700" fill="#fff">BYB</text>
+      </svg>
+      <span class="word">BYB<small>Versicherung</small></span>
+    </a>
+  </header>
+
+  <!-- Linke Schiene -->
+  <nav class="rail" aria-label="Fortschritt">
+    <ul class="stepper" id="stepper">
+      <li data-phase="ident"><span class="dot"></span>Identifikation</li>
+      <li data-phase="schaden"><span class="dot"></span>Schadenhergang</li>
+      <li data-phase="vorgehen"><span class="dot"></span>Weiteres Vorgehen</li>
+      <li data-phase="fertig"><span class="dot"></span>Fertig</li>
+    </ul>
+    <div class="summary">
+      <h3>✨ Das weiss ich bisher</h3>
+      <div id="sumBody"><div class="empty">Noch keine Angaben erfasst.</div></div>
+    </div>
+  </nav>
+
+  <!-- Chat -->
+  <main class="stage">
+    <div class="scroll" id="scroll">
+      <div class="thread" id="thread">
+        <div class="page-title">Schadenmeldung</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Composer -->
+  <div class="composer" id="composer">
+    <div class="composer-inner">
+      <textarea id="input" rows="1" placeholder="Antwort eingeben …" autocomplete="off"></textarea>
+      <button class="send" id="send" aria-label="Senden" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+    <div class="hint">Sie können tippen oder auf eine Option klicken · ✎ ändert jede Antwort</div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="langs"><span class="on">DE</span><span>FR</span><span>IT</span><span>EN</span></div>
+    <div class="legal"><span>Nutzungshinweise</span><span>Datenschutz / Cookie Policy</span><span>© 2026 BYB Versicherungen AG</span></div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================================
+   BYB · Schadenmeldung – konversationeller Prototyp (Wizard-of-Oz / scripted)
+   Einzeldatei, kein Build, kein Backend. Controlled-Smart-Set.
+   ========================================================================= */
+
+const CONFIG = { claimNo:"22.213.390/0002", refDate:"23.04.2026" };
+const TODAY = new Date(2026,5,15); // Prototyp-"Heute": 15.06.2026
+
+/* ---- DOM ---- */
+const thread   = document.getElementById("thread");
+const scroller = document.getElementById("scroll");
+const input    = document.getElementById("input");
+const sendBtn  = document.getElementById("send");
+const composer = document.getElementById("composer");
+const sumBody  = document.getElementById("sumBody");
+const toastEl  = document.getElementById("toast");
+
+const AVATAR = `<svg class="avatar" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="#00008f"/><path d="M9 26 L27 10" stroke="#e23b4e" stroke-width="4" stroke-linecap="round"/></svg>`;
+const PENCIL = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+
+/* ---- Helpers ---- */
+const pad = n => String(n).padStart(2,"0");
+const fmtDate = d => `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+const toBottom = () => { scroller.scrollTop = scroller.scrollHeight; };
+function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("show"); setTimeout(()=>toastEl.classList.remove("show"),2600); }
+
+/* ---- Stepper ---- */
+const PHASE_ORDER = ["ident","schaden","vorgehen","fertig"];
+function setPhase(phase){
+  const ai = PHASE_ORDER.indexOf(phase);
+  document.querySelectorAll("#stepper li").forEach(li=>{
+    const i = PHASE_ORDER.indexOf(li.dataset.phase);
+    li.classList.toggle("done", i < ai);
+    li.classList.toggle("active", i === ai);
+  });
+}
+
+/* ---- Live-Summary ---- */
+function setSummary(key,label,val){
+  const empty = sumBody.querySelector(".empty"); if(empty) empty.remove();
+  let row = sumBody.querySelector(`[data-key="${key}"]`);
+  if(!row){
+    row = document.createElement("div");
+    row.className="sum-row"; row.dataset.key=key;
+    sumBody.appendChild(row);
+  }
+  row.innerHTML = `<div class="k">${label}</div><div class="v">${val}</div>`;
+}
+
+/* ---- Bot-Nachrichten mit Tipp-Indikator + Streaming ---- */
+function addBot(html){
+  const m=document.createElement("div"); m.className="msg bot";
+  m.innerHTML = `${AVATAR}<div class="body">${html}</div>`;
+  thread.appendChild(m); toBottom(); return m;
+}
+async function botSay(html,{stream=true}={}){
+  // Tipp-Indikator
+  const t=document.createElement("div"); t.className="msg bot";
+  t.innerHTML = `${AVATAR}<div class="typing"><span></span><span></span><span></span></div>`;
+  thread.appendChild(t); toBottom();
+  await wait(560 + Math.random()*350);
+  t.remove();
+  const m = addBot(html);
+  if(stream){
+    const body = m.querySelector(".body");
+    const full = body.innerHTML; body.innerHTML="";
+    // Wort-für-Wort einblenden, ohne HTML zu zerstören
+    await streamInto(body, full);
+  }
+  toBottom(); return m;
+}
+function streamInto(el, html){
+  return new Promise(res=>{
+    const tmp=document.createElement("div"); tmp.innerHTML=html;
+    const nodes=[...tmp.childNodes];
+    let ni=0;
+    function nextNode(){
+      if(ni>=nodes.length){res();return;}
+      const node=nodes[ni++];
+      if(node.nodeType===3){ // Text -> wortweise
+        const words=node.textContent.split(/(\s+)/); let wi=0;
+        const holder=document.createTextNode(""); el.appendChild(holder);
+        (function w(){
+          if(wi<words.length){ holder.textContent+=words[wi++]; toBottom(); setTimeout(w, 16); }
+          else nextNode();
+        })();
+      } else { el.appendChild(node); toBottom(); setTimeout(nextNode, 60); }
+    }
+    nextNode();
+  });
+}
+async function analyze(text,ms){
+  const a=document.createElement("div"); a.className="msg bot";
+  a.innerHTML=`${AVATAR}<div class="analyze"><span class="spin"></span>${text}</div>`;
+  thread.appendChild(a); toBottom(); await wait(ms); a.remove();
+}
+
+/* ---- User-Bubble ---- */
+function addUser(display, rec){
+  const m=document.createElement("div"); m.className="msg user";
+  const canEdit = rec && rec.node && rec.node.editable!==false;
+  m.innerHTML = `${canEdit?`<button class="edit-btn" title="Antwort ändern">${PENCIL}</button>`:""}<div class="bubble">${display}</div>`;
+  thread.appendChild(m); toBottom();
+  if(canEdit){ m.querySelector(".edit-btn").addEventListener("click",()=>editRecord(rec)); rec.bubbleEl=m; }
+  return m;
+}
+
+/* =========================================================================
+   FLOW
+   ========================================================================= */
+let idx=0;
+const records=[];          // beantwortete Schritte: {node,value,display,raw}
+let active=null;           // {node, zoneEl}
+let openerText="";
+let facts={art:"Wasser", ursacheBekannt:false, mehrere:true};
+
+/* Schadenart-Chips */
+const ART_OPTS=[
+  {label:"Wasser",value:"Wasser",ic:"💧"},
+  {label:"Naturereignis (z.B. Unwetter)",value:"Naturereignis",ic:"⛈️"},
+  {label:"Diebstahl",value:"Diebstahl",ic:"🔓"},
+  {label:"Glasbruch",value:"Glasbruch",ic:"🔨"},
+  {label:"Feuer",value:"Feuer",ic:"🔥"},
+  {label:"Ausfall Gebäudetechnik",value:"Ausfall Gebäudetechnik",ic:"⚙️"},
+  {label:"Sonstiges",value:"Sonstiges",ic:"•"},
+];
+const CAUSE_OPTS=[
+  {label:"Leitungsbruch innerhalb des Gebäudes",value:"Leitungsbruch innerhalb des Gebäudes"},
+  {label:"Leitungsbruch ausserhalb des Gebäudes",value:"Leitungsbruch ausserhalb des Gebäudes"},
+  {label:"Undichtigkeit bei Dusche/Badewanne/Lavabo",value:"Undichtigkeit bei Dusche/Badewanne/Lavabo"},
+  {label:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten",value:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten"},
+  {label:"Eindringen von Regen/Schnee/Schmelzwasser",value:"Eindringen von Regen/Schnee/Schmelzwasser"},
+  {label:"Rückstau oder Grundwasser",value:"Rückstau oder Grundwasser"},
+  {label:"Frostschaden",value:"Frostschaden"},
+  {label:"Sonstiges oder unbekannt",value:"Sonstiges oder unbekannt",rec:true},
+];
+
+/* leichte „NLU" für die Eröffnung */
+function extract(t){
+  t=(t||"").toLowerCase();
+  let art="Wasser";
+  if(/feuer|brand|brennt|rauch|russ/.test(t)) art="Feuer";
+  else if(/einbruch|diebstahl|gestohlen|aufgebrochen/.test(t)) art="Diebstahl";
+  else if(/sturm|unwetter|hagel|gewitter|blitz/.test(t)) art="Naturereignis";
+  else if(/glas|scheibe|fenster zerbroch/.test(t)) art="Glasbruch";
+  else if(/wasser|nass|feucht|decke|leck|tropf|durchnässt|überschwemm|rohr/.test(t)) art="Wasser";
+  const ursacheBekannt = !/unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|nicht klar|unsicher|rätsel/.test(t) && t.length>0;
+  const areas=["decke","wand","wände","boden","fassade","badezimmer","bad","küche","keller","dach","zimmer","raum","mauer"];
+  const hits=[...new Set(areas.filter(a=>t.includes(a)))];
+  return {art, ursacheBekannt, mehrere: hits.length>=2, hits};
+}
+
+/* Datum-Parsing */
+function parseDate(text){
+  const t=(text||"").toLowerCase().trim();
+  const rel=d=>{const x=new Date(TODAY);x.setDate(x.getDate()-d);return fmtDate(x);};
+  if(/^heute/.test(t)) return fmtDate(TODAY);
+  if(/vorgestern/.test(t)) return rel(2);
+  if(/gestern/.test(t)) return rel(1);
+  if(/letzte woche|vor einer woche/.test(t)) return rel(7);
+  const m=t.match(/(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{2,4})/);
+  if(m){ let[_,d,mo,y]=m; if(y.length===2)y="20"+y; return `${pad(+d)}.${pad(+mo)}.${y}`; }
+  return null;
+}
+function parseAmount(text){
+  const t=(text||"").toLowerCase();
+  if(/keine ahnung|weiss nicht|weiß nicht|unbekannt|unklar|kp|keine idee/.test(t)) return "Weiss nicht";
+  const n=parseInt(t.replace(/[^\d]/g,""),10);
+  if(!isNaN(n)){ if(n<5000) return "Bis CHF 5'000"; if(n<=10000) return "CHF 5'000 – 10'000"; return "Über CHF 10'000"; }
+  return null;
+}
+
+/* ---- Eingabe-Zone rendern ---- */
+function clearZone(){ if(active&&active.zoneEl){active.zoneEl.remove();} }
+function zone(){ const z=document.createElement("div"); z.className="inputzone"; thread.appendChild(z); toBottom(); return z; }
+
+function renderInput(node){
+  const k=node.input.kind;
+  const z=zone(); active={node,zoneEl:z};
+  setComposer(node);
+
+  if(k==="freetext" || k==="extraction-confirm"){
+    // nur Composer; bei extraction-confirm zusätzlich Chips
+    if(k==="extraction-confirm"){
+      const c=document.createElement("div"); c.className="chips";
+      c.appendChild(chip({label:"Ja, das stimmt",rec:true},()=>commit(node,"ok","Ja, das stimmt")));
+      c.appendChild(chip({label:"Etwas anpassen"},()=>{ editOpener(); }));
+      z.appendChild(c);
+    }
+  }
+  else if(k==="chips"){
+    const c=document.createElement("div"); c.className="chips";
+    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+    z.appendChild(c);
+  }
+  else if(k==="stack"){
+    const s=document.createElement("div"); s.className="stack";
+    node.input.options.forEach(o=>{
+      const b=document.createElement("button"); b.className="opt"+(o.rec?" rec":"");
+      b.innerHTML=`<span>${o.label}</span>${o.rec?'<span class="tag">★ Empfohlen</span>':""}`;
+      b.onclick=()=>commit(node,o.value,o.label); s.appendChild(b);
+    });
+    z.appendChild(s);
+  }
+  else if(k==="confirm"){
+    if(node.input.card){
+      const card=document.createElement("div"); card.className="card";
+      card.innerHTML=`<div class="ct">${node.input.card.title}</div><div class="cs">${node.input.card.sub}</div>`;
+      z.appendChild(card);
+    }
+    const c=document.createElement("div"); c.className="chips";
+    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+    z.appendChild(c);
+  }
+  else if(k==="date"){
+    const c=document.createElement("div"); c.className="chips";
+    c.appendChild(chip({label:"Gestern"},()=>commit(node,parseDate("gestern"),parseDate("gestern"))));
+    c.appendChild(chip({label:"Letzte Woche"},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
+    const pickWrap=document.createElement("span");
+    const dchip=chip({label:"📅 Datum wählen"},()=>{
+      const f=document.createElement("input"); f.type="date"; f.className="field"; f.value="2026-04-23";
+      pickWrap.innerHTML=""; pickWrap.appendChild(f);
+      const ok=document.createElement("button"); ok.className="mini"; ok.textContent="Übernehmen";
+      ok.onclick=()=>{ if(!f.value)return; const[y,mo,d]=f.value.split("-"); const v=`${d}.${mo}.${y}`; commit(node,v,v); };
+      pickWrap.appendChild(ok); f.focus();
+    });
+    c.appendChild(dchip); c.appendChild(pickWrap);
+    z.appendChild(c);
+  }
+  else if(k==="amount"){
+    const c=document.createElement("div"); c.className="chips";
+    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+    z.appendChild(c);
+  }
+  else if(k==="upload"){
+    const c=document.createElement("div"); c.className="chips";
+    const later=chip({label:"Dateien später nachreichen",ic:"🕓"},()=>commit(node,"später","Dateien später nachreichen"));
+    const up1=chip({label:"Schadenfotos hochladen",ic:"📷"},()=>openUpload(node,z));
+    const up2=chip({label:"Kostenvoranschläge, Rechnungen hochladen",ic:"📄"},()=>openUpload(node,z));
+    c.appendChild(up1); c.appendChild(up2); c.appendChild(later);
+    z.appendChild(c);
+  }
+  else if(k==="payout"){
+    const c=document.createElement("div"); c.className="chips";
+    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+    z.appendChild(c);
+  }
+  else if(k==="final"){
+    composer.style.display="none";
+  }
+}
+
+function chip(o,onClick){
+  const b=document.createElement("button"); b.className="chip"+(o.rec?" rec":"");
+  b.innerHTML=`${o.ic?`<span class="ic">${o.ic}</span>`:""}${o.rec?'<span class="star">★</span>':""}${o.label}`;
+  b.onclick=onClick; return b;
+}
+
+function openUpload(node,z){
+  z.querySelector(".chips").remove();
+  const drop=document.createElement("div"); drop.className="drop";
+  drop.innerHTML="📎 Datei hierher ziehen oder klicken<br><small>Unterstützt: .jpg, .png, .pdf, .docx · max. 5 MB</small>";
+  const fileInput=document.createElement("input"); fileInput.type="file"; fileInput.multiple=true; fileInput.hidden=true;
+  const list=document.createElement("ul"); list.className="filelist";
+  const row=document.createElement("div"); row.className="fieldrow";
+  const done=document.createElement("button"); done.className="mini"; done.textContent="Fertig, weiter"; done.disabled=true;
+  const skip=document.createElement("button"); skip.className="mini ghost"; skip.textContent="Doch später nachreichen";
+  let files=[];
+  drop.onclick=()=>fileInput.click();
+  fileInput.onchange=()=>{ [...fileInput.files].forEach(f=>files.push(f.name));
+    list.innerHTML=files.map(n=>`<li>📄 ${n}</li>`).join(""); done.disabled=files.length===0; };
+  done.onclick=()=>commit(node,"hochgeladen", files.length+" Datei(en) hinzugefügt");
+  skip.onclick=()=>commit(node,"später","Dateien später nachreichen");
+  row.appendChild(done); row.appendChild(skip);
+  z.appendChild(drop); z.appendChild(fileInput); z.appendChild(list); z.appendChild(row);
+  toBottom();
+}
+
+/* ---- Composer-Anbindung ---- */
+function setComposer(node){
+  const k=node.input.kind;
+  const enabled = ["freetext","extraction-confirm","date","amount","chips","confirm","payout"].includes(k);
+  input.value=""; autoGrow();
+  input.placeholder = node.input.placeholder || "Antwort eingeben …";
+  input.disabled=!enabled; sendBtn.disabled=true;
+  if(enabled){ input.focus(); }
+}
+function acceptTyped(text){
+  if(!active) return;
+  const node=active.node, k=node.input.kind, t=text.trim();
+  if(!t) return;
+  if(k==="freetext"){ commit(node, t, t); return; }
+  if(k==="extraction-confirm"){
+    if(/ja|stimmt|passt|korrekt|genau|richtig/i.test(t)) commit(node,"ok","Ja, das stimmt");
+    else fallback(); return;
+  }
+  if(k==="date"){ const d=parseDate(t); d?commit(node,d,d):fallback("Bitte ein Datum wie «23.04.2026» oder «gestern» angeben."); return; }
+  if(k==="amount"){ const a=parseAmount(t); a?commit(node,a,a):fallback("Nennen Sie gern einen Betrag oder schreiben Sie «keine Ahnung»."); return; }
+  // optionsbasiert: per Text matchen
+  const opts=node.input.options||[];
+  const hit=opts.find(o=> o.label.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(o.value.toLowerCase()) || (o.value.length>3&&o.label.toLowerCase().startsWith(t.toLowerCase())) );
+  if(hit) commit(node,hit.value,hit.label);
+  else if(/ja\b/i.test(t)&&opts.find(o=>o.value==="Ja")) commit(node,"Ja","Ja");
+  else if(/nein/i.test(t)&&opts.find(o=>o.value==="Nein")) commit(node,"Nein","Nein");
+  else fallback();
+}
+async function fallback(msg){
+  input.disabled=true; sendBtn.disabled=true;
+  await botSay(msg || "Das habe ich nicht ganz verstanden. Tippen Sie es gern anders – oder wählen Sie direkt eine der Optionen oben. 🙂");
+  if(active){ input.disabled=false; input.focus(); }
+}
+
+/* ---- Antwort übernehmen ---- */
+async function commit(node, value, display, rawText){
+  clearZone();
+  input.disabled=true; sendBtn.disabled=true; input.value=""; autoGrow();
+  const rec={node, value, display, raw: rawText!=null?rawText:display};
+  records.push(rec);
+  addUser(display, rec);
+  if(node.onCommit) node.onCommit(rec);
+  if(node.summary) node.summary(value, display, rec).forEach(s=>setSummary(s.key,s.label,s.val));
+  idx++; await run();
+}
+
+/* ---- Edit ---- */
+function editRecord(rec){
+  const node=rec.node, k=node.input.kind, m=rec.bubbleEl;
+  if(!m) return;
+  const optionKinds=["chips","stack","confirm","amount","payout"];
+  m.innerHTML="";
+  const editor=document.createElement("div"); editor.className="inputzone"; editor.style.paddingLeft="0"; editor.style.margin="0";
+  if(optionKinds.includes(k)){
+    const c=document.createElement("div"); c.className="chips"; c.style.justifyContent="flex-end";
+    node.input.options.forEach(o=> c.appendChild(chip(o,()=>applyEdit(rec,o.value,o.label))));
+    editor.appendChild(c);
+  } else { // freetext / date / extraction
+    const row=document.createElement("div"); row.className="fieldrow"; row.style.justifyContent="flex-end";
+    const f=document.createElement("input"); f.className="field"; f.value=rec.raw; f.style.minWidth="280px";
+    const ok=document.createElement("button"); ok.className="mini"; ok.textContent="Speichern";
+    ok.onclick=()=>{
+      let v=f.value.trim(); if(!v) return;
+      if(k==="date"){ const d=parseDate(v)||v; v=d; }
+      applyEdit(rec,v,v,v);
+    };
+    const cancel=document.createElement("button"); cancel.className="mini ghost"; cancel.textContent="Abbrechen";
+    cancel.onclick=()=>restoreBubble(rec);
+    row.appendChild(f); row.appendChild(ok); row.appendChild(cancel);
+    editor.appendChild(row); setTimeout(()=>f.focus(),10);
+  }
+  m.appendChild(editor);
+}
+function applyEdit(rec,value,display,raw){
+  rec.value=value; rec.display=display; if(raw!=null)rec.raw=raw;
+  restoreBubble(rec);
+  if(rec.node.summary) rec.node.summary(value,display,rec).forEach(s=>setSummary(s.key,s.label,s.val));
+  toast("Antwort aktualisiert ✓");
+}
+function restoreBubble(rec){
+  rec.bubbleEl.innerHTML=`<button class="edit-btn" title="Antwort ändern">${PENCIL}</button><div class="bubble">${rec.display}</div>`;
+  rec.bubbleEl.querySelector(".edit-btn").addEventListener("click",()=>editRecord(rec));
+}
+function editOpener(){ const rec=records.find(r=>r.node.id==="opener"); if(rec){ rec.bubbleEl.scrollIntoView({behavior:"smooth",block:"center"}); editRecord(rec); } }
+
+/* =========================================================================
+   SCRIPT-DEFINITION (die Schadenmeldung)
+   ========================================================================= */
+const flow=[
+  /* 1 — Eröffnung: frei erzählen (Tell, don't fill) */
+  {
+    id:"opener", phase:"schaden",
+    bot:[`<p>Guten Tag, Frau Naville. Das machen wir gemeinsam – Schritt für Schritt.</p>
+          <p><strong>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist.</strong> Ein, zwei Sätze genügen.</p>`],
+    input:{kind:"freetext", placeholder:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …"},
+    onCommit:(rec)=>{ openerText=rec.raw; facts=extract(rec.raw); },
+    summary:(v)=>[{key:"hergang",label:"Schadenhergang",val: v.length>70? v.slice(0,68)+"…":v}],
+  },
+  /* 2 — Auto-Extraktion + Bestätigung */
+  {
+    id:"extract", phase:"schaden", editable:false,
+    bot: async ()=>{
+      await analyze("Ich analysiere Ihre Schilderung …", 1300);
+      const u = facts.ursacheBekannt? "Ursache: bekannt" : "Ursache: unbekannt";
+      const m = facts.mehrere? "mehrere Bereiche betroffen" : "betroffener Bereich erkannt";
+      await botSay(`<p>Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.</p>
+        <p>Aus Ihrer Schilderung entnehme ich:</p>
+        <ul class="info-list">
+          <li>🏷️ <strong>Schadenart:</strong> ${facts.art}</li>
+          <li>❓ <strong>${u.replace("Ursache: ","Ursache ")}</strong></li>
+          <li>🏠 <strong>${m}</strong></li>
+        </ul>
+        <p>Stimmt das so?</p>`);
+    },
+    input:{kind:"extraction-confirm"},
+    onCommit:()=>{},
+    summary:()=>[
+      {key:"art",label:"Schadenart",val:facts.art},
+      {key:"ursache",label:"Ursache",val: facts.ursacheBekannt?"bekannt":"unbekannt"},
+    ],
+  },
+  /* 3 — Datum (NLU) */
+  {
+    id:"datum", phase:"schaden",
+    bot:[`<p>Wann ist der Schaden passiert? Sie können auch einfach <em>«gestern»</em> schreiben.</p>`],
+    input:{kind:"date", placeholder:"z.B. gestern oder 23.04.2026"},
+    summary:(v)=>[{key:"datum",label:"Schadendatum",val:v}],
+  },
+  /* 4 — Ort (Bestätigen-Vorschlag) */
+  {
+    id:"ort", phase:"schaden",
+    bot:[`<p>Ist der Schaden an Ihrer hinterlegten Adresse passiert?</p>`],
+    input:{kind:"confirm",
+      card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:"Ihre hinterlegte Adresse"},
+      options:[{label:"Ja, dort",value:"Untere Bahnhofstrasse 12, 9500 Wil SG",rec:true},{label:"An einem anderen Ort",value:"anderer"}]},
+    summary:(v,d)=>[{key:"ort",label:"Ort",val: v==="anderer"?"Anderer Ort":"Untere Bahnhofstrasse 12, 9500 Wil SG"}],
+  },
+  /* 5 — Ursache-Kategorie (vorgeschlagen, weil unbekannt) */
+  {
+    id:"ursache", phase:"schaden",
+    bot:[`<p>Da die Ursache laut Ihrer Schilderung noch unklar ist, ordne ich das als <strong>«Sonstiges oder unbekannt»</strong> ein. Möchten Sie das anpassen?</p>`],
+    input:{kind:"chips", options:CAUSE_OPTS},
+    summary:(v)=>[{key:"ursache-kat",label:"Ursache (Kategorie)",val:v}],
+  },
+  /* 6 — Gebäude bestätigen */
+  {
+    id:"gebaeude", phase:"schaden",
+    bot:[`<p>Handelt es sich um dieses Gebäude?</p>`],
+    input:{kind:"confirm",
+      card:{title:"Einfamilienhaus", sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950"},
+      options:[{label:"Ja, das stimmt",value:"Ja",rec:true},{label:"Nein",value:"Nein"}]},
+    summary:(v)=>[{key:"gebaeude",label:"Gebäude",val:"Einfamilienhaus · Baujahr 1950"}],
+  },
+  /* 6a — mehrere Stockwerke */
+  {
+    id:"stockwerke", phase:"schaden",
+    bot:[`<p>Sind vom Wasseraustritt mehrere Stockwerke betroffen?</p>`],
+    input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"},{label:"Unbekannt",value:"Unbekannt"}]},
+    summary:(v)=>[{key:"stockwerke",label:"Mehrere Stockwerke",val:v}],
+  },
+  /* 6b — Renovation 5 Jahre */
+  {
+    id:"renoviert", phase:"schaden",
+    bot:[`<p>Wurde an der betroffenen Stelle in den letzten 5 Jahren renoviert oder anderweitig gearbeitet?</p>`],
+    input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"},{label:"Unbekannt",value:"Unbekannt"}]},
+    summary:(v)=>[{key:"reno",label:"Renovation (5 J.)",val:v}],
+  },
+  /* 7 — Reparaturen */
+  {
+    id:"reparatur", phase:"schaden",
+    bot:[`<p>Wurden bereits Reparaturarbeiten ausgeführt?</p>`],
+    input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"}]},
+    summary:(v)=>[{key:"reparatur",label:"Reparaturen",val:v}],
+  },
+  /* 7a — Schätzung (NLU + Chips) */
+  {
+    id:"schaetzung", phase:"schaden",
+    bot:[`<p>Wie hoch schätzen Sie den Schaden ungefähr? <em>«Keine Ahnung»</em> ist völlig in Ordnung.</p>`],
+    input:{kind:"amount", placeholder:"z.B. keine Ahnung oder 8000",
+      options:[{label:"Bis CHF 5'000",value:"Bis CHF 5'000"},{label:"CHF 5'000 – 10'000",value:"CHF 5'000 – 10'000"},{label:"Über CHF 10'000",value:"Über CHF 10'000"},{label:"Weiss nicht",value:"Weiss nicht"}]},
+    summary:(v)=>[{key:"hoehe",label:"Schadenhöhe",val:v}],
+  },
+  /* 8 — Dateien */
+  {
+    id:"dateien", phase:"schaden",
+    bot:[`<p>Möchten Sie Dateien hinzufügen? Falls vorhanden, können Sie hier <strong>Schadenfotos, Kostenvoranschläge oder Rechnungen</strong> hochladen.</p>`],
+    input:{kind:"upload"},
+    summary:(v,d)=>[{key:"dateien",label:"Dateien",val:d}],
+  },
+  /* 9 — Deckungsprüfung */
+  {
+    id:"deckung", phase:"vorgehen",
+    bot:[`<p>Vielen Dank – damit habe ich alles für die Deckungsprüfung. 🙏</p>
+          <p>Wir können Ihnen noch nicht abschliessend sagen, ob dieser Schadenfall versichert ist.</p>
+          <h4>Bitte beachten Sie</h4>
+          <ul class="info-list">
+            <li>Folgeschäden an Ihrem Gebäude und dessen Bestandteilen sind nach einem <strong>versicherten Wasserereignis gedeckt</strong>.</li>
+            <li>Gemäss unseren Allgemeinen Vertragsbedingungen (AVB) sind die Kosten für das Beheben der <strong>Schadenursache</strong> sowie für <strong>Unterhalts- und Schadenverhütungsmassnahmen</strong> hingegen generell nicht versichert.</li>
+          </ul>`,
+          `<p>Da die Ursache unklar ist, empfehle ich eine <strong>Leckortung</strong> – das organisieren wir gern für Sie.</p>
+           <h4>Ihre Vorteile</h4>
+           <ul class="benefits">
+             <li><strong>Top-Fachleute:</strong> qualifizierte, professionelle Fachkräfte.</li>
+             <li><strong>Garantie:</strong> es werden nur die notwendigen schadenbedingten Arbeiten ausgeführt.</li>
+             <li><strong>Schnell:</strong> Sie werden so rasch als möglich für eine Erstbesichtigung kontaktiert.</li>
+             <li><strong>Einfach:</strong> wir entlasten Sie und koordinieren mit den Fachkräften.</li>
+           </ul>
+           <p>Wie möchten Sie weitermachen?</p>`],
+    input:{kind:"stack", options:[
+      {label:"Leckortungsfirma aufbieten lassen",value:"Leckortungsfirma aufbieten lassen",rec:true},
+      {label:"Leckortungsfirma selber organisieren",value:"Leckortungsfirma selber organisieren"},
+      {label:"Auf Leckortung verzichten",value:"Auf Leckortung verzichten"},
+    ]},
+    summary:(v)=>[{key:"vorgehen",label:"Weiteres Vorgehen",val:v}],
+  },
+  /* 10 — Rückzahlungskonto */
+  {
+    id:"payout", phase:"vorgehen",
+    bot:[`<p>Auf wessen Konto sollen wir eine allfällige Rückzahlung einer durch Sie bezahlten Rechnung überweisen?</p>`],
+    input:{kind:"payout", options:[
+      {label:"Robert Naville",value:"Robert Naville"},
+      {label:"Corinna Naville",value:"Corinna Naville"},
+      {label:"Andere Person",value:"Andere Person"},
+      {label:"Später angeben",value:"Später angeben"},
+    ]},
+    summary:(v)=>[{key:"konto",label:"Rückzahlungskonto",val:v}],
+  },
+  /* 11 — Abschluss */
+  {
+    id:"final", phase:"fertig",
+    bot: async ()=>{
+      await botSay(`<p class="lead">Vielen Dank für Ihre Schadenmeldung.</p>
+        <p style="margin-top:10px">Schadennummer: <strong>${CONFIG.claimNo}</strong></p>
+        <p><span class="dl" id="dlLink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Schadenmeldung herunterladen</span></p>
+        <h4>So geht es weiter</h4>
+        <ul class="info-list">
+          <li>Wir informieren Sie per Mail, sobald die Empfangsbestätigung auf Ihrer Schadendetailseite hinterlegt ist.</li>
+          <li>Die Leckortungsfirma meldet sich bei Ihnen für eine Terminvereinbarung.</li>
+          <li>Wir prüfen Ihren gemeldeten Schaden und melden uns so rasch als möglich mit den nächsten Schritten.</li>
+          <li>Wir bitten Sie jetzt schon, drei bis vier aussagekräftige Fotos des Schadens zu machen – Sie können diese über die Schadendetailseite hochladen.</li>
+          <li>Sobald Sie einen Kostenvoranschlag erhalten haben, reichen Sie ihn uns bitte über die Schadendetailseite nach.</li>
+        </ul>
+        <p><button class="btn-out" id="detailBtn">Weiter zur Schadendetailseite</button></p>`);
+      document.getElementById("dlLink").onclick=downloadSummary;
+      document.getElementById("detailBtn").onclick=()=>toast("Prototyp: Die Schadendetailseite würde sich hier öffnen.");
+    },
+    input:{kind:"final"},
+  },
+];
+
+/* ---- Engine ---- */
+async function run(){
+  const node=flow[idx]; if(!node) return;
+  setPhase(node.phase);
+  active=null;
+  if(typeof node.bot==="function"){ await node.bot(); }
+  else { for(const block of node.bot){ await botSay(block); await wait(120); } }
+  renderInput(node);
+}
+
+/* ---- Download der Zusammenfassung ---- */
+function downloadSummary(){
+  const lines=["BYB Versicherungen AG — Schadenmeldung","Schadennummer: "+CONFIG.claimNo,"Datum: "+fmtDate(TODAY),"","Versicherungsnehmerin: Corinna Naville","Untere Bahnhofstrasse 12, 9500 Wil SG","","--- Angaben ---"];
+  sumBody.querySelectorAll(".sum-row").forEach(r=> lines.push(r.querySelector(".k").textContent+": "+r.querySelector(".v").textContent));
+  lines.push("","Schadenhergang:", openerText||"-");
+  const blob=new Blob([lines.join("\n")],{type:"text/plain"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="Schadenmeldung_"+CONFIG.claimNo.replace(/[^\d]/g,"-")+".txt"; a.click();
+  toast("Schadenmeldung heruntergeladen ✓");
+}
+
+/* ---- Composer-Events ---- */
+function autoGrow(){ input.style.height="auto"; input.style.height=Math.min(input.scrollHeight,120)+"px"; }
+input.addEventListener("input",()=>{ autoGrow(); sendBtn.disabled = input.value.trim()==="" || input.disabled; });
+input.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); if(!sendBtn.disabled) doSend(); }});
+sendBtn.addEventListener("click",doSend);
+function doSend(){ const v=input.value; if(!v.trim())return; acceptTyped(v); }
+
+/* ---- Start ---- */
+run();
+</script>
+</body>
+</html>
