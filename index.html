@@ -395,7 +395,7 @@ const CAUSE_OPTS=[
   {label:"Eindringen von Regen/Schnee/Schmelzwasser",value:"Eindringen von Regen/Schnee/Schmelzwasser"},
   {label:"Rückstau oder Grundwasser",value:"Rückstau oder Grundwasser"},
   {label:"Frostschaden",value:"Frostschaden"},
-  {label:"Sonstiges oder unbekannt",value:"Sonstiges oder unbekannt",rec:true},
+  {label:"Sonstiges oder unbekannt",value:"Sonstiges oder unbekannt"},
 ];
 
 /* leichte „NLU" für die Eröffnung */
@@ -463,8 +463,8 @@ function renderInput(node){
   else if(k==="stack"){
     const s=document.createElement("div"); s.className="stack";
     node.input.options.forEach(o=>{
-      const b=document.createElement("button"); b.className="opt"+(o.rec?" rec":"");
-      b.innerHTML=`<span>${o.label}</span>${o.rec?'<span class="tag">★ Empfohlen</span>':""}`;
+      const b=document.createElement("button"); b.className="opt";
+      b.innerHTML=`<span>${o.label}</span>`;
       b.onclick=()=>commit(node,o.value,o.label); s.appendChild(b);
     });
     z.appendChild(s);
@@ -517,8 +517,8 @@ function renderInput(node){
 }
 
 function chip(o,onClick){
-  const b=document.createElement("button"); b.className="chip"+(o.rec?" rec":"");
-  b.innerHTML=`${o.ic?`<span class="ic">${o.ic}</span>`:""}${o.rec?'<span class="star">★</span>':""}${o.label}`;
+  const b=document.createElement("button"); b.className="chip";
+  b.innerHTML=`${o.ic?`<span class="ic">${o.ic}</span>`:""}${o.label}`;
   b.onclick=onClick; return b;
 }
 
@@ -675,13 +675,13 @@ const flow=[
     bot:[`<p>Ist der Schaden an Ihrer hinterlegten Adresse passiert?</p>`],
     input:{kind:"confirm",
       card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:"Ihre hinterlegte Adresse"},
-      options:[{label:"Ja, dort",value:"Untere Bahnhofstrasse 12, 9500 Wil SG",rec:true},{label:"An einem anderen Ort",value:"anderer"}]},
+      options:[{label:"Ja, dort",value:"Untere Bahnhofstrasse 12, 9500 Wil SG"},{label:"An einem anderen Ort",value:"anderer"}]},
     summary:(v,d)=>[{key:"ort",label:"Ort",val: v==="anderer"?"Anderer Ort":"Untere Bahnhofstrasse 12, 9500 Wil SG"}],
   },
   /* 5 — Ursache-Kategorie (vorgeschlagen, weil unbekannt) */
   {
     id:"ursache", phase:"schaden",
-    bot:[`<p>Da die Ursache laut Ihrer Schilderung noch unklar ist, ordne ich das als <strong>«Sonstiges oder unbekannt»</strong> ein. Möchten Sie das anpassen?</p>`],
+    bot:[`<p>Wodurch wurde der Schaden verursacht?</p>`],
     input:{kind:"chips", options:CAUSE_OPTS},
     summary:(v)=>[{key:"ursache-kat",label:"Ursache (Kategorie)",val:v}],
   },
@@ -691,7 +691,7 @@ const flow=[
     bot:[`<p>Handelt es sich um dieses Gebäude?</p>`],
     input:{kind:"confirm",
       card:{title:"Einfamilienhaus", sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950"},
-      options:[{label:"Ja, das stimmt",value:"Ja",rec:true},{label:"Nein",value:"Nein"}]},
+      options:[{label:"Ja, das stimmt",value:"Ja"},{label:"Nein",value:"Nein"}]},
     summary:(v)=>[{key:"gebaeude",label:"Gebäude",val:"Einfamilienhaus · Baujahr 1950"}],
   },
   /* 6a — mehrere Stockwerke */
@@ -750,7 +750,7 @@ const flow=[
            </ul>
            <p>Wie möchten Sie weitermachen?</p>`],
     input:{kind:"stack", options:[
-      {label:"Leckortungsfirma aufbieten lassen",value:"Leckortungsfirma aufbieten lassen",rec:true},
+      {label:"Leckortungsfirma aufbieten lassen",value:"Leckortungsfirma aufbieten lassen"},
       {label:"Leckortungsfirma selber organisieren",value:"Leckortungsfirma selber organisieren"},
       {label:"Auf Leckortung verzichten",value:"Auf Leckortung verzichten"},
     ]},
