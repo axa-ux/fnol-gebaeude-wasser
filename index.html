@@ -61,16 +61,16 @@
     bottom:calc(var(--footer-h) + 14px);overflow-y:auto;padding-right:6px;z-index:20;
   }
   .stepper{list-style:none;margin:0 0 26px;padding:0;position:relative}
-  .stepper li{position:relative;padding:0 0 22px 30px;color:var(--muted);font-size:14px}
+  .stepper li{position:relative;padding:0 0 24px 30px;color:var(--muted);font-size:14px;line-height:1.2}
   .stepper li:last-child{padding-bottom:0}
-  .stepper li .dot{position:absolute;left:0;top:1px;width:15px;height:15px;border-radius:50%;background:#d7d7dd;transition:.3s}
-  .stepper li::after{content:"";position:absolute;left:7px;top:16px;bottom:2px;width:1.5px;background:#e0e0e6}
+  .stepper li .dot{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;background:#d7d7dd;box-sizing:border-box;z-index:1;transition:.3s}
+  .stepper li::after{content:"";position:absolute;left:7px;top:20px;height:calc(100% - 20px);width:2px;background:#e0e0e6;z-index:0}
   .stepper li:last-child::after{display:none}
   .stepper li.done{color:var(--text)}
   .stepper li.done .dot{background:var(--blue-mid)}
   .stepper li.done::after{background:var(--blue-mid)}
   .stepper li.active{color:var(--ink);font-weight:700}
-  .stepper li.active .dot{background:#fff;border:4px solid var(--blue);width:17px;height:17px;left:-1px;top:0}
+  .stepper li.active .dot{background:#fff;border:4px solid var(--blue)}
 
   .summary{border:1px solid var(--line);border-radius:12px;padding:14px 14px 6px;background:#fcfcff}
   .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:6px}
@@ -82,8 +82,8 @@
   /* ---------- Bühne / Chat ---------- */
   .stage{position:fixed;top:var(--header-h);bottom:var(--footer-h);left:0;right:0}
   .scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
-  .thread{max-width:var(--col);margin:0 auto;padding:26px 24px 150px}
-  .page-title{text-align:center;font-family:var(--font-head);font-weight:600;color:var(--ink);font-size:22px;margin:6px 0 30px}
+  .thread{max-width:var(--col);margin:0 auto;padding:12px 24px 150px}
+  .page-title{text-align:center;font-family:var(--font-body);font-weight:400;color:#5b5b63;font-size:16px;margin:0 0 26px}
 
   .msg{display:flex;margin:0 0 18px;animation:fadeUp .4s ease both}
   .msg.bot{align-items:flex-start;gap:12px}
@@ -159,6 +159,7 @@
   .composer-inner:focus-within{border-color:var(--blue)}
   .composer textarea{flex:1;border:none;outline:none;resize:none;font-family:var(--font-body);font-size:15px;color:var(--ink);
     line-height:1.4;max-height:120px;padding:9px 0;background:transparent}
+  .composer textarea::placeholder{color:#c4c4cd}
   .send{width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;cursor:pointer;flex:0 0 auto;
     display:flex;align-items:center;justify-content:center;transition:.15s}
   .send:hover{background:var(--blue-hover)}
@@ -240,7 +241,6 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
       </button>
     </div>
-    <div class="hint">Sie können tippen oder auf eine Option klicken · ✎ ändert jede Antwort</div>
   </div>
 
   <!-- Footer -->
@@ -623,8 +623,7 @@ const flow=[
   /* 1 — Eröffnung: frei erzählen (Tell, don't fill) */
   {
     id:"opener", phase:"schaden",
-    bot:[`<p>Guten Tag, Frau Naville. Das machen wir gemeinsam – Schritt für Schritt.</p>
-          <p><strong>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist.</strong> Ein, zwei Sätze genügen.</p>`],
+    bot:[`<p><strong>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist.</strong> Ein, zwei Sätze genügen.</p>`],
     input:{kind:"freetext", placeholder:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …"},
     onCommit:(rec)=>{ openerText=rec.raw; facts=extract(rec.raw); },
     summary:(v)=>[{key:"hergang",label:"Schadenhergang",val: v.length>70? v.slice(0,68)+"…":v}],
