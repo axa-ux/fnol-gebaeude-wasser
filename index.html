@@ -219,7 +219,7 @@
       <li data-phase="fertig"><span class="dot"></span>Fertig</li>
     </ul>
     <div class="summary">
-      <h3>✨ Das weiss ich bisher</h3>
+      <h3>Das weiss ich bisher</h3>
       <div id="sumBody"><div class="empty">Noch keine Angaben erfasst.</div></div>
     </div>
   </nav>
@@ -371,13 +371,13 @@ let facts={art:"Wasser", ursacheBekannt:false, mehrere:true};
 
 /* Schadenart-Chips */
 const ART_OPTS=[
-  {label:"Wasser",value:"Wasser",ic:"💧"},
-  {label:"Naturereignis (z.B. Unwetter)",value:"Naturereignis",ic:"⛈️"},
-  {label:"Diebstahl",value:"Diebstahl",ic:"🔓"},
-  {label:"Glasbruch",value:"Glasbruch",ic:"🔨"},
-  {label:"Feuer",value:"Feuer",ic:"🔥"},
-  {label:"Ausfall Gebäudetechnik",value:"Ausfall Gebäudetechnik",ic:"⚙️"},
-  {label:"Sonstiges",value:"Sonstiges",ic:"•"},
+  {label:"Wasser",value:"Wasser"},
+  {label:"Naturereignis (z.B. Unwetter)",value:"Naturereignis"},
+  {label:"Diebstahl",value:"Diebstahl"},
+  {label:"Glasbruch",value:"Glasbruch"},
+  {label:"Feuer",value:"Feuer"},
+  {label:"Ausfall Gebäudetechnik",value:"Ausfall Gebäudetechnik"},
+  {label:"Sonstiges",value:"Sonstiges"},
 ];
 const CAUSE_OPTS=[
   {label:"Leitungsbruch innerhalb des Gebäudes",value:"Leitungsbruch innerhalb des Gebäudes"},
@@ -399,7 +399,11 @@ function extract(t){
   else if(/sturm|unwetter|hagel|gewitter|blitz/.test(t)) art="Naturereignis";
   else if(/glas|scheibe|fenster zerbroch/.test(t)) art="Glasbruch";
   else if(/wasser|nass|feucht|decke|leck|tropf|durchnässt|überschwemm|rohr/.test(t)) art="Wasser";
-  const ursacheBekannt = !/unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|nicht klar|unsicher|rätsel/.test(t) && t.length>0;
+  // Ursache gilt nur dann als bekannt, wenn der Text eine konkrete Ursache nennt –
+  // eine reine Schadenbeschreibung (z.B. "Wand nass und schimmelt") bleibt "unbekannt".
+  const uncertain = /unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|nicht klar|unsicher|rätsel|kein plan/.test(t);
+  const knownCause = /\b(weil|wegen|aufgrund|verursacht|ausgel(ö|oe)st)\b|rohrbruch|rohr geplatzt|leitungsbruch|wasserleitung|waschmaschine|sp(ü|ue)lmaschine|geschirrsp(ü|ue)ler|boiler|warmwasserspeicher|undicht|armatur|ventil|frost|rückstau|regen|unwetter|sturm|hochwasser|überschwemm/.test(t);
+  const ursacheBekannt = !uncertain && knownCause;
   const areas=["decke","wand","wände","boden","fassade","badezimmer","bad","küche","keller","dach","zimmer","raum","mauer"];
   const hits=[...new Set(areas.filter(a=>t.includes(a)))];
   return {art, ursacheBekannt, mehrere: hits.length>=2, hits};
@@ -438,7 +442,7 @@ function renderInput(node){
     // nur Composer; bei extraction-confirm zusätzlich Chips
     if(k==="extraction-confirm"){
       const c=document.createElement("div"); c.className="chips";
-      c.appendChild(chip({label:"Ja, das stimmt",rec:true},()=>commit(node,"ok","Ja, das stimmt")));
+      c.appendChild(chip({label:"Ja, das stimmt"},()=>commit(node,"ok","Ja, das stimmt")));
       c.appendChild(chip({label:"Etwas anpassen"},()=>{ editOpener(); }));
       z.appendChild(c);
     }
@@ -472,7 +476,7 @@ function renderInput(node){
     c.appendChild(chip({label:"Gestern"},()=>commit(node,parseDate("gestern"),parseDate("gestern"))));
     c.appendChild(chip({label:"Letzte Woche"},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
     const pickWrap=document.createElement("span");
-    const dchip=chip({label:"📅 Datum wählen"},()=>{
+    const dchip=chip({label:"Datum wählen"},()=>{
       const f=document.createElement("input"); f.type="date"; f.className="field"; f.value="2026-04-23";
       pickWrap.innerHTML=""; pickWrap.appendChild(f);
       const ok=document.createElement("button"); ok.className="mini"; ok.textContent="Übernehmen";
@@ -489,9 +493,9 @@ function renderInput(node){
   }
   else if(k==="upload"){
     const c=document.createElement("div"); c.className="chips";
-    const later=chip({label:"Dateien später nachreichen",ic:"🕓"},()=>commit(node,"später","Dateien später nachreichen"));
-    const up1=chip({label:"Schadenfotos hochladen",ic:"📷"},()=>openUpload(node,z));
-    const up2=chip({label:"Kostenvoranschläge, Rechnungen hochladen",ic:"📄"},()=>openUpload(node,z));
+    const later=chip({label:"Dateien später nachreichen"},()=>commit(node,"später","Dateien später nachreichen"));
+    const up1=chip({label:"Schadenfotos hochladen"},()=>openUpload(node,z));
+    const up2=chip({label:"Kostenvoranschläge, Rechnungen hochladen"},()=>openUpload(node,z));
     c.appendChild(up1); c.appendChild(up2); c.appendChild(later);
     z.appendChild(c);
   }
@@ -514,7 +518,7 @@ function chip(o,onClick){
 function openUpload(node,z){
   z.querySelector(".chips").remove();
   const drop=document.createElement("div"); drop.className="drop";
-  drop.innerHTML="📎 Datei hierher ziehen oder klicken<br><small>Unterstützt: .jpg, .png, .pdf, .docx · max. 5 MB</small>";
+  drop.innerHTML="Datei hierher ziehen oder klicken<br><small>Unterstützt: .jpg, .png, .pdf, .docx · max. 5 MB</small>";
   const fileInput=document.createElement("input"); fileInput.type="file"; fileInput.multiple=true; fileInput.hidden=true;
   const list=document.createElement("ul"); list.className="filelist";
   const row=document.createElement("div"); row.className="fieldrow";
@@ -561,7 +565,7 @@ function acceptTyped(text){
 }
 async function fallback(msg){
   input.disabled=true; sendBtn.disabled=true;
-  await botSay(msg || "Das habe ich nicht ganz verstanden. Tippen Sie es gern anders – oder wählen Sie direkt eine der Optionen oben. 🙂");
+  await botSay(msg || "Das habe ich nicht ganz verstanden. Tippen Sie es gern anders – oder wählen Sie direkt eine der Optionen oben.");
   if(active){ input.disabled=false; input.focus(); }
 }
 
@@ -633,14 +637,14 @@ const flow=[
     id:"extract", phase:"schaden", editable:false,
     bot: async ()=>{
       await analyze("Ich analysiere Ihre Schilderung …", 1300);
-      const u = facts.ursacheBekannt? "Ursache: bekannt" : "Ursache: unbekannt";
+      const u = facts.ursacheBekannt? "Ursache bekannt" : "Ursache noch unbekannt";
       const m = facts.mehrere? "mehrere Bereiche betroffen" : "betroffener Bereich erkannt";
       await botSay(`<p>Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.</p>
         <p>Aus Ihrer Schilderung entnehme ich:</p>
         <ul class="info-list">
-          <li>🏷️ <strong>Schadenart:</strong> ${facts.art}</li>
-          <li>❓ <strong>${u.replace("Ursache: ","Ursache ")}</strong></li>
-          <li>🏠 <strong>${m}</strong></li>
+          <li><strong>Schadenart:</strong> ${facts.art}</li>
+          <li><strong>${u}</strong></li>
+          <li><strong>${m}</strong></li>
         </ul>
         <p>Stimmt das so?</p>`);
     },
@@ -722,7 +726,7 @@ const flow=[
   /* 9 — Deckungsprüfung */
   {
     id:"deckung", phase:"vorgehen",
-    bot:[`<p>Vielen Dank – damit habe ich alles für die Deckungsprüfung. 🙏</p>
+    bot:[`<p>Vielen Dank – damit habe ich alles für die Deckungsprüfung.</p>
           <p>Wir können Ihnen noch nicht abschliessend sagen, ob dieser Schadenfall versichert ist.</p>
           <h4>Bitte beachten Sie</h4>
           <ul class="info-list">
