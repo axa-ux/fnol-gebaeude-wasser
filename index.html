@@ -88,6 +88,8 @@
   .msg{display:flex;margin:0 0 18px;animation:fadeUp .4s ease both}
   .msg.bot{align-items:flex-start;gap:12px}
   .avatar{width:30px;height:30px;border-radius:50%;flex:0 0 auto;margin-top:2px}
+  .msg.bot .avatar{visibility:hidden}            /* Platz bleibt erhalten (Ausrichtung) */
+  .msg.bot.show-avatar .avatar{visibility:visible} /* Icon nur bei der aktuellsten Bot-Nachricht */
   .bot .body{max-width:90%;color:var(--text)}
   .bot .body p{margin:0 0 10px}
   .bot .body p:last-child{margin-bottom:0}
@@ -271,6 +273,7 @@ const toastEl  = document.getElementById("toast");
 
 const AVATAR = `<svg class="avatar" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="#00008f"/><path d="M9 26 L27 10" stroke="#e23b4e" stroke-width="4" stroke-linecap="round"/></svg>`;
 const PENCIL = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+const CAL_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
 
 /* ---- Helpers ---- */
 const pad = n => String(n).padStart(2,"0");
@@ -303,16 +306,21 @@ function setSummary(key,label,val){
 }
 
 /* ---- Bot-Nachrichten mit Tipp-Indikator + Streaming ---- */
+function updateLatestAvatar(){
+  // Avatar nur bei der jüngsten Bot-Nachricht zeigen
+  const bots=thread.querySelectorAll(".msg.bot");
+  bots.forEach((m,i)=> m.classList.toggle("show-avatar", i===bots.length-1));
+}
 function addBot(html){
   const m=document.createElement("div"); m.className="msg bot";
   m.innerHTML = `${AVATAR}<div class="body">${html}</div>`;
-  thread.appendChild(m); toBottom(); return m;
+  thread.appendChild(m); updateLatestAvatar(); toBottom(); return m;
 }
 async function botSay(html,{stream=true}={}){
   // Tipp-Indikator
   const t=document.createElement("div"); t.className="msg bot";
   t.innerHTML = `${AVATAR}<div class="typing"><span></span><span></span><span></span></div>`;
-  thread.appendChild(t); toBottom();
+  thread.appendChild(t); updateLatestAvatar(); toBottom();
   await wait(560 + Math.random()*350);
   t.remove();
   const m = addBot(html);
@@ -347,7 +355,7 @@ function streamInto(el, html){
 async function analyze(text,ms){
   const a=document.createElement("div"); a.className="msg bot";
   a.innerHTML=`${AVATAR}<div class="analyze"><span class="spin"></span>${text}</div>`;
-  thread.appendChild(a); toBottom(); await wait(ms); a.remove();
+  thread.appendChild(a); updateLatestAvatar(); toBottom(); await wait(ms); a.remove();
 }
 
 /* ---- User-Bubble ---- */
@@ -475,15 +483,14 @@ function renderInput(node){
     const c=document.createElement("div"); c.className="chips";
     c.appendChild(chip({label:"Gestern"},()=>commit(node,parseDate("gestern"),parseDate("gestern"))));
     c.appendChild(chip({label:"Letzte Woche"},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
-    const pickWrap=document.createElement("span");
-    const dchip=chip({label:"Datum wählen"},()=>{
-      const f=document.createElement("input"); f.type="date"; f.className="field"; f.value="2026-04-23";
-      pickWrap.innerHTML=""; pickWrap.appendChild(f);
-      const ok=document.createElement("button"); ok.className="mini"; ok.textContent="Übernehmen";
-      ok.onclick=()=>{ if(!f.value)return; const[y,mo,d]=f.value.split("-"); const v=`${d}.${mo}.${y}`; commit(node,v,v); };
-      pickWrap.appendChild(ok); f.focus();
-    });
-    c.appendChild(dchip); c.appendChild(pickWrap);
+    // "Datum wählen": Chip mit Kalender-Icon öffnet direkt den nativen Date-Picker; Auswahl übernimmt sofort.
+    const wrap=document.createElement("span"); wrap.style.position="relative"; wrap.style.display="inline-flex";
+    const f=document.createElement("input"); f.type="date"; f.value="2026-04-23";
+    f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
+    f.onchange=()=>{ if(!f.value)return; const[y,mo,d]=f.value.split("-"); commit(node,`${d}.${mo}.${y}`,`${d}.${mo}.${y}`); };
+    const dchip=chip({label:"Datum wählen",ic:CAL_ICON},()=>{ try{ f.showPicker(); }catch(e){ f.focus(); f.click(); } });
+    wrap.appendChild(dchip); wrap.appendChild(f);
+    c.appendChild(wrap);
     z.appendChild(c);
   }
   else if(k==="amount"){
