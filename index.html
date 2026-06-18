@@ -132,7 +132,7 @@
 
   .stack{display:flex;flex-direction:column;gap:10px;max-width:420px}
   .opt{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);
-    padding:14px 18px;border-radius:8px;cursor:pointer;transition:.15s;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    padding:14px 22px;border-radius:24px;cursor:pointer;transition:.15s;text-align:center;display:flex;justify-content:center;align-items:center;gap:10px}
   .opt:hover{border-color:var(--blue);color:var(--blue);background:#fafaff}
   .opt.rec{border-color:var(--blue)}
   .opt .tag{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.3px}
@@ -260,7 +260,7 @@
    ========================================================================= */
 
 const CONFIG = { claimNo:"22.213.390/0002", refDate:"23.04.2026" };
-const TODAY = new Date(2026,5,15); // Prototyp-"Heute": 15.06.2026
+const TODAY = new Date(); // aktuelles Datum (für "gestern", Date-Picker-Default etc.)
 
 /* ---- DOM ---- */
 const thread   = document.getElementById("thread");
@@ -485,7 +485,7 @@ function renderInput(node){
     c.appendChild(chip({label:"Letzte Woche"},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
     // "Datum wählen": Chip mit Kalender-Icon öffnet direkt den nativen Date-Picker; Auswahl übernimmt sofort.
     const wrap=document.createElement("span"); wrap.style.position="relative"; wrap.style.display="inline-flex";
-    const f=document.createElement("input"); f.type="date"; f.value="2026-04-23";
+    const f=document.createElement("input"); f.type="date"; f.value=`${TODAY.getFullYear()}-${pad(TODAY.getMonth()+1)}-${pad(TODAY.getDate())}`;
     f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
     f.onchange=()=>{ if(!f.value)return; const[y,mo,d]=f.value.split("-"); commit(node,`${d}.${mo}.${y}`,`${d}.${mo}.${y}`); };
     const dchip=chip({label:"Datum wählen",ic:CAL_ICON},()=>{ try{ f.showPicker(); }catch(e){ f.focus(); f.click(); } });
@@ -665,14 +665,14 @@ const flow=[
   /* 3 — Datum (NLU) */
   {
     id:"datum", phase:"schaden",
-    bot:[`<p>Wann ist der Schaden passiert? Sie können auch einfach <em>«gestern»</em> schreiben.</p>`],
+    bot:[`<p>Alles klar. Wann ist der Schaden passiert? Sie können auch einfach <em>«gestern»</em> schreiben.</p>`],
     input:{kind:"date", placeholder:"z.B. gestern oder 23.04.2026"},
     summary:(v)=>[{key:"datum",label:"Schadendatum",val:v}],
   },
   /* 4 — Ort (Bestätigen-Vorschlag) */
   {
     id:"ort", phase:"schaden",
-    bot:[`<p>Ist der Schaden an Ihrer hinterlegten Adresse passiert?</p>`],
+    bot:[`<p>Danke. Und wo ist der Schaden passiert – an Ihrer hinterlegten Adresse?</p>`],
     input:{kind:"confirm",
       card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:"Ihre hinterlegte Adresse"},
       options:[{label:"Ja, dort",value:"Untere Bahnhofstrasse 12, 9500 Wil SG"},{label:"An einem anderen Ort",value:"anderer"}]},
@@ -681,14 +681,14 @@ const flow=[
   /* 5 — Ursache-Kategorie (vorgeschlagen, weil unbekannt) */
   {
     id:"ursache", phase:"schaden",
-    bot:[`<p>Wodurch wurde der Schaden verursacht?</p>`],
+    bot:[`<p>Verstanden. Wodurch wurde der Schaden verursacht?</p>`],
     input:{kind:"chips", options:CAUSE_OPTS},
     summary:(v)=>[{key:"ursache-kat",label:"Ursache (Kategorie)",val:v}],
   },
   /* 6 — Gebäude bestätigen */
   {
     id:"gebaeude", phase:"schaden",
-    bot:[`<p>Handelt es sich um dieses Gebäude?</p>`],
+    bot:[`<p>Geht es um dieses Gebäude?</p>`],
     input:{kind:"confirm",
       card:{title:"Einfamilienhaus", sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950"},
       options:[{label:"Ja, das stimmt",value:"Ja"},{label:"Nein",value:"Nein"}]},
@@ -697,36 +697,36 @@ const flow=[
   /* 6a — mehrere Stockwerke */
   {
     id:"stockwerke", phase:"schaden",
-    bot:[`<p>Sind vom Wasseraustritt mehrere Stockwerke betroffen?</p>`],
+    bot:[`<p>Danke. Sind vom Wasseraustritt mehrere Stockwerke betroffen?</p>`],
     input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"},{label:"Unbekannt",value:"Unbekannt"}]},
     summary:(v)=>[{key:"stockwerke",label:"Mehrere Stockwerke",val:v}],
   },
   /* 6b — Renovation 5 Jahre */
   {
     id:"renoviert", phase:"schaden",
-    bot:[`<p>Wurde an der betroffenen Stelle in den letzten 5 Jahren renoviert oder anderweitig gearbeitet?</p>`],
+    bot:[`<p>Und wurde an der betroffenen Stelle in den letzten 5 Jahren renoviert oder etwas daran gemacht?</p>`],
     input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"},{label:"Unbekannt",value:"Unbekannt"}]},
     summary:(v)=>[{key:"reno",label:"Renovation (5 J.)",val:v}],
   },
   /* 7 — Reparaturen */
   {
     id:"reparatur", phase:"schaden",
-    bot:[`<p>Wurden bereits Reparaturarbeiten ausgeführt?</p>`],
+    bot:[`<p>Alles klar. Haben Sie bereits Reparaturen ausführen lassen?</p>`],
     input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"}]},
     summary:(v)=>[{key:"reparatur",label:"Reparaturen",val:v}],
   },
   /* 7a — Schätzung (NLU + Chips) */
   {
     id:"schaetzung", phase:"schaden",
-    bot:[`<p>Wie hoch schätzen Sie den Schaden ungefähr? <em>«Keine Ahnung»</em> ist völlig in Ordnung.</p>`],
-    input:{kind:"amount", placeholder:"z.B. keine Ahnung oder 8000",
+    bot:[`<p>Wie hoch schätzen Sie den Schaden ungefähr?</p>`],
+    input:{kind:"amount", placeholder:"z.B. rund 8000",
       options:[{label:"Bis CHF 5'000",value:"Bis CHF 5'000"},{label:"CHF 5'000 – 10'000",value:"CHF 5'000 – 10'000"},{label:"Über CHF 10'000",value:"Über CHF 10'000"},{label:"Weiss nicht",value:"Weiss nicht"}]},
     summary:(v)=>[{key:"hoehe",label:"Schadenhöhe",val:v}],
   },
   /* 8 — Dateien */
   {
     id:"dateien", phase:"schaden",
-    bot:[`<p>Möchten Sie Dateien hinzufügen? Falls vorhanden, können Sie hier <strong>Schadenfotos, Kostenvoranschläge oder Rechnungen</strong> hochladen.</p>`],
+    bot:[`<p>Fast geschafft. Möchten Sie noch Dateien hinzufügen? Falls vorhanden, können Sie hier <strong>Schadenfotos, Kostenvoranschläge oder Rechnungen</strong> hochladen.</p>`],
     input:{kind:"upload"},
     summary:(v,d)=>[{key:"dateien",label:"Dateien",val:d}],
   },
@@ -739,8 +739,8 @@ const flow=[
           <ul class="info-list">
             <li>Folgeschäden an Ihrem Gebäude und dessen Bestandteilen sind nach einem <strong>versicherten Wasserereignis gedeckt</strong>.</li>
             <li>Gemäss unseren Allgemeinen Vertragsbedingungen (AVB) sind die Kosten für das Beheben der <strong>Schadenursache</strong> sowie für <strong>Unterhalts- und Schadenverhütungsmassnahmen</strong> hingegen generell nicht versichert.</li>
-          </ul>`,
-          `<p>Da die Ursache unklar ist, empfehle ich eine <strong>Leckortung</strong> – das organisieren wir gern für Sie.</p>
+          </ul>
+          <p>Da die Ursache unklar ist, empfehlen wir eine <strong>Leckortung</strong> – das organisieren wir gern für Sie.</p>
            <h4>Ihre Vorteile</h4>
            <ul class="benefits">
              <li><strong>Top-Fachleute:</strong> qualifizierte, professionelle Fachkräfte.</li>
@@ -759,7 +759,7 @@ const flow=[
   /* 10 — Rückzahlungskonto */
   {
     id:"payout", phase:"vorgehen",
-    bot:[`<p>Auf wessen Konto sollen wir eine allfällige Rückzahlung einer durch Sie bezahlten Rechnung überweisen?</p>`],
+    bot:[`<p>Eine letzte Frage: Auf wessen Konto sollen wir eine allfällige Rückzahlung überweisen, falls Sie einmal eine Rechnung selbst bezahlt haben?</p>`],
     input:{kind:"payout", options:[
       {label:"Robert Naville",value:"Robert Naville"},
       {label:"Corinna Naville",value:"Corinna Naville"},
