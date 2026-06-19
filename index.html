@@ -43,11 +43,11 @@
   .summary{border:1px solid var(--line);border-radius:12px;padding:14px 14px 8px;background:#fcfcff}
   .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
   .check-item{display:flex;gap:9px;padding:0 0 12px;align-items:flex-start;animation:fadeUp .3s ease both}
-  .check-item .box{width:16px;height:16px;border:1.5px solid #cdcdd6;border-radius:5px;flex:0 0 auto;margin-top:1px;transition:.2s;background:#fff}
-  .check-item.done .box{background:var(--green) no-repeat center/11px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");border-color:var(--green)}
-  .check-item .ct-label{font-size:13px;color:var(--muted);line-height:1.3}
+  .check-item .box{width:16px;height:19px;flex:0 0 auto;background:no-repeat center;background-size:7px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='4' fill='%23b9b9c4'/%3E%3C/svg%3E")}
+  .check-item.done .box{background-size:15px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233aa55f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")}
+  .check-item .ct-label{font-size:13px;color:var(--muted);line-height:19px}
   .check-item.done .ct-label{color:var(--ink)}
-  .check-item .ct-val{font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.3;margin-top:1px;display:none}
+  .check-item .ct-val{font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.3;display:none}
 
   .stage{position:fixed;top:var(--header-h);bottom:var(--footer-h);left:0;right:0}
   .scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
@@ -415,7 +415,7 @@ function applyStaticI18n(){
 }
 
 /* ---------- Checkliste ---------- */
-const CHECKLIST=[["hergang","cl_hergang"],["art","cl_art"],["datum","cl_datum"],["ort","cl_ort"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"],["vorgehen","cl_vorgehen"],["konto","cl_konto"]];
+const CHECKLIST=[["hergang","cl_hergang"],["art","cl_art"],["datum","cl_datum"],["ort","cl_ort"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"]];
 function renderChecklist(){
   checklistEl.innerHTML="";
   CHECKLIST.forEach(([key,lblKey])=>{
