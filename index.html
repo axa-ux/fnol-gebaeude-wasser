@@ -9,57 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    /* Farben (aus den Screens gesampelt) */
-    --blue:#00008f;            /* Primär-Navy */
-    --blue-hover:#1a1aa3;
-    --blue-mid:#4a78c8;        /* erledigte Stepper-Punkte / Linien */
-    --footer:#5f7cb5;          /* Footer-Blau */
-    --accent:#e23b4e;          /* BYB-Akzent (Coral) */
-    --green:#3aa55f;           /* Vorteile / Erfolg */
-    --bubble:#ecebf8;          /* User-Bubble */
-    --bubble-bd:#dcdaf2;
-    --ink:#1f1f2e;             /* Überschriften */
-    --text:#3c3c44;            /* Fliesstext */
-    --muted:#8c8c96;
-    --line:#e3e3e8;
-    --field-bd:#c7c7cf;
-    --bg:#ffffff;
-    --rail-bg:#ffffff;
-    --shadow:0 6px 24px rgba(20,20,60,.08);
+    --blue:#00008f; --blue-hover:#1a1aa3; --blue-mid:#4a78c8; --footer:#5f7cb5;
+    --accent:#e23b4e; --green:#3aa55f; --bubble:#ecebf8; --bubble-bd:#dcdaf2;
+    --ink:#1f1f2e; --text:#3c3c44; --muted:#8c8c96; --line:#e3e3e8; --field-bd:#c7c7cf;
+    --bg:#ffffff; --shadow:0 6px 24px rgba(20,20,60,.08);
     --font-head:'Source Serif 4', Georgia, 'Times New Roman', serif;
     --font-body:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --rail-w:248px;
-    --col:700px;
-    --header-h:64px;
-    --footer-h:46px;
+    --rail-w:248px; --col:700px; --header-h:64px; --footer-h:46px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
-  body{
-    font-family:var(--font-body);
-    color:var(--text);
-    background:var(--bg);
-    font-size:16px;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{font-family:var(--font-body);color:var(--text);background:var(--bg);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
-  /* ---------- Header ---------- */
-  .topbar{
-    position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:30;
-    background:#fff;border-bottom:1px solid var(--line);
-    display:flex;align-items:center;padding:0 26px;
-  }
+  .topbar{position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:30;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px}
   .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
   .logo .mark{width:36px;height:36px;border-radius:6px;flex:0 0 auto}
   .logo .word{font-family:var(--font-head);font-weight:700;font-size:20px;color:var(--blue);letter-spacing:.3px}
   .logo .word small{display:block;font-family:var(--font-body);font-weight:400;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:-3px}
 
-  /* ---------- Linke Schiene (Stepper + Live-Summary) ---------- */
-  .rail{
-    position:fixed;left:24px;top:calc(var(--header-h) + 22px);width:var(--rail-w);
-    bottom:calc(var(--footer-h) + 14px);overflow-y:auto;padding-right:6px;z-index:20;
-  }
+  .rail{position:fixed;left:24px;top:calc(var(--header-h) + 22px);width:var(--rail-w);bottom:calc(var(--footer-h) + 14px);overflow-y:auto;padding-right:6px;z-index:20}
   .stepper{list-style:none;margin:0 0 26px;padding:0;position:relative}
   .stepper li{position:relative;padding:0 0 24px 30px;color:var(--muted);font-size:14px;line-height:1.2}
   .stepper li:last-child{padding-bottom:0}
@@ -72,14 +40,15 @@
   .stepper li.active{color:var(--ink);font-weight:700}
   .stepper li.active .dot{background:#fff;border:4px solid var(--blue)}
 
-  .summary{border:1px solid var(--line);border-radius:12px;padding:14px 14px 6px;background:#fcfcff}
-  .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:6px}
-  .summary .empty{color:var(--muted);font-size:13px;padding-bottom:10px}
-  .sum-row{padding:0 0 11px;animation:fadeUp .35s ease both}
-  .sum-row .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-  .sum-row .v{font-size:14px;color:var(--ink);font-weight:600;line-height:1.35}
+  .summary{border:1px solid var(--line);border-radius:12px;padding:14px 14px 8px;background:#fcfcff}
+  .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .check-item{display:flex;gap:9px;padding:0 0 12px;align-items:flex-start;animation:fadeUp .3s ease both}
+  .check-item .box{width:16px;height:16px;border:1.5px solid #cdcdd6;border-radius:5px;flex:0 0 auto;margin-top:1px;transition:.2s;background:#fff}
+  .check-item.done .box{background:var(--green) no-repeat center/11px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");border-color:var(--green)}
+  .check-item .ct-label{font-size:13px;color:var(--muted);line-height:1.3}
+  .check-item.done .ct-label{color:var(--ink)}
+  .check-item .ct-val{font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.3;margin-top:1px;display:none}
 
-  /* ---------- Bühne / Chat ---------- */
   .stage{position:fixed;top:var(--header-h);bottom:var(--footer-h);left:0;right:0}
   .scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
   .thread{max-width:var(--col);margin:0 auto;padding:12px 24px 150px}
@@ -88,8 +57,8 @@
   .msg{display:flex;margin:0 0 18px;animation:fadeUp .4s ease both}
   .msg.bot{align-items:flex-start;gap:12px}
   .avatar{width:30px;height:30px;border-radius:50%;flex:0 0 auto;margin-top:2px}
-  .msg.bot .avatar{visibility:hidden}            /* Platz bleibt erhalten (Ausrichtung) */
-  .msg.bot.show-avatar .avatar{visibility:visible} /* Icon nur bei der aktuellsten Bot-Nachricht */
+  .msg.bot .avatar{visibility:hidden}
+  .msg.bot.show-avatar .avatar{visibility:visible}
   .bot .body{max-width:90%;color:var(--text)}
   .bot .body p{margin:0 0 10px}
   .bot .body p:last-child{margin-bottom:0}
@@ -102,17 +71,13 @@
   .info-list{margin:6px 0 0;padding-left:20px}
   .info-list li{margin-bottom:9px}
 
-  /* User-Bubble rechts */
   .msg.user{justify-content:flex-end;align-items:center;gap:8px}
-  .bubble{position:relative;background:var(--bubble);border:1px solid var(--bubble-bd);color:#2a2a3a;
-    padding:11px 18px;border-radius:22px;max-width:78%;line-height:1.4}
-  .bubble::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
-    width:0;height:0;border:8px solid transparent;border-left-color:var(--bubble);border-right:0}
+  .bubble{position:relative;background:var(--bubble);border:1px solid var(--bubble-bd);color:#2a2a3a;padding:11px 18px;border-radius:22px;max-width:78%;line-height:1.4}
+  .bubble::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);width:0;height:0;border:8px solid transparent;border-left-color:var(--bubble);border-right:0}
   .edit-btn{background:none;border:none;cursor:pointer;color:#b6b6c4;padding:4px;border-radius:6px;flex:0 0 auto;transition:.15s}
   .edit-btn:hover{color:var(--blue);background:#f0f0f8}
   .edit-btn svg{display:block}
 
-  /* Tipp-Indikator */
   .typing{display:inline-flex;gap:5px;background:#f2f2f7;border-radius:16px;padding:13px 16px;align-items:center}
   .typing span{width:7px;height:7px;border-radius:50%;background:#b9b9c6;animation:blink 1.3s infinite both}
   .typing span:nth-child(2){animation-delay:.18s}
@@ -120,22 +85,15 @@
   .analyze{display:inline-flex;gap:10px;align-items:center;background:#f4f5ff;border:1px solid #e4e6ff;color:var(--blue);border-radius:14px;padding:11px 16px;font-size:14px;font-weight:600}
   .analyze .spin{width:16px;height:16px;border:2.5px solid #c9ccff;border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
 
-  /* Eingabe-Zone (Chips / Karten) */
   .inputzone{margin:2px 0 20px;padding-left:42px;animation:fadeUp .4s ease both}
   .chips{display:flex;flex-wrap:wrap;gap:10px}
-  .chip{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);
-    padding:10px 18px;border-radius:24px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+  .chip{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);padding:10px 18px;border-radius:24px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:8px}
   .chip:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
-  .chip.rec{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
-  .chip .star{color:var(--accent)}
-  .chip .ic{font-size:17px}
+  .chip .ic{display:inline-flex}
 
-  .stack{display:flex;flex-direction:column;gap:10px;max-width:420px}
-  .opt{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);
-    padding:14px 22px;border-radius:24px;cursor:pointer;transition:.15s;text-align:center;display:flex;justify-content:center;align-items:center;gap:10px}
+  .stack{display:flex;flex-direction:column;gap:10px;max-width:430px}
+  .opt{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);padding:14px 22px;border-radius:24px;cursor:pointer;transition:.15s;text-align:center;display:flex;justify-content:center;align-items:center;gap:10px}
   .opt:hover{border-color:var(--blue);color:var(--blue);background:#fafaff}
-  .opt.rec{border-color:var(--blue)}
-  .opt .tag{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.3px}
 
   .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;max-width:430px;margin-bottom:14px;background:#fcfcff;box-shadow:var(--shadow)}
   .card .ct{font-weight:700;color:var(--ink);font-size:16px;margin-bottom:3px}
@@ -154,53 +112,39 @@
   .filelist{list-style:none;margin:0 0 12px;padding:0;max-width:430px}
   .filelist li{display:flex;align-items:center;gap:8px;background:#f4f5ff;border:1px solid #e4e6ff;border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:14px;color:var(--ink)}
 
-  /* ---------- Composer ---------- */
   .composer{position:fixed;bottom:var(--footer-h);left:0;right:0;background:linear-gradient(180deg,rgba(255,255,255,0) 0%, #fff 22%);padding:14px 24px 16px;z-index:25}
-  .composer-inner{max-width:var(--col);margin:0 auto;display:flex;gap:10px;align-items:flex-end;
-    border:1.5px solid var(--field-bd);border-radius:26px;padding:6px 6px 6px 18px;background:#fff;box-shadow:var(--shadow)}
+  .composer-inner{max-width:var(--col);margin:0 auto;display:flex;gap:10px;align-items:flex-end;border:1.5px solid var(--field-bd);border-radius:26px;padding:6px 6px 6px 18px;background:#fff;box-shadow:var(--shadow)}
   .composer-inner:focus-within{border-color:var(--blue)}
-  .composer textarea{flex:1;border:none;outline:none;resize:none;font-family:var(--font-body);font-size:15px;color:var(--ink);
-    line-height:1.4;max-height:120px;padding:9px 0;background:transparent}
+  .composer textarea{flex:1;border:none;outline:none;resize:none;font-family:var(--font-body);font-size:15px;color:var(--ink);line-height:1.4;max-height:120px;padding:9px 0;background:transparent}
   .composer textarea::placeholder{color:#c4c4cd}
-  .send{width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;cursor:pointer;flex:0 0 auto;
-    display:flex;align-items:center;justify-content:center;transition:.15s}
+  .send{width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:.15s}
   .send:hover{background:var(--blue-hover)}
   .send:disabled{background:#cfcfd8;cursor:default}
-  .composer .hint{max-width:var(--col);margin:7px auto 0;font-size:12px;color:var(--muted);text-align:center}
 
-  /* ---------- Abschluss ---------- */
   .dl{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:700;text-decoration:none;letter-spacing:.3px;margin:6px 0 4px;cursor:pointer}
   .dl:hover{text-decoration:underline}
-  .btn-out{display:inline-block;font-family:var(--font-body);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;
-    border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:6px;padding:13px 22px;cursor:pointer;margin-top:8px}
+  .btn-out{display:inline-block;font-family:var(--font-body);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:6px;padding:13px 22px;cursor:pointer;margin-top:8px}
   .btn-out:hover{background:var(--blue);color:#fff}
-  .check-big{width:46px;height:46px;margin:4px 0 2px}
 
-  /* ---------- Footer ---------- */
-  .footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-h);z-index:30;background:var(--footer);color:#fff;
-    display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:12.5px}
-  .footer .langs span{margin-right:8px;opacity:.8;cursor:pointer}
-  .footer .langs span.on{font-weight:700;opacity:1}
+  .footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-h);z-index:30;background:var(--footer);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:12.5px}
+  .footer .langs span{margin-right:10px;opacity:.8;cursor:pointer;transition:.15s}
+  .footer .langs span[data-active="1"]{font-weight:700;opacity:1;text-decoration:underline;text-underline-offset:3px}
+  .footer .langs span.disabled{opacity:.45;cursor:default}
+  .footer .langs span:not(.disabled):hover{opacity:1}
   .footer .legal span{opacity:.85;margin-left:14px}
 
-  /* ---------- Toast ---------- */
-  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
-    padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:50;box-shadow:var(--shadow)}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:50;box-shadow:var(--shadow)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  @media (max-width:1080px){
-    .rail{display:none}
-    .thread,.composer-inner,.composer .hint{max-width:640px}
-  }
+  @media (max-width:1080px){ .rail{display:none} .thread,.composer-inner{max-width:640px} }
 </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header class="topbar">
     <a class="logo" href="#" onclick="return false">
       <svg class="mark" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-label="BYB">
@@ -212,618 +156,541 @@
     </a>
   </header>
 
-  <!-- Linke Schiene -->
   <nav class="rail" aria-label="Fortschritt">
     <ul class="stepper" id="stepper">
-      <li data-phase="ident"><span class="dot"></span>Identifikation</li>
-      <li data-phase="schaden"><span class="dot"></span>Schadenhergang</li>
-      <li data-phase="vorgehen"><span class="dot"></span>Weiteres Vorgehen</li>
-      <li data-phase="fertig"><span class="dot"></span>Fertig</li>
+      <li data-phase="ident"><span class="dot"></span><span class="lbl"></span></li>
+      <li data-phase="schaden"><span class="dot"></span><span class="lbl"></span></li>
+      <li data-phase="vorgehen"><span class="dot"></span><span class="lbl"></span></li>
+      <li data-phase="fertig"><span class="dot"></span><span class="lbl"></span></li>
     </ul>
     <div class="summary">
-      <h3>Das weiss ich bisher</h3>
-      <div id="sumBody"><div class="empty">Noch keine Angaben erfasst.</div></div>
+      <h3 id="clTitle"></h3>
+      <div id="checklist"></div>
     </div>
   </nav>
 
-  <!-- Chat -->
   <main class="stage">
     <div class="scroll" id="scroll">
-      <div class="thread" id="thread">
-        <div class="page-title">Schadenmeldung</div>
-      </div>
+      <div class="thread" id="thread"></div>
     </div>
   </main>
 
-  <!-- Composer -->
   <div class="composer" id="composer">
     <div class="composer-inner">
-      <textarea id="input" rows="1" placeholder="Antwort eingeben …" autocomplete="off"></textarea>
+      <textarea id="input" rows="1" autocomplete="off"></textarea>
       <button class="send" id="send" aria-label="Senden" disabled>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer">
-    <div class="langs"><span class="on">DE</span><span>FR</span><span>IT</span><span>EN</span></div>
-    <div class="legal"><span>Nutzungshinweise</span><span>Datenschutz / Cookie Policy</span><span>© 2026 BYB Versicherungen AG</span></div>
+    <div class="langs" id="langs">
+      <span data-lang="de">DE</span><span data-lang="fr">FR</span><span data-lang="it" class="disabled">IT</span><span data-lang="en">EN</span>
+    </div>
+    <div class="legal"><span id="ftTerms"></span><span id="ftPrivacy"></span><span id="ftCompany"></span></div>
   </footer>
 
   <div class="toast" id="toast"></div>
 
 <script>
-/* =========================================================================
-   BYB · Schadenmeldung – konversationeller Prototyp (Wizard-of-Oz / scripted)
-   Einzeldatei, kein Build, kein Backend. Controlled-Smart-Set.
-   ========================================================================= */
+/* ============================================================
+   BYB · Schadenmeldung – konversationeller Prototyp
+   DE / EN / FR, scripted (Wizard-of-Oz), Einzeldatei.
+   ============================================================ */
+const CONFIG = { claimNo:"22.213.390/0002" };
+const TODAY = new Date();
 
-const CONFIG = { claimNo:"22.213.390/0002", refDate:"23.04.2026" };
-const TODAY = new Date(); // aktuelles Datum (für "gestern", Date-Picker-Default etc.)
+const thread=document.getElementById("thread");
+const scroller=document.getElementById("scroll");
+const input=document.getElementById("input");
+const sendBtn=document.getElementById("send");
+const composer=document.getElementById("composer");
+const checklistEl=document.getElementById("checklist");
+const toastEl=document.getElementById("toast");
 
-/* ---- DOM ---- */
-const thread   = document.getElementById("thread");
-const scroller = document.getElementById("scroll");
-const input    = document.getElementById("input");
-const sendBtn  = document.getElementById("send");
-const composer = document.getElementById("composer");
-const sumBody  = document.getElementById("sumBody");
-const toastEl  = document.getElementById("toast");
+const AVATAR=`<svg class="avatar" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="#00008f"/><path d="M9 26 L27 10" stroke="#e23b4e" stroke-width="4" stroke-linecap="round"/></svg>`;
+const PENCIL=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+const CAL_ICON=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+const DL_ICON=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
 
-const AVATAR = `<svg class="avatar" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="#00008f"/><path d="M9 26 L27 10" stroke="#e23b4e" stroke-width="4" stroke-linecap="round"/></svg>`;
-const PENCIL = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
-const CAL_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+const pad=n=>String(n).padStart(2,"0");
+const fmtDate=d=>`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const toBottom=()=>{scroller.scrollTop=scroller.scrollHeight;};
+function toast(m){toastEl.textContent=m;toastEl.classList.add("show");setTimeout(()=>toastEl.classList.remove("show"),2600);}
 
-/* ---- Helpers ---- */
-const pad = n => String(n).padStart(2,"0");
-const fmtDate = d => `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
-const wait = ms => new Promise(r=>setTimeout(r,ms));
-const toBottom = () => { scroller.scrollTop = scroller.scrollHeight; };
-function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("show"); setTimeout(()=>toastEl.classList.remove("show"),2600); }
+/* ---------- Übersetzungen ---------- */
+const I18N={
+ de:{
+  htmlLang:"de", title:"Schadenmeldung", clTitle:"Benötigte Angaben",
+  placeholder:"Antwort eingeben …",
+  fallback:"Das habe ich nicht ganz verstanden. Tippen Sie es gern anders – oder wählen Sie direkt eine der Optionen oben.",
+  step_ident:"Identifikation", step_schaden:"Schadenhergang", step_vorgehen:"Weiteres Vorgehen", step_fertig:"Fertig",
+  ft_terms:"Nutzungshinweise", ft_privacy:"Datenschutz / Cookie Policy", ft_company:"© 2026 BYB Versicherungen AG",
+  toast_dl:"Schadenmeldung heruntergeladen ✓", toast_detail:"Prototyp: Die Schadendetailseite würde sich hier öffnen.", toast_edit:"Antwort aktualisiert ✓",
+  cl_hergang:"Was ist passiert", cl_art:"Schadenart", cl_datum:"Schadendatum (ungefähr)", cl_ort:"Ort des Schadens", cl_ursache:"Ursache",
+  cl_gebaeude:"Betroffenes Gebäude", cl_stockwerke:"Betroffene Stockwerke", cl_reno:"Renovation (letzte 5 J.)", cl_reparatur:"Bereits Reparaturen",
+  cl_hoehe:"Geschätzte Schadenhöhe", cl_dateien:"Dateien / Belege", cl_vorgehen:"Weiteres Vorgehen", cl_konto:"Rückzahlungskonto",
+  art_wasser:"Wasser", art_feuer:"Feuer", art_diebstahl:"Diebstahl", art_natur:"Naturereignis", art_glas:"Glasbruch",
+  opener_q:`<p><strong>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist.</strong> Ein, zwei Sätze genügen.</p>`,
+  opener_ph:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …",
+  ex_analyze:"Ich analysiere Ihre Schilderung …",
+  ex_intro:"Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.", ex_entnehme:"Aus Ihrer Schilderung entnehme ich:",
+  ex_artlabel:"Schadenart:", ex_unbekannt:"Ursache noch unbekannt", ex_bekannt:"Ursache bekannt", ex_mehrere:"mehrere Bereiche betroffen", ex_einbereich:"betroffener Bereich erkannt", ex_stimmt:"Stimmt das so?",
+  yes_right:"Ja, das stimmt", adjust:"Etwas anpassen",
+  datum_q:`<p>Alles klar. Wann ist der Schaden <strong>ungefähr</strong> passiert? Das genaue Datum müssen Sie nicht kennen – «gestern» genügt auch.</p>`,
+  d_yesterday:"Gestern", d_lastweek:"Letzte Woche", d_choose:"Datum wählen",
+  ort_q:`<p>Danke. Und wo ist der Schaden passiert – an Ihrer hinterlegten Adresse?</p>`, ort_sub:"Ihre hinterlegte Adresse", ort_yes:"Ja, dort", ort_other:"An einem anderen Ort",
+  ursache_q:`<p>Verstanden. Wodurch wurde der Schaden verursacht?</p>`,
+  cause_1:"Leitungsbruch innerhalb des Gebäudes", cause_2:"Leitungsbruch ausserhalb des Gebäudes", cause_3:"Undichtigkeit bei Dusche/Badewanne/Lavabo", cause_4:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten", cause_5:"Eindringen von Regen/Schnee/Schmelzwasser", cause_6:"Rückstau oder Grundwasser", cause_7:"Frostschaden", cause_8:"Sonstiges oder unbekannt",
+  geb_q:`<p>Geht es um dieses Gebäude?</p>`, geb_title:"Einfamilienhaus", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950", geb_yes:"Ja, das stimmt", geb_no:"Nein",
+  stock_q:`<p>Danke. Sind vom Wasseraustritt mehrere Stockwerke betroffen?</p>`,
+  reno_q:`<p>Und wurde an der betroffenen Stelle in den letzten 5 Jahren renoviert oder etwas daran gemacht?</p>`,
+  rep_q:`<p>Alles klar. Haben Sie bereits Reparaturen ausführen lassen?</p>`,
+  o_yes:"Ja", o_no:"Nein", o_unknown:"Unbekannt",
+  est_q:`<p>Wie hoch schätzen Sie den Schaden ungefähr?</p>`, est_ph:"z.B. rund 8000", est_1:"Bis CHF 5'000", est_2:"CHF 5'000 – 10'000", est_3:"Über CHF 10'000", est_dontknow:"Weiss nicht",
+  files_q:`<p>Fast geschafft. Möchten Sie noch Dateien hinzufügen? Falls vorhanden, können Sie hier <strong>Schadenfotos, Kostenvoranschläge oder Rechnungen</strong> hochladen.</p>`,
+  files_photos:"Schadenfotos hochladen", files_estimates:"Kostenvoranschläge, Rechnungen hochladen", files_later:"Dateien später nachreichen",
+  drop_text:"Datei hierher ziehen oder klicken", drop_formats:"Unterstützt: .jpg, .png, .pdf, .docx · max. 5 MB", drop_done:"Fertig, weiter", drop_skip:"Doch später nachreichen", files_added:"Datei(en) hinzugefügt",
+  deck_body:`<p>Vielen Dank – damit habe ich alles für die Deckungsprüfung.</p>
+    <p>Wir können Ihnen noch nicht abschliessend sagen, ob dieser Schadenfall versichert ist.</p>
+    <h4>Bitte beachten Sie</h4>
+    <ul class="info-list">
+      <li>Folgeschäden an Ihrem Gebäude und dessen Bestandteilen sind nach einem <strong>versicherten Wasserereignis gedeckt</strong>.</li>
+      <li>Gemäss unseren Allgemeinen Vertragsbedingungen (AVB) sind die Kosten für das Beheben der <strong>Schadenursache</strong> sowie für <strong>Unterhalts- und Schadenverhütungsmassnahmen</strong> hingegen generell nicht versichert.</li>
+    </ul>
+    <p>Da die Ursache unklar ist, empfehlen wir eine <strong>Leckortung</strong> – das organisieren wir gern für Sie.</p>
+    <h4>Ihre Vorteile</h4>
+    <ul class="benefits">
+      <li><strong>Top-Fachleute:</strong> qualifizierte, professionelle Fachkräfte.</li>
+      <li><strong>Garantie:</strong> es werden nur die notwendigen schadenbedingten Arbeiten ausgeführt.</li>
+      <li><strong>Schnell:</strong> Sie werden so rasch als möglich für eine Erstbesichtigung kontaktiert.</li>
+      <li><strong>Einfach:</strong> wir entlasten Sie und koordinieren mit den Fachkräften.</li>
+    </ul>
+    <p>Wie möchten Sie weitermachen?</p>`,
+  deck_1:"Leckortungsfirma aufbieten lassen", deck_2:"Leckortungsfirma selber organisieren", deck_3:"Auf Leckortung verzichten",
+  pay_q:`<p>Eine letzte Frage: Auf wessen Konto sollen wir eine allfällige Rückzahlung überweisen, falls Sie einmal eine Rechnung selbst bezahlt haben?</p>`, pay_other:"Andere Person", pay_later:"Später angeben",
+  final_thanks:"Vielen Dank für Ihre Schadenmeldung.", final_claim:"Schadennummer:", final_dl:"Schadenmeldung herunterladen", final_next:"So geht es weiter",
+  final_b1:"Wir informieren Sie per Mail, sobald die Empfangsbestätigung auf Ihrer Schadendetailseite hinterlegt ist.",
+  final_b2:"Die Leckortungsfirma meldet sich bei Ihnen für eine Terminvereinbarung.",
+  final_b3:"Wir prüfen Ihren gemeldeten Schaden und melden uns so rasch als möglich mit den nächsten Schritten.",
+  final_b4:"Wir bitten Sie jetzt schon, drei bis vier aussagekräftige Fotos des Schadens zu machen – Sie können diese über die Schadendetailseite hochladen.",
+  final_b5:"Sobald Sie einen Kostenvoranschlag erhalten haben, reichen Sie ihn uns bitte über die Schadendetailseite nach.",
+  final_detail:"Weiter zur Schadendetailseite",
+  dl_name:"Schadenmeldung", dl_for:"Versicherungsnehmerin:", dl_hergang:"Schadenhergang:"
+ },
+ en:{
+  htmlLang:"en", title:"Claim report", clTitle:"Required information",
+  placeholder:"Type your answer …",
+  fallback:"I didn't quite get that. Feel free to rephrase – or simply pick one of the options above.",
+  step_ident:"Identification", step_schaden:"Incident details", step_vorgehen:"Next steps", step_fertig:"Done",
+  ft_terms:"Terms of use", ft_privacy:"Privacy / Cookie Policy", ft_company:"© 2026 BYB Insurance Ltd",
+  toast_dl:"Claim report downloaded ✓", toast_detail:"Prototype: the claim details page would open here.", toast_edit:"Answer updated ✓",
+  cl_hergang:"What happened", cl_art:"Type of damage", cl_datum:"Date of damage (approx.)", cl_ort:"Location", cl_ursache:"Cause",
+  cl_gebaeude:"Affected building", cl_stockwerke:"Affected floors", cl_reno:"Renovation (last 5 yrs)", cl_reparatur:"Repairs already done",
+  cl_hoehe:"Estimated amount", cl_dateien:"Files / documents", cl_vorgehen:"Next step", cl_konto:"Refund account",
+  art_wasser:"Water", art_feuer:"Fire", art_diebstahl:"Theft", art_natur:"Natural event", art_glas:"Glass breakage",
+  opener_q:`<p><strong>In your own words, briefly describe what happened.</strong> One or two sentences are enough.</p>`,
+  opener_ph:"Example: Yesterday the dishwasher broke and water leaked out …",
+  ex_analyze:"Analysing your description …",
+  ex_intro:"Thank you – that sounds stressful, I'm sorry. I'll take care of it.", ex_entnehme:"From your description, I understand:",
+  ex_artlabel:"Type of damage:", ex_unbekannt:"Cause still unknown", ex_bekannt:"Cause known", ex_mehrere:"several areas affected", ex_einbereich:"one affected area identified", ex_stimmt:"Is that correct?",
+  yes_right:"Yes, that's right", adjust:"Adjust something",
+  datum_q:`<p>Got it. Roughly when did the damage <strong>occur</strong>? You don't need the exact date – "yesterday" is fine too.</p>`,
+  d_yesterday:"Yesterday", d_lastweek:"Last week", d_choose:"Choose a date",
+  ort_q:`<p>Thanks. And where did it happen – at your registered address?</p>`, ort_sub:"Your registered address", ort_yes:"Yes, there", ort_other:"Somewhere else",
+  ursache_q:`<p>Understood. What caused the damage?</p>`,
+  cause_1:"Burst pipe inside the building", cause_2:"Burst pipe outside the building", cause_3:"Leak at shower/bathtub/basin", cause_4:"Liquids from pipes/appliances/devices", cause_5:"Ingress of rain/snow/meltwater", cause_6:"Backflow or groundwater", cause_7:"Frost damage", cause_8:"Other or unknown",
+  geb_q:`<p>Is this the building in question?</p>`, geb_title:"Single-family house", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Built 1950", geb_yes:"Yes, that's right", geb_no:"No",
+  stock_q:`<p>Thanks. Are several floors affected by the water?</p>`,
+  reno_q:`<p>And in the last 5 years, was anything renovated or worked on at the affected spot?</p>`,
+  rep_q:`<p>Got it. Have any repairs already been carried out?</p>`,
+  o_yes:"Yes", o_no:"No", o_unknown:"Unknown",
+  est_q:`<p>Roughly how high do you estimate the damage?</p>`, est_ph:"e.g. around 8000", est_1:"Up to CHF 5,000", est_2:"CHF 5,000 – 10,000", est_3:"Over CHF 10,000", est_dontknow:"Don't know",
+  files_q:`<p>Almost done. Would you like to add any files? If available, you can upload <strong>photos of the damage, cost estimates or invoices</strong> here.</p>`,
+  files_photos:"Upload photos of the damage", files_estimates:"Upload cost estimates, invoices", files_later:"Submit files later",
+  drop_text:"Drag a file here or click", drop_formats:"Supported: .jpg, .png, .pdf, .docx · max. 5 MB", drop_done:"Done, continue", drop_skip:"Submit later after all", files_added:"file(s) added",
+  deck_body:`<p>Thank you – I now have everything for the coverage check.</p>
+    <p>We can't yet tell you conclusively whether this claim is covered.</p>
+    <h4>Please note</h4>
+    <ul class="info-list">
+      <li>Consequential damage to your building and its components is <strong>covered after an insured water event</strong>.</li>
+      <li>According to our General Terms and Conditions (GTC), however, the costs of fixing the <strong>cause of the damage</strong> as well as <strong>maintenance and damage-prevention measures</strong> are generally not insured.</li>
+    </ul>
+    <p>Since the cause is unclear, we recommend <strong>leak detection</strong> – we'll gladly arrange it for you.</p>
+    <h4>Your benefits</h4>
+    <ul class="benefits">
+      <li><strong>Top experts:</strong> qualified, professional specialists.</li>
+      <li><strong>Guarantee:</strong> only the necessary damage-related work is carried out.</li>
+      <li><strong>Fast:</strong> you'll be contacted as soon as possible for an initial inspection.</li>
+      <li><strong>Easy:</strong> we take the load off you and coordinate with the specialists.</li>
+    </ul>
+    <p>How would you like to proceed?</p>`,
+  deck_1:"Have BYB arrange leak detection", deck_2:"Arrange leak detection myself", deck_3:"Decline leak detection",
+  pay_q:`<p>One last question: into whose account should we transfer any refund, in case you ever pay an invoice yourself?</p>`, pay_other:"Another person", pay_later:"Provide later",
+  final_thanks:"Thank you for your claim report.", final_claim:"Claim number:", final_dl:"Download claim report", final_next:"What happens next",
+  final_b1:"We'll notify you by email as soon as the confirmation of receipt is available on your claim details page.",
+  final_b2:"The leak-detection company will contact you to arrange an appointment.",
+  final_b3:"We'll review your reported claim and get back to you with the next steps as soon as possible.",
+  final_b4:"We'd already ask you to take three to four meaningful photos of the damage – you can upload them via the claim details page.",
+  final_b5:"As soon as you receive a cost estimate, please submit it to us via the claim details page.",
+  final_detail:"Go to claim details page",
+  dl_name:"Claim report", dl_for:"Policyholder:", dl_hergang:"Description:"
+ },
+ fr:{
+  htmlLang:"fr", title:"Déclaration de sinistre", clTitle:"Informations requises",
+  placeholder:"Saisir votre réponse …",
+  fallback:"Je n'ai pas tout à fait compris. N'hésitez pas à reformuler – ou choisissez simplement l'une des options ci-dessus.",
+  step_ident:"Identification", step_schaden:"Détails du sinistre", step_vorgehen:"Prochaines étapes", step_fertig:"Terminé",
+  ft_terms:"Conditions d'utilisation", ft_privacy:"Confidentialité / Cookies", ft_company:"© 2026 BYB Assurances SA",
+  toast_dl:"Déclaration téléchargée ✓", toast_detail:"Prototype : la page de détail du sinistre s'ouvrirait ici.", toast_edit:"Réponse mise à jour ✓",
+  cl_hergang:"Ce qui s'est passé", cl_art:"Type de sinistre", cl_datum:"Date du sinistre (approx.)", cl_ort:"Lieu du sinistre", cl_ursache:"Cause",
+  cl_gebaeude:"Bâtiment concerné", cl_stockwerke:"Étages concernés", cl_reno:"Rénovation (5 dern. ans)", cl_reparatur:"Réparations déjà faites",
+  cl_hoehe:"Montant estimé", cl_dateien:"Fichiers / justificatifs", cl_vorgehen:"Prochaine étape", cl_konto:"Compte de remboursement",
+  art_wasser:"Eau", art_feuer:"Feu", art_diebstahl:"Vol", art_natur:"Événement naturel", art_glas:"Bris de glace",
+  opener_q:`<p><strong>Décrivez brièvement, dans vos propres mots, ce qui s'est passé.</strong> Une ou deux phrases suffisent.</p>`,
+  opener_ph:"Exemple : Hier, le lave-vaisselle est tombé en panne et de l'eau s'est répandue …",
+  ex_analyze:"J'analyse votre description …",
+  ex_intro:"Merci – cela semble pénible, j'en suis désolé. Je m'en occupe.", ex_entnehme:"D'après votre description, je comprends :",
+  ex_artlabel:"Type de sinistre :", ex_unbekannt:"Cause encore inconnue", ex_bekannt:"Cause connue", ex_mehrere:"plusieurs zones touchées", ex_einbereich:"une zone touchée identifiée", ex_stimmt:"Est-ce correct ?",
+  yes_right:"Oui, c'est exact", adjust:"Modifier",
+  datum_q:`<p>Très bien. Quand le sinistre s'est-il <strong>approximativement</strong> produit ? Vous n'avez pas besoin de la date exacte – « hier » suffit aussi.</p>`,
+  d_yesterday:"Hier", d_lastweek:"La semaine dernière", d_choose:"Choisir une date",
+  ort_q:`<p>Merci. Et où le sinistre s'est-il produit – à votre adresse enregistrée ?</p>`, ort_sub:"Votre adresse enregistrée", ort_yes:"Oui, à cette adresse", ort_other:"À un autre endroit",
+  ursache_q:`<p>Compris. Quelle est la cause du sinistre ?</p>`,
+  cause_1:"Rupture de conduite à l'intérieur du bâtiment", cause_2:"Rupture de conduite à l'extérieur du bâtiment", cause_3:"Fuite à la douche/baignoire/lavabo", cause_4:"Liquides provenant de conduites/appareils/installations", cause_5:"Infiltration de pluie/neige/eau de fonte", cause_6:"Refoulement ou eaux souterraines", cause_7:"Dégât dû au gel", cause_8:"Autre ou inconnu",
+  geb_q:`<p>S'agit-il de ce bâtiment ?</p>`, geb_title:"Maison individuelle", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Construit en 1950", geb_yes:"Oui, c'est exact", geb_no:"Non",
+  stock_q:`<p>Merci. Plusieurs étages sont-ils touchés par l'eau ?</p>`,
+  reno_q:`<p>Et au cours des 5 dernières années, l'endroit concerné a-t-il été rénové ou modifié ?</p>`,
+  rep_q:`<p>Très bien. Des réparations ont-elles déjà été effectuées ?</p>`,
+  o_yes:"Oui", o_no:"Non", o_unknown:"Inconnu",
+  est_q:`<p>À combien estimez-vous approximativement les dommages ?</p>`, est_ph:"p. ex. environ 8000", est_1:"Jusqu'à CHF 5'000", est_2:"CHF 5'000 – 10'000", est_3:"Plus de CHF 10'000", est_dontknow:"Je ne sais pas",
+  files_q:`<p>Presque terminé. Souhaitez-vous ajouter des fichiers ? Si disponibles, vous pouvez télécharger ici des <strong>photos du sinistre, des devis ou des factures</strong>.</p>`,
+  files_photos:"Télécharger des photos du sinistre", files_estimates:"Télécharger devis, factures", files_later:"Fournir les fichiers plus tard",
+  drop_text:"Glissez un fichier ici ou cliquez", drop_formats:"Formats : .jpg, .png, .pdf, .docx · max. 5 Mo", drop_done:"Terminé, continuer", drop_skip:"Fournir plus tard finalement", files_added:"fichier(s) ajouté(s)",
+  deck_body:`<p>Merci – j'ai désormais tout pour l'examen de couverture.</p>
+    <p>Nous ne pouvons pas encore vous dire de manière définitive si ce sinistre est couvert.</p>
+    <h4>Veuillez noter</h4>
+    <ul class="info-list">
+      <li>Les dommages consécutifs à votre bâtiment et à ses composants sont <strong>couverts après un événement d'eau assuré</strong>.</li>
+      <li>Selon nos Conditions générales (CG), les coûts liés à la réparation de la <strong>cause du sinistre</strong> ainsi que les <strong>mesures d'entretien et de prévention</strong> ne sont toutefois généralement pas assurés.</li>
+    </ul>
+    <p>La cause étant incertaine, nous recommandons une <strong>recherche de fuite</strong> – nous l'organisons volontiers pour vous.</p>
+    <h4>Vos avantages</h4>
+    <ul class="benefits">
+      <li><strong>Experts qualifiés :</strong> des spécialistes professionnels et compétents.</li>
+      <li><strong>Garantie :</strong> seuls les travaux nécessaires liés au sinistre sont effectués.</li>
+      <li><strong>Rapide :</strong> vous serez contacté dès que possible pour une première inspection.</li>
+      <li><strong>Simple :</strong> nous vous déchargeons et coordonnons avec les spécialistes.</li>
+    </ul>
+    <p>Comment souhaitez-vous poursuivre ?</p>`,
+  deck_1:"Faire intervenir une entreprise de recherche de fuite", deck_2:"Organiser la recherche de fuite moi-même", deck_3:"Renoncer à la recherche de fuite",
+  pay_q:`<p>Une dernière question : sur quel compte devons-nous verser un éventuel remboursement, au cas où vous régleriez vous-même une facture ?</p>`, pay_other:"Une autre personne", pay_later:"Indiquer plus tard",
+  final_thanks:"Merci pour votre déclaration de sinistre.", final_claim:"Numéro de sinistre :", final_dl:"Télécharger la déclaration", final_next:"Prochaines étapes",
+  final_b1:"Nous vous informerons par e-mail dès que l'accusé de réception sera disponible sur la page de détail de votre sinistre.",
+  final_b2:"L'entreprise de recherche de fuite vous contactera pour convenir d'un rendez-vous.",
+  final_b3:"Nous examinons le sinistre déclaré et reviendrons vers vous dès que possible avec les prochaines étapes.",
+  final_b4:"Nous vous invitons déjà à prendre trois à quatre photos parlantes du sinistre – vous pouvez les téléverser via la page de détail du sinistre.",
+  final_b5:"Dès que vous recevez un devis, merci de nous le transmettre via la page de détail du sinistre.",
+  final_detail:"Accéder à la page du sinistre",
+  dl_name:"Déclaration de sinistre", dl_for:"Preneur d'assurance :", dl_hergang:"Description :"
+ }
+};
+let lang="de";
+const t=k=>(I18N[lang][k]!==undefined?I18N[lang][k]:(I18N.de[k]!==undefined?I18N.de[k]:k));
 
-/* ---- Stepper ---- */
-const PHASE_ORDER = ["ident","schaden","vorgehen","fertig"];
-function setPhase(phase){
-  const ai = PHASE_ORDER.indexOf(phase);
-  document.querySelectorAll("#stepper li").forEach(li=>{
-    const i = PHASE_ORDER.indexOf(li.dataset.phase);
-    li.classList.toggle("done", i < ai);
-    li.classList.toggle("active", i === ai);
+/* ---------- Stepper + statische Texte ---------- */
+const PHASE_ORDER=["ident","schaden","vorgehen","fertig"];
+function setPhase(phase){const ai=PHASE_ORDER.indexOf(phase);document.querySelectorAll("#stepper li").forEach(li=>{const i=PHASE_ORDER.indexOf(li.dataset.phase);li.classList.toggle("done",i<ai);li.classList.toggle("active",i===ai);});}
+function applyStaticI18n(){
+  document.documentElement.lang=t("htmlLang");
+  document.getElementById("clTitle").textContent=t("clTitle");
+  document.querySelectorAll("#stepper li").forEach(li=>{li.querySelector(".lbl").textContent=t("step_"+li.dataset.phase);});
+  input.placeholder=t("placeholder");
+  document.getElementById("ftTerms").textContent=t("ft_terms");
+  document.getElementById("ftPrivacy").textContent=t("ft_privacy");
+  document.getElementById("ftCompany").textContent=t("ft_company");
+  document.querySelectorAll("#langs span").forEach(s=>s.setAttribute("data-active", s.dataset.lang===lang?"1":"0"));
+}
+
+/* ---------- Checkliste ---------- */
+const CHECKLIST=[["hergang","cl_hergang"],["art","cl_art"],["datum","cl_datum"],["ort","cl_ort"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"],["vorgehen","cl_vorgehen"],["konto","cl_konto"]];
+function renderChecklist(){
+  checklistEl.innerHTML="";
+  CHECKLIST.forEach(([key,lblKey])=>{
+    const it=document.createElement("div"); it.className="check-item"; it.dataset.key=key;
+    it.innerHTML=`<span class="box"></span><span><span class="ct-label">${t(lblKey)}</span><span class="ct-val"></span></span>`;
+    checklistEl.appendChild(it);
   });
 }
+function checkOff(key,val){const it=checklistEl.querySelector(`.check-item[data-key="${key}"]`);if(!it)return;it.classList.add("done");const v=it.querySelector(".ct-val");if(v&&val){v.textContent=val;v.style.display="block";}}
 
-/* ---- Live-Summary ---- */
-function setSummary(key,label,val){
-  const empty = sumBody.querySelector(".empty"); if(empty) empty.remove();
-  let row = sumBody.querySelector(`[data-key="${key}"]`);
-  if(!row){
-    row = document.createElement("div");
-    row.className="sum-row"; row.dataset.key=key;
-    sumBody.appendChild(row);
-  }
-  row.innerHTML = `<div class="k">${label}</div><div class="v">${val}</div>`;
+/* ---------- Bot / User Nachrichten ---------- */
+function updateLatestAvatar(){const bots=thread.querySelectorAll(".msg.bot");bots.forEach((m,i)=>m.classList.toggle("show-avatar",i===bots.length-1));}
+function addBot(html){const m=document.createElement("div");m.className="msg bot";m.innerHTML=`${AVATAR}<div class="body">${html}</div>`;thread.appendChild(m);updateLatestAvatar();toBottom();return m;}
+async function botSay(html){
+  const tp=document.createElement("div");tp.className="msg bot";tp.innerHTML=`${AVATAR}<div class="typing"><span></span><span></span><span></span></div>`;
+  thread.appendChild(tp);updateLatestAvatar();toBottom();
+  await wait(520+Math.random()*300);tp.remove();
+  const m=addBot(html);toBottom();return m;
 }
-
-/* ---- Bot-Nachrichten mit Tipp-Indikator + Streaming ---- */
-function updateLatestAvatar(){
-  // Avatar nur bei der jüngsten Bot-Nachricht zeigen
-  const bots=thread.querySelectorAll(".msg.bot");
-  bots.forEach((m,i)=> m.classList.toggle("show-avatar", i===bots.length-1));
-}
-function addBot(html){
-  const m=document.createElement("div"); m.className="msg bot";
-  m.innerHTML = `${AVATAR}<div class="body">${html}</div>`;
-  thread.appendChild(m); updateLatestAvatar(); toBottom(); return m;
-}
-async function botSay(html,{stream=true}={}){
-  // Tipp-Indikator
-  const t=document.createElement("div"); t.className="msg bot";
-  t.innerHTML = `${AVATAR}<div class="typing"><span></span><span></span><span></span></div>`;
-  thread.appendChild(t); updateLatestAvatar(); toBottom();
-  await wait(560 + Math.random()*350);
-  t.remove();
-  const m = addBot(html);
-  if(stream){
-    const body = m.querySelector(".body");
-    const full = body.innerHTML; body.innerHTML="";
-    // Wort-für-Wort einblenden, ohne HTML zu zerstören
-    await streamInto(body, full);
-  }
-  toBottom(); return m;
-}
-function streamInto(el, html){
-  return new Promise(res=>{
-    const tmp=document.createElement("div"); tmp.innerHTML=html;
-    const nodes=[...tmp.childNodes];
-    let ni=0;
-    function nextNode(){
-      if(ni>=nodes.length){res();return;}
-      const node=nodes[ni++];
-      if(node.nodeType===3){ // Text -> wortweise
-        const words=node.textContent.split(/(\s+)/); let wi=0;
-        const holder=document.createTextNode(""); el.appendChild(holder);
-        (function w(){
-          if(wi<words.length){ holder.textContent+=words[wi++]; toBottom(); setTimeout(w, 16); }
-          else nextNode();
-        })();
-      } else { el.appendChild(node); toBottom(); setTimeout(nextNode, 60); }
-    }
-    nextNode();
-  });
-}
-async function analyze(text,ms){
-  const a=document.createElement("div"); a.className="msg bot";
-  a.innerHTML=`${AVATAR}<div class="analyze"><span class="spin"></span>${text}</div>`;
-  thread.appendChild(a); updateLatestAvatar(); toBottom(); await wait(ms); a.remove();
-}
-
-/* ---- User-Bubble ---- */
-function addUser(display, rec){
-  const m=document.createElement("div"); m.className="msg user";
-  const canEdit = rec && rec.node && rec.node.editable!==false;
-  m.innerHTML = `${canEdit?`<button class="edit-btn" title="Antwort ändern">${PENCIL}</button>`:""}<div class="bubble">${display}</div>`;
-  thread.appendChild(m); toBottom();
-  if(canEdit){ m.querySelector(".edit-btn").addEventListener("click",()=>editRecord(rec)); rec.bubbleEl=m; }
+async function analyze(text,ms){const a=document.createElement("div");a.className="msg bot";a.innerHTML=`${AVATAR}<div class="analyze"><span class="spin"></span>${text}</div>`;thread.appendChild(a);updateLatestAvatar();toBottom();await wait(ms);a.remove();}
+function addUser(display,rec){
+  const m=document.createElement("div");m.className="msg user";
+  const canEdit=rec&&rec.node&&rec.node.editable!==false;
+  m.innerHTML=`${canEdit?`<button class="edit-btn" title="✎">${PENCIL}</button>`:""}<div class="bubble">${display}</div>`;
+  thread.appendChild(m);toBottom();
+  if(canEdit){m.querySelector(".edit-btn").addEventListener("click",()=>editRecord(rec));rec.bubbleEl=m;}
   return m;
 }
 
-/* =========================================================================
-   FLOW
-   ========================================================================= */
-let idx=0;
-const records=[];          // beantwortete Schritte: {node,value,display,raw}
-let active=null;           // {node, zoneEl}
-let openerText="";
-let facts={art:"Wasser", ursacheBekannt:false, mehrere:true};
+/* ---------- Zustand ---------- */
+let idx=0, flow=[], active=null, openerText="", facts={artKey:"wasser",ursacheBekannt:false,mehrere:true};
+const records=[];
 
-/* Schadenart-Chips */
-const ART_OPTS=[
-  {label:"Wasser",value:"Wasser"},
-  {label:"Naturereignis (z.B. Unwetter)",value:"Naturereignis"},
-  {label:"Diebstahl",value:"Diebstahl"},
-  {label:"Glasbruch",value:"Glasbruch"},
-  {label:"Feuer",value:"Feuer"},
-  {label:"Ausfall Gebäudetechnik",value:"Ausfall Gebäudetechnik"},
-  {label:"Sonstiges",value:"Sonstiges"},
-];
-const CAUSE_OPTS=[
-  {label:"Leitungsbruch innerhalb des Gebäudes",value:"Leitungsbruch innerhalb des Gebäudes"},
-  {label:"Leitungsbruch ausserhalb des Gebäudes",value:"Leitungsbruch ausserhalb des Gebäudes"},
-  {label:"Undichtigkeit bei Dusche/Badewanne/Lavabo",value:"Undichtigkeit bei Dusche/Badewanne/Lavabo"},
-  {label:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten",value:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten"},
-  {label:"Eindringen von Regen/Schnee/Schmelzwasser",value:"Eindringen von Regen/Schnee/Schmelzwasser"},
-  {label:"Rückstau oder Grundwasser",value:"Rückstau oder Grundwasser"},
-  {label:"Frostschaden",value:"Frostschaden"},
-  {label:"Sonstiges oder unbekannt",value:"Sonstiges oder unbekannt"},
-];
-
-/* leichte „NLU" für die Eröffnung */
-function extract(t){
-  t=(t||"").toLowerCase();
-  let art="Wasser";
-  if(/feuer|brand|brennt|rauch|russ/.test(t)) art="Feuer";
-  else if(/einbruch|diebstahl|gestohlen|aufgebrochen/.test(t)) art="Diebstahl";
-  else if(/sturm|unwetter|hagel|gewitter|blitz/.test(t)) art="Naturereignis";
-  else if(/glas|scheibe|fenster zerbroch/.test(t)) art="Glasbruch";
-  else if(/wasser|nass|feucht|decke|leck|tropf|durchnässt|überschwemm|rohr/.test(t)) art="Wasser";
-  // Ursache gilt nur dann als bekannt, wenn der Text eine konkrete Ursache nennt –
-  // eine reine Schadenbeschreibung (z.B. "Wand nass und schimmelt") bleibt "unbekannt".
-  const uncertain = /unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|nicht klar|unsicher|rätsel|kein plan/.test(t);
-  const knownCause = /\b(weil|wegen|aufgrund|verursacht|ausgel(ö|oe)st)\b|rohrbruch|rohr geplatzt|leitungsbruch|wasserleitung|waschmaschine|sp(ü|ue)lmaschine|geschirrsp(ü|ue)ler|boiler|warmwasserspeicher|undicht|armatur|ventil|frost|rückstau|regen|unwetter|sturm|hochwasser|überschwemm/.test(t);
-  const ursacheBekannt = !uncertain && knownCause;
-  const areas=["decke","wand","wände","boden","fassade","badezimmer","bad","küche","keller","dach","zimmer","raum","mauer"];
-  const hits=[...new Set(areas.filter(a=>t.includes(a)))];
-  return {art, ursacheBekannt, mehrere: hits.length>=2, hits};
+/* ---------- leichte "NLU" ---------- */
+function extract(text){
+  const t2=(text||"").toLowerCase();
+  let artKey="wasser";
+  if(/feuer|brand|brennt|rauch|fire|burn|smoke|incendie|feu|fumée|flamme/.test(t2)) artKey="feuer";
+  else if(/einbruch|diebstahl|gestohlen|theft|burglar|stolen|vol|cambriol/.test(t2)) artKey="diebstahl";
+  else if(/sturm|unwetter|hagel|storm|hail|flood|tempête|grêle|inondation|orage/.test(t2)) artKey="natur";
+  else if(/glas|scheibe|glass|window pane|vitre|verre|bris/.test(t2)) artKey="glas";
+  else if(/wasser|nass|feucht|decke|leck|tropf|rohr|water|wet|leak|ceiling|damp|pipe|eau|mouill|plafond|fuite|humide|infiltr/.test(t2)) artKey="wasser";
+  const uncertain=/unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|unknown|not sure|no idea|don'?t know|inconnu|incertain|sais pas|aucune idée/.test(t2);
+  const known=/\b(weil|wegen|aufgrund|verursacht|because|due to|caused by|parce que|à cause)\b|rohrbruch|leitungsbruch|burst pipe|waschmaschine|spülmaschine|dishwasher|washing machine|boiler|machine à laver|lave-vaisselle|chauffe-eau|frost|gel|undicht|leaking|fuite/.test(t2);
+  const areas=["decke","wand","wände","boden","fassade","badezimmer","bad","küche","keller","dach","mauer","ceiling","wall","floor","bathroom","kitchen","facade","basement","roof","plafond","mur","sol","salle de bain","cuisine","façade","cave","toit"];
+  const hits=[...new Set(areas.filter(a=>t2.includes(a)))];
+  return {artKey, ursacheBekannt:(!uncertain&&known), mehrere:hits.length>=2};
 }
-
-/* Datum-Parsing */
 function parseDate(text){
-  const t=(text||"").toLowerCase().trim();
+  const s=(text||"").toLowerCase().trim();
   const rel=d=>{const x=new Date(TODAY);x.setDate(x.getDate()-d);return fmtDate(x);};
-  if(/^heute/.test(t)) return fmtDate(TODAY);
-  if(/vorgestern/.test(t)) return rel(2);
-  if(/gestern/.test(t)) return rel(1);
-  if(/letzte woche|vor einer woche/.test(t)) return rel(7);
-  const m=t.match(/(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{2,4})/);
-  if(m){ let[_,d,mo,y]=m; if(y.length===2)y="20"+y; return `${pad(+d)}.${pad(+mo)}.${y}`; }
+  if(/^(heute|today|aujourd)/.test(s)) return fmtDate(TODAY);
+  if(/vorgestern|day before yesterday|avant-hier/.test(s)) return rel(2);
+  if(/gestern|yesterday|hier/.test(s)) return rel(1);
+  if(/letzte woche|last week|semaine dernière|la semaine/.test(s)) return rel(7);
+  const m=s.match(/(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{2,4})/);
+  if(m){let[_,d,mo,y]=m;if(y.length===2)y="20"+y;return `${pad(+d)}.${pad(+mo)}.${y}`;}
   return null;
 }
 function parseAmount(text){
-  const t=(text||"").toLowerCase();
-  if(/keine ahnung|weiss nicht|weiß nicht|unbekannt|unklar|kp|keine idee/.test(t)) return "Weiss nicht";
-  const n=parseInt(t.replace(/[^\d]/g,""),10);
-  if(!isNaN(n)){ if(n<5000) return "Bis CHF 5'000"; if(n<=10000) return "CHF 5'000 – 10'000"; return "Über CHF 10'000"; }
+  const s=(text||"").toLowerCase();
+  if(/weiss nicht|weiß nicht|keine ahnung|don'?t know|dunno|no idea|je ne sais|aucune idée|sais pas|unbekannt|unknown/.test(s)) return t("est_dontknow");
+  const n=parseInt(s.replace(/[^\d]/g,""),10);
+  if(!isNaN(n)){if(n<5000)return t("est_1");if(n<=10000)return t("est_2");return t("est_3");}
   return null;
 }
 
-/* ---- Eingabe-Zone rendern ---- */
-function clearZone(){ if(active&&active.zoneEl){active.zoneEl.remove();} }
-function zone(){ const z=document.createElement("div"); z.className="inputzone"; thread.appendChild(z); toBottom(); return z; }
+/* ---------- Flow ---------- */
+function buildFlow(){
+  const yesno=[{label:t("o_yes"),value:"yes"},{label:t("o_no"),value:"no"}];
+  const yesnounk=[{label:t("o_yes"),value:"yes"},{label:t("o_no"),value:"no"},{label:t("o_unknown"),value:"unknown"}];
+  const CAUSE=[1,2,3,4,5,6,7,8].map(i=>({label:t("cause_"+i),value:t("cause_"+i)}));
+  return [
+   { id:"opener", phase:"schaden",
+     bot:[t("opener_q")], input:{kind:"freetext", placeholder:t("opener_ph")},
+     onCommit:r=>{openerText=r.raw;facts=extract(r.raw);},
+     summary:v=>[{key:"hergang",val:(v.length>40?v.slice(0,38)+"…":v)}] },
+   { id:"extract", phase:"schaden", editable:false,
+     bot: async ()=>{
+       await analyze(t("ex_analyze"),1300);
+       const u=facts.ursacheBekannt?t("ex_bekannt"):t("ex_unbekannt");
+       const m=facts.mehrere?t("ex_mehrere"):t("ex_einbereich");
+       await botSay(`<p>${t("ex_intro")}</p><p>${t("ex_entnehme")}</p>
+         <ul class="info-list"><li><strong>${t("ex_artlabel")}</strong> ${t("art_"+facts.artKey)}</li><li><strong>${u}</strong></li><li><strong>${m}</strong></li></ul>
+         <p>${t("ex_stimmt")}</p>`);
+     },
+     input:{kind:"extraction-confirm"},
+     summary:()=>[{key:"art",val:t("art_"+facts.artKey)}] },
+   { id:"datum", phase:"schaden", bot:[t("datum_q")], input:{kind:"date"}, summary:v=>[{key:"datum",val:v}] },
+   { id:"ort", phase:"schaden", bot:[t("ort_q")],
+     input:{kind:"confirm", card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:t("ort_sub")}, options:[{label:t("ort_yes"),value:"here"},{label:t("ort_other"),value:"other"}]},
+     summary:v=>[{key:"ort",val:(v==="other"?t("ort_other"):"Untere Bahnhofstrasse 12, 9500 Wil SG")}] },
+   { id:"ursache", phase:"schaden", bot:[t("ursache_q")], input:{kind:"chips", options:CAUSE}, summary:v=>[{key:"ursache-kat",val:v}] },
+   { id:"gebaeude", phase:"schaden", bot:[t("geb_q")],
+     input:{kind:"confirm", card:{title:t("geb_title"), sub:t("geb_sub")}, options:[{label:t("geb_yes"),value:"yes"},{label:t("geb_no"),value:"no"}]},
+     summary:()=>[{key:"gebaeude",val:t("geb_title")+" · 1950"}] },
+   { id:"stockwerke", phase:"schaden", bot:[t("stock_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"stockwerke",val:d}] },
+   { id:"renoviert", phase:"schaden", bot:[t("reno_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"reno",val:d}] },
+   { id:"reparatur", phase:"schaden", bot:[t("rep_q")], input:{kind:"chips", options:yesno}, summary:(v,d)=>[{key:"reparatur",val:d}] },
+   { id:"schaetzung", phase:"schaden", bot:[t("est_q")],
+     input:{kind:"amount", placeholder:t("est_ph"), options:[{label:t("est_1"),value:t("est_1")},{label:t("est_2"),value:t("est_2")},{label:t("est_3"),value:t("est_3")},{label:t("est_dontknow"),value:t("est_dontknow")}]},
+     summary:v=>[{key:"hoehe",val:v}] },
+   { id:"dateien", phase:"schaden", bot:[t("files_q")], input:{kind:"upload"}, summary:(v,d)=>[{key:"dateien",val:d}] },
+   { id:"deckung", phase:"vorgehen", bot:[t("deck_body")],
+     input:{kind:"stack", options:[{label:t("deck_1"),value:"arrange"},{label:t("deck_2"),value:"self"},{label:t("deck_3"),value:"decline"}]},
+     summary:(v,d)=>[{key:"vorgehen",val:d}] },
+   { id:"payout", phase:"vorgehen", bot:[t("pay_q")],
+     input:{kind:"chips", options:[{label:"Robert Naville",value:"Robert Naville"},{label:"Corinna Naville",value:"Corinna Naville"},{label:t("pay_other"),value:t("pay_other")},{label:t("pay_later"),value:t("pay_later")}]},
+     summary:(v,d)=>[{key:"konto",val:d}] },
+   { id:"final", phase:"fertig",
+     bot: async ()=>{
+       document.querySelectorAll(".edit-btn").forEach(b=>b.remove());
+       await botSay(`<p class="lead">${t("final_thanks")}</p>
+         <p style="margin-top:10px">${t("final_claim")} <strong>${CONFIG.claimNo}</strong></p>
+         <p><span class="dl" id="dlLink">${DL_ICON} ${t("final_dl")}</span></p>
+         <h4>${t("final_next")}</h4>
+         <ul class="info-list"><li>${t("final_b1")}</li><li>${t("final_b2")}</li><li>${t("final_b3")}</li><li>${t("final_b4")}</li><li>${t("final_b5")}</li></ul>
+         <p><button class="btn-out" id="detailBtn">${t("final_detail")}</button></p>`);
+       document.getElementById("dlLink").onclick=downloadSummary;
+       document.getElementById("detailBtn").onclick=()=>toast(t("toast_detail"));
+     },
+     input:{kind:"final"} }
+  ];
+}
+
+/* ---------- Eingabe-Zonen ---------- */
+function clearZone(){if(active&&active.zoneEl)active.zoneEl.remove();}
+function zone(){const z=document.createElement("div");z.className="inputzone";thread.appendChild(z);toBottom();return z;}
+function chip(o,onClick){const b=document.createElement("button");b.className="chip";b.innerHTML=`${o.ic?`<span class="ic">${o.ic}</span>`:""}${o.label}`;b.onclick=onClick;return b;}
 
 function renderInput(node){
-  const k=node.input.kind;
-  const z=zone(); active={node,zoneEl:z};
-  setComposer(node);
-
-  if(k==="freetext" || k==="extraction-confirm"){
-    // nur Composer; bei extraction-confirm zusätzlich Chips
-    if(k==="extraction-confirm"){
-      const c=document.createElement("div"); c.className="chips";
-      c.appendChild(chip({label:"Ja, das stimmt"},()=>commit(node,"ok","Ja, das stimmt")));
-      c.appendChild(chip({label:"Etwas anpassen"},()=>{ editOpener(); }));
-      z.appendChild(c);
-    }
-  }
-  else if(k==="chips"){
-    const c=document.createElement("div"); c.className="chips";
-    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+  const k=node.input.kind, z=zone(); active={node,zoneEl:z}; setComposer(node);
+  if(k==="extraction-confirm"){
+    const c=document.createElement("div");c.className="chips";
+    c.appendChild(chip({label:t("yes_right")},()=>commit(node,"ok",t("yes_right"))));
+    c.appendChild(chip({label:t("adjust")},()=>editOpener()));
     z.appendChild(c);
-  }
-  else if(k==="stack"){
-    const s=document.createElement("div"); s.className="stack";
-    node.input.options.forEach(o=>{
-      const b=document.createElement("button"); b.className="opt";
-      b.innerHTML=`<span>${o.label}</span>`;
-      b.onclick=()=>commit(node,o.value,o.label); s.appendChild(b);
-    });
+  } else if(k==="chips"){
+    const c=document.createElement("div");c.className="chips";
+    node.input.options.forEach(o=>c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+    z.appendChild(c);
+  } else if(k==="stack"){
+    const s=document.createElement("div");s.className="stack";
+    node.input.options.forEach(o=>{const b=document.createElement("button");b.className="opt";b.innerHTML=`<span>${o.label}</span>`;b.onclick=()=>commit(node,o.value,o.label);s.appendChild(b);});
     z.appendChild(s);
-  }
-  else if(k==="confirm"){
-    if(node.input.card){
-      const card=document.createElement("div"); card.className="card";
-      card.innerHTML=`<div class="ct">${node.input.card.title}</div><div class="cs">${node.input.card.sub}</div>`;
-      z.appendChild(card);
-    }
-    const c=document.createElement("div"); c.className="chips";
-    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+  } else if(k==="confirm"){
+    if(node.input.card){const card=document.createElement("div");card.className="card";card.innerHTML=`<div class="ct">${node.input.card.title}</div><div class="cs">${node.input.card.sub}</div>`;z.appendChild(card);}
+    const c=document.createElement("div");c.className="chips";
+    node.input.options.forEach(o=>c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
     z.appendChild(c);
-  }
-  else if(k==="date"){
-    const c=document.createElement("div"); c.className="chips";
-    c.appendChild(chip({label:"Gestern"},()=>commit(node,parseDate("gestern"),parseDate("gestern"))));
-    c.appendChild(chip({label:"Letzte Woche"},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
-    // "Datum wählen": Chip mit Kalender-Icon öffnet direkt den nativen Date-Picker; Auswahl übernimmt sofort.
-    const wrap=document.createElement("span"); wrap.style.position="relative"; wrap.style.display="inline-flex";
-    const f=document.createElement("input"); f.type="date"; // kein Vorbelegen, damit auch "heute" ein change auslöst
+  } else if(k==="date"){
+    const c=document.createElement("div");c.className="chips";
+    c.appendChild(chip({label:t("d_yesterday")},()=>commit(node,parseDate("gestern"),parseDate("gestern"))));
+    c.appendChild(chip({label:t("d_lastweek")},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
+    const wrap=document.createElement("span");wrap.style.position="relative";wrap.style.display="inline-flex";
+    const f=document.createElement("input");f.type="date";
     f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
-    f.onchange=()=>{ if(!f.value)return; const[y,mo,d]=f.value.split("-"); commit(node,`${d}.${mo}.${y}`,`${d}.${mo}.${y}`); };
-    const dchip=chip({label:"Datum wählen",ic:CAL_ICON},()=>{ f.value=""; try{ f.showPicker(); }catch(e){ f.focus(); f.click(); } });
-    wrap.appendChild(dchip); wrap.appendChild(f);
-    c.appendChild(wrap);
+    f.onchange=()=>{if(!f.value)return;const[y,mo,d]=f.value.split("-");commit(node,`${d}.${mo}.${y}`,`${d}.${mo}.${y}`);};
+    const dchip=chip({label:t("d_choose"),ic:CAL_ICON},()=>{f.value="";try{f.showPicker();}catch(e){f.focus();f.click();}});
+    wrap.appendChild(dchip);wrap.appendChild(f);c.appendChild(wrap);z.appendChild(c);
+  } else if(k==="amount"){
+    const c=document.createElement("div");c.className="chips";
+    node.input.options.forEach(o=>c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
     z.appendChild(c);
-  }
-  else if(k==="amount"){
-    const c=document.createElement("div"); c.className="chips";
-    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
+  } else if(k==="upload"){
+    const c=document.createElement("div");c.className="chips";
+    c.appendChild(chip({label:t("files_photos")},()=>openUpload(node,z)));
+    c.appendChild(chip({label:t("files_estimates")},()=>openUpload(node,z)));
+    c.appendChild(chip({label:t("files_later")},()=>commit(node,"later",t("files_later"))));
     z.appendChild(c);
-  }
-  else if(k==="upload"){
-    const c=document.createElement("div"); c.className="chips";
-    const later=chip({label:"Dateien später nachreichen"},()=>commit(node,"später","Dateien später nachreichen"));
-    const up1=chip({label:"Schadenfotos hochladen"},()=>openUpload(node,z));
-    const up2=chip({label:"Kostenvoranschläge, Rechnungen hochladen"},()=>openUpload(node,z));
-    c.appendChild(up1); c.appendChild(up2); c.appendChild(later);
-    z.appendChild(c);
-  }
-  else if(k==="payout"){
-    const c=document.createElement("div"); c.className="chips";
-    node.input.options.forEach(o=> c.appendChild(chip(o,()=>commit(node,o.value,o.label))));
-    z.appendChild(c);
-  }
-  else if(k==="final"){
+  } else if(k==="final"){
     composer.style.display="none";
   }
 }
-
-function chip(o,onClick){
-  const b=document.createElement("button"); b.className="chip";
-  b.innerHTML=`${o.ic?`<span class="ic">${o.ic}</span>`:""}${o.label}`;
-  b.onclick=onClick; return b;
-}
-
 function openUpload(node,z){
   z.querySelector(".chips").remove();
-  const drop=document.createElement("div"); drop.className="drop";
-  drop.innerHTML="Datei hierher ziehen oder klicken<br><small>Unterstützt: .jpg, .png, .pdf, .docx · max. 5 MB</small>";
-  const fileInput=document.createElement("input"); fileInput.type="file"; fileInput.multiple=true; fileInput.hidden=true;
-  const list=document.createElement("ul"); list.className="filelist";
-  const row=document.createElement("div"); row.className="fieldrow";
-  const done=document.createElement("button"); done.className="mini"; done.textContent="Fertig, weiter"; done.disabled=true;
-  const skip=document.createElement("button"); skip.className="mini ghost"; skip.textContent="Doch später nachreichen";
+  const drop=document.createElement("div");drop.className="drop";drop.innerHTML=`${t("drop_text")}<br><small>${t("drop_formats")}</small>`;
+  const fileInput=document.createElement("input");fileInput.type="file";fileInput.multiple=true;fileInput.hidden=true;
+  const list=document.createElement("ul");list.className="filelist";
+  const row=document.createElement("div");row.className="fieldrow";
+  const done=document.createElement("button");done.className="mini";done.textContent=t("drop_done");done.disabled=true;
+  const skip=document.createElement("button");skip.className="mini ghost";skip.textContent=t("drop_skip");
   let files=[];
   drop.onclick=()=>fileInput.click();
-  fileInput.onchange=()=>{ [...fileInput.files].forEach(f=>files.push(f.name));
-    list.innerHTML=files.map(n=>`<li>📄 ${n}</li>`).join(""); done.disabled=files.length===0; };
-  done.onclick=()=>commit(node,"hochgeladen", files.length+" Datei(en) hinzugefügt");
-  skip.onclick=()=>commit(node,"später","Dateien später nachreichen");
-  row.appendChild(done); row.appendChild(skip);
-  z.appendChild(drop); z.appendChild(fileInput); z.appendChild(list); z.appendChild(row);
-  toBottom();
+  fileInput.onchange=()=>{[...fileInput.files].forEach(f=>files.push(f.name));list.innerHTML=files.map(n=>`<li>📄 ${n}</li>`).join("");done.disabled=files.length===0;};
+  done.onclick=()=>commit(node,"uploaded",files.length+" "+t("files_added"));
+  skip.onclick=()=>commit(node,"later",t("files_later"));
+  row.appendChild(done);row.appendChild(skip);
+  z.appendChild(drop);z.appendChild(fileInput);z.appendChild(list);z.appendChild(row);toBottom();
 }
 
-/* ---- Composer-Anbindung ---- */
+/* ---------- Composer ---------- */
 function setComposer(node){
-  const k=node.input.kind;
-  const enabled = ["freetext","extraction-confirm","date","amount","chips","confirm","payout"].includes(k);
-  input.value=""; autoGrow();
-  input.placeholder = node.input.placeholder || "Antwort eingeben …";
-  input.disabled=!enabled; sendBtn.disabled=true;
-  if(enabled){ input.focus(); }
+  const k=node.input.kind, enabled=["freetext","extraction-confirm","date","amount","chips","confirm"].includes(k);
+  input.value="";autoGrow();input.placeholder=node.input.placeholder||t("placeholder");
+  input.disabled=!enabled;sendBtn.disabled=true;if(enabled)input.focus();
 }
 function acceptTyped(text){
-  if(!active) return;
-  const node=active.node, k=node.input.kind, t=text.trim();
-  if(!t) return;
-  if(k==="freetext"){ commit(node, t, t); return; }
-  if(k==="extraction-confirm"){
-    if(/ja|stimmt|passt|korrekt|genau|richtig/i.test(t)) commit(node,"ok","Ja, das stimmt");
-    else fallback(); return;
-  }
-  if(k==="date"){ const d=parseDate(t); d?commit(node,d,d):fallback("Bitte ein Datum wie «23.04.2026» oder «gestern» angeben."); return; }
-  if(k==="amount"){ const a=parseAmount(t); a?commit(node,a,a):fallback("Nennen Sie gern einen Betrag oder schreiben Sie «keine Ahnung»."); return; }
-  // optionsbasiert: per Text matchen
+  if(!active)return;const node=active.node,k=node.input.kind,s=text.trim();if(!s)return;
+  if(k==="freetext"){commit(node,s,s);return;}
+  if(k==="extraction-confirm"){/yes|ja|stimmt|passt|correct|exact|oui|right/i.test(s)?commit(node,"ok",t("yes_right")):fallback();return;}
+  if(k==="date"){const d=parseDate(s);d?commit(node,d,d):fallback();return;}
+  if(k==="amount"){const a=parseAmount(s);a?commit(node,a,a):fallback();return;}
   const opts=node.input.options||[];
-  const hit=opts.find(o=> o.label.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(o.value.toLowerCase()) || (o.value.length>3&&o.label.toLowerCase().startsWith(t.toLowerCase())) );
-  if(hit) commit(node,hit.value,hit.label);
-  else if(/ja\b/i.test(t)&&opts.find(o=>o.value==="Ja")) commit(node,"Ja","Ja");
-  else if(/nein/i.test(t)&&opts.find(o=>o.value==="Nein")) commit(node,"Nein","Nein");
-  else fallback();
+  const hit=opts.find(o=>o.label.toLowerCase().includes(s.toLowerCase())||s.toLowerCase().includes(o.label.toLowerCase()));
+  if(hit)commit(node,hit.value,hit.label);else fallback();
 }
-async function fallback(msg){
-  input.disabled=true; sendBtn.disabled=true;
-  await botSay(msg || "Das habe ich nicht ganz verstanden. Tippen Sie es gern anders – oder wählen Sie direkt eine der Optionen oben.");
-  if(active){ input.disabled=false; input.focus(); }
-}
+async function fallback(msg){input.disabled=true;sendBtn.disabled=true;await botSay(`<p>${msg||t("fallback")}</p>`);if(active){input.disabled=false;input.focus();}}
 
-/* ---- Antwort übernehmen ---- */
-async function commit(node, value, display, rawText){
-  clearZone();
-  input.disabled=true; sendBtn.disabled=true; input.value=""; autoGrow();
-  const rec={node, value, display, raw: rawText!=null?rawText:display};
-  records.push(rec);
-  addUser(display, rec);
-  if(node.onCommit) node.onCommit(rec);
-  if(node.summary) node.summary(value, display, rec).forEach(s=>setSummary(s.key,s.label,s.val));
-  idx++; await run();
+/* ---------- Commit / Edit ---------- */
+async function commit(node,value,display){
+  clearZone();input.disabled=true;sendBtn.disabled=true;input.value="";autoGrow();
+  const rec={node,value,display,raw:display};records.push(rec);addUser(display,rec);
+  if(node.onCommit)node.onCommit(rec);
+  if(node.summary)node.summary(value,display,rec).forEach(s=>checkOff(s.key,s.val));
+  idx++;await run();
 }
-
-/* ---- Edit ---- */
 function editRecord(rec){
-  const node=rec.node, k=node.input.kind, m=rec.bubbleEl;
-  if(!m) return;
-  const optionKinds=["chips","stack","confirm","amount","payout"];
+  const node=rec.node,k=node.input.kind,m=rec.bubbleEl;if(!m)return;
+  const optionKinds=["chips","confirm","amount"];
   m.innerHTML="";
-  const editor=document.createElement("div"); editor.className="inputzone"; editor.style.paddingLeft="0"; editor.style.margin="0";
+  const ed=document.createElement("div");ed.className="inputzone";ed.style.paddingLeft="0";ed.style.margin="0";
   if(optionKinds.includes(k)){
-    const c=document.createElement("div"); c.className="chips"; c.style.justifyContent="flex-end";
-    node.input.options.forEach(o=> c.appendChild(chip(o,()=>applyEdit(rec,o.value,o.label))));
-    editor.appendChild(c);
-  } else { // freetext / date / extraction
-    const row=document.createElement("div"); row.className="fieldrow"; row.style.justifyContent="flex-end";
-    const f=document.createElement("input"); f.className="field"; f.value=rec.raw; f.style.minWidth="280px";
-    const ok=document.createElement("button"); ok.className="mini"; ok.textContent="Speichern";
-    ok.onclick=()=>{
-      let v=f.value.trim(); if(!v) return;
-      if(k==="date"){ const d=parseDate(v)||v; v=d; }
-      applyEdit(rec,v,v,v);
-    };
-    const cancel=document.createElement("button"); cancel.className="mini ghost"; cancel.textContent="Abbrechen";
+    const c=document.createElement("div");c.className="chips";c.style.justifyContent="flex-end";
+    node.input.options.forEach(o=>c.appendChild(chip(o,()=>applyEdit(rec,o.value,o.label))));
+    ed.appendChild(c);
+  } else {
+    const row=document.createElement("div");row.className="fieldrow";row.style.justifyContent="flex-end";
+    const f=document.createElement("input");f.className="field";f.value=rec.raw;f.style.minWidth="260px";
+    const ok=document.createElement("button");ok.className="mini";ok.textContent="✓";
+    ok.onclick=()=>{let v=f.value.trim();if(!v)return;if(k==="date")v=parseDate(v)||v;applyEdit(rec,v,v);};
+    const cancel=document.createElement("button");cancel.className="mini ghost";cancel.textContent="✕";
     cancel.onclick=()=>restoreBubble(rec);
-    row.appendChild(f); row.appendChild(ok); row.appendChild(cancel);
-    editor.appendChild(row); setTimeout(()=>f.focus(),10);
+    row.appendChild(f);row.appendChild(ok);row.appendChild(cancel);ed.appendChild(row);setTimeout(()=>f.focus(),10);
   }
-  m.appendChild(editor);
+  m.appendChild(ed);
 }
-function applyEdit(rec,value,display,raw){
-  rec.value=value; rec.display=display; if(raw!=null)rec.raw=raw;
-  restoreBubble(rec);
-  if(rec.node.summary) rec.node.summary(value,display,rec).forEach(s=>setSummary(s.key,s.label,s.val));
-  toast("Antwort aktualisiert ✓");
-}
-function restoreBubble(rec){
-  rec.bubbleEl.innerHTML=`<button class="edit-btn" title="Antwort ändern">${PENCIL}</button><div class="bubble">${rec.display}</div>`;
-  rec.bubbleEl.querySelector(".edit-btn").addEventListener("click",()=>editRecord(rec));
-}
-function editOpener(){ const rec=records.find(r=>r.node.id==="opener"); if(rec){ rec.bubbleEl.scrollIntoView({behavior:"smooth",block:"center"}); editRecord(rec); } }
+function applyEdit(rec,value,display){rec.value=value;rec.display=display;rec.raw=display;restoreBubble(rec);if(rec.node.summary)rec.node.summary(value,display,rec).forEach(s=>checkOff(s.key,s.val));toast(t("toast_edit"));}
+function restoreBubble(rec){rec.bubbleEl.innerHTML=`<button class="edit-btn" title="✎">${PENCIL}</button><div class="bubble">${rec.display}</div>`;rec.bubbleEl.querySelector(".edit-btn").addEventListener("click",()=>editRecord(rec));}
+function editOpener(){const rec=records.find(r=>r.node.id==="opener");if(rec){rec.bubbleEl.scrollIntoView({behavior:"smooth",block:"center"});editRecord(rec);}}
 
-/* =========================================================================
-   SCRIPT-DEFINITION (die Schadenmeldung)
-   ========================================================================= */
-const flow=[
-  /* 1 — Eröffnung: frei erzählen (Tell, don't fill) */
-  {
-    id:"opener", phase:"schaden",
-    bot:[`<p><strong>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist.</strong> Ein, zwei Sätze genügen.</p>`],
-    input:{kind:"freetext", placeholder:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …"},
-    onCommit:(rec)=>{ openerText=rec.raw; facts=extract(rec.raw); },
-    summary:(v)=>[{key:"hergang",label:"Schadenhergang",val: v.length>70? v.slice(0,68)+"…":v}],
-  },
-  /* 2 — Auto-Extraktion + Bestätigung */
-  {
-    id:"extract", phase:"schaden", editable:false,
-    bot: async ()=>{
-      await analyze("Ich analysiere Ihre Schilderung …", 1300);
-      const u = facts.ursacheBekannt? "Ursache bekannt" : "Ursache noch unbekannt";
-      const m = facts.mehrere? "mehrere Bereiche betroffen" : "betroffener Bereich erkannt";
-      await botSay(`<p>Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.</p>
-        <p>Aus Ihrer Schilderung entnehme ich:</p>
-        <ul class="info-list">
-          <li><strong>Schadenart:</strong> ${facts.art}</li>
-          <li><strong>${u}</strong></li>
-          <li><strong>${m}</strong></li>
-        </ul>
-        <p>Stimmt das so?</p>`);
-    },
-    input:{kind:"extraction-confirm"},
-    onCommit:()=>{},
-    summary:()=>[
-      {key:"art",label:"Schadenart",val:facts.art},
-      {key:"ursache",label:"Ursache",val: facts.ursacheBekannt?"bekannt":"unbekannt"},
-    ],
-  },
-  /* 3 — Datum (NLU) */
-  {
-    id:"datum", phase:"schaden",
-    bot:[`<p>Alles klar. Wann ist der Schaden passiert? Sie können auch einfach <em>«gestern»</em> schreiben.</p>`],
-    input:{kind:"date", placeholder:"z.B. gestern oder 23.04.2026"},
-    summary:(v)=>[{key:"datum",label:"Schadendatum",val:v}],
-  },
-  /* 4 — Ort (Bestätigen-Vorschlag) */
-  {
-    id:"ort", phase:"schaden",
-    bot:[`<p>Danke. Und wo ist der Schaden passiert – an Ihrer hinterlegten Adresse?</p>`],
-    input:{kind:"confirm",
-      card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:"Ihre hinterlegte Adresse"},
-      options:[{label:"Ja, dort",value:"Untere Bahnhofstrasse 12, 9500 Wil SG"},{label:"An einem anderen Ort",value:"anderer"}]},
-    summary:(v,d)=>[{key:"ort",label:"Ort",val: v==="anderer"?"Anderer Ort":"Untere Bahnhofstrasse 12, 9500 Wil SG"}],
-  },
-  /* 5 — Ursache-Kategorie (vorgeschlagen, weil unbekannt) */
-  {
-    id:"ursache", phase:"schaden",
-    bot:[`<p>Verstanden. Wodurch wurde der Schaden verursacht?</p>`],
-    input:{kind:"chips", options:CAUSE_OPTS},
-    summary:(v)=>[{key:"ursache-kat",label:"Ursache (Kategorie)",val:v}],
-  },
-  /* 6 — Gebäude bestätigen */
-  {
-    id:"gebaeude", phase:"schaden",
-    bot:[`<p>Geht es um dieses Gebäude?</p>`],
-    input:{kind:"confirm",
-      card:{title:"Einfamilienhaus", sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950"},
-      options:[{label:"Ja, das stimmt",value:"Ja"},{label:"Nein",value:"Nein"}]},
-    summary:(v)=>[{key:"gebaeude",label:"Gebäude",val:"Einfamilienhaus · Baujahr 1950"}],
-  },
-  /* 6a — mehrere Stockwerke */
-  {
-    id:"stockwerke", phase:"schaden",
-    bot:[`<p>Danke. Sind vom Wasseraustritt mehrere Stockwerke betroffen?</p>`],
-    input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"},{label:"Unbekannt",value:"Unbekannt"}]},
-    summary:(v)=>[{key:"stockwerke",label:"Mehrere Stockwerke",val:v}],
-  },
-  /* 6b — Renovation 5 Jahre */
-  {
-    id:"renoviert", phase:"schaden",
-    bot:[`<p>Und wurde an der betroffenen Stelle in den letzten 5 Jahren renoviert oder etwas daran gemacht?</p>`],
-    input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"},{label:"Unbekannt",value:"Unbekannt"}]},
-    summary:(v)=>[{key:"reno",label:"Renovation (5 J.)",val:v}],
-  },
-  /* 7 — Reparaturen */
-  {
-    id:"reparatur", phase:"schaden",
-    bot:[`<p>Alles klar. Haben Sie bereits Reparaturen ausführen lassen?</p>`],
-    input:{kind:"chips", options:[{label:"Ja",value:"Ja"},{label:"Nein",value:"Nein"}]},
-    summary:(v)=>[{key:"reparatur",label:"Reparaturen",val:v}],
-  },
-  /* 7a — Schätzung (NLU + Chips) */
-  {
-    id:"schaetzung", phase:"schaden",
-    bot:[`<p>Wie hoch schätzen Sie den Schaden ungefähr?</p>`],
-    input:{kind:"amount", placeholder:"z.B. rund 8000",
-      options:[{label:"Bis CHF 5'000",value:"Bis CHF 5'000"},{label:"CHF 5'000 – 10'000",value:"CHF 5'000 – 10'000"},{label:"Über CHF 10'000",value:"Über CHF 10'000"},{label:"Weiss nicht",value:"Weiss nicht"}]},
-    summary:(v)=>[{key:"hoehe",label:"Schadenhöhe",val:v}],
-  },
-  /* 8 — Dateien */
-  {
-    id:"dateien", phase:"schaden",
-    bot:[`<p>Fast geschafft. Möchten Sie noch Dateien hinzufügen? Falls vorhanden, können Sie hier <strong>Schadenfotos, Kostenvoranschläge oder Rechnungen</strong> hochladen.</p>`],
-    input:{kind:"upload"},
-    summary:(v,d)=>[{key:"dateien",label:"Dateien",val:d}],
-  },
-  /* 9 — Deckungsprüfung */
-  {
-    id:"deckung", phase:"vorgehen",
-    bot:[`<p>Vielen Dank – damit habe ich alles für die Deckungsprüfung.</p>
-          <p>Wir können Ihnen noch nicht abschliessend sagen, ob dieser Schadenfall versichert ist.</p>
-          <h4>Bitte beachten Sie</h4>
-          <ul class="info-list">
-            <li>Folgeschäden an Ihrem Gebäude und dessen Bestandteilen sind nach einem <strong>versicherten Wasserereignis gedeckt</strong>.</li>
-            <li>Gemäss unseren Allgemeinen Vertragsbedingungen (AVB) sind die Kosten für das Beheben der <strong>Schadenursache</strong> sowie für <strong>Unterhalts- und Schadenverhütungsmassnahmen</strong> hingegen generell nicht versichert.</li>
-          </ul>
-          <p>Da die Ursache unklar ist, empfehlen wir eine <strong>Leckortung</strong> – das organisieren wir gern für Sie.</p>
-           <h4>Ihre Vorteile</h4>
-           <ul class="benefits">
-             <li><strong>Top-Fachleute:</strong> qualifizierte, professionelle Fachkräfte.</li>
-             <li><strong>Garantie:</strong> es werden nur die notwendigen schadenbedingten Arbeiten ausgeführt.</li>
-             <li><strong>Schnell:</strong> Sie werden so rasch als möglich für eine Erstbesichtigung kontaktiert.</li>
-             <li><strong>Einfach:</strong> wir entlasten Sie und koordinieren mit den Fachkräften.</li>
-           </ul>
-           <p>Wie möchten Sie weitermachen?</p>`],
-    input:{kind:"stack", options:[
-      {label:"Leckortungsfirma aufbieten lassen",value:"Leckortungsfirma aufbieten lassen"},
-      {label:"Leckortungsfirma selber organisieren",value:"Leckortungsfirma selber organisieren"},
-      {label:"Auf Leckortung verzichten",value:"Auf Leckortung verzichten"},
-    ]},
-    summary:(v)=>[{key:"vorgehen",label:"Weiteres Vorgehen",val:v}],
-  },
-  /* 10 — Rückzahlungskonto */
-  {
-    id:"payout", phase:"vorgehen",
-    bot:[`<p>Eine letzte Frage: Auf wessen Konto sollen wir eine allfällige Rückzahlung überweisen, falls Sie einmal eine Rechnung selbst bezahlt haben?</p>`],
-    input:{kind:"payout", options:[
-      {label:"Robert Naville",value:"Robert Naville"},
-      {label:"Corinna Naville",value:"Corinna Naville"},
-      {label:"Andere Person",value:"Andere Person"},
-      {label:"Später angeben",value:"Später angeben"},
-    ]},
-    summary:(v)=>[{key:"konto",label:"Rückzahlungskonto",val:v}],
-  },
-  /* 11 — Abschluss */
-  {
-    id:"final", phase:"fertig",
-    bot: async ()=>{
-      document.querySelectorAll(".edit-btn").forEach(b=>b.remove()); // nach Absenden keine Korrekturen mehr
-      await botSay(`<p class="lead">Vielen Dank für Ihre Schadenmeldung.</p>
-        <p style="margin-top:10px">Schadennummer: <strong>${CONFIG.claimNo}</strong></p>
-        <p><span class="dl" id="dlLink">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Schadenmeldung herunterladen</span></p>
-        <h4>So geht es weiter</h4>
-        <ul class="info-list">
-          <li>Wir informieren Sie per Mail, sobald die Empfangsbestätigung auf Ihrer Schadendetailseite hinterlegt ist.</li>
-          <li>Die Leckortungsfirma meldet sich bei Ihnen für eine Terminvereinbarung.</li>
-          <li>Wir prüfen Ihren gemeldeten Schaden und melden uns so rasch als möglich mit den nächsten Schritten.</li>
-          <li>Wir bitten Sie jetzt schon, drei bis vier aussagekräftige Fotos des Schadens zu machen – Sie können diese über die Schadendetailseite hochladen.</li>
-          <li>Sobald Sie einen Kostenvoranschlag erhalten haben, reichen Sie ihn uns bitte über die Schadendetailseite nach.</li>
-        </ul>
-        <p><button class="btn-out" id="detailBtn">Weiter zur Schadendetailseite</button></p>`);
-      document.getElementById("dlLink").onclick=downloadSummary;
-      document.getElementById("detailBtn").onclick=()=>toast("Prototyp: Die Schadendetailseite würde sich hier öffnen.");
-    },
-    input:{kind:"final"},
-  },
-];
+/* ---------- Engine ---------- */
+async function run(){const node=flow[idx];if(!node)return;setPhase(node.phase);active=null;if(typeof node.bot==="function"){await node.bot();}else{for(const block of node.bot){await botSay(block);await wait(100);}}renderInput(node);}
 
-/* ---- Engine ---- */
-async function run(){
-  const node=flow[idx]; if(!node) return;
-  setPhase(node.phase);
-  active=null;
-  if(typeof node.bot==="function"){ await node.bot(); }
-  else { for(const block of node.bot){ await botSay(block); await wait(120); } }
-  renderInput(node);
-}
-
-/* ---- Download der Zusammenfassung ---- */
 function downloadSummary(){
-  const lines=["BYB Versicherungen AG — Schadenmeldung","Schadennummer: "+CONFIG.claimNo,"Datum: "+fmtDate(TODAY),"","Versicherungsnehmerin: Corinna Naville","Untere Bahnhofstrasse 12, 9500 Wil SG","","--- Angaben ---"];
-  sumBody.querySelectorAll(".sum-row").forEach(r=> lines.push(r.querySelector(".k").textContent+": "+r.querySelector(".v").textContent));
-  lines.push("","Schadenhergang:", openerText||"-");
+  const lines=["BYB · "+t("dl_name"),t("final_claim")+" "+CONFIG.claimNo,fmtDate(TODAY),"",t("dl_for")+" Corinna Naville","Untere Bahnhofstrasse 12, 9500 Wil SG",""];
+  checklistEl.querySelectorAll(".check-item.done").forEach(it=>lines.push(it.querySelector(".ct-label").textContent+": "+it.querySelector(".ct-val").textContent));
+  lines.push("",t("dl_hergang"),openerText||"-");
   const blob=new Blob([lines.join("\n")],{type:"text/plain"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
-  a.download="Schadenmeldung_"+CONFIG.claimNo.replace(/[^\d]/g,"-")+".txt"; a.click();
-  toast("Schadenmeldung heruntergeladen ✓");
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="BYB_"+CONFIG.claimNo.replace(/[^\d]/g,"-")+".txt";a.click();
+  toast(t("toast_dl"));
 }
 
-/* ---- Composer-Events ---- */
-function autoGrow(){ input.style.height="auto"; input.style.height=Math.min(input.scrollHeight,120)+"px"; }
-input.addEventListener("input",()=>{ autoGrow(); sendBtn.disabled = input.value.trim()==="" || input.disabled; });
-input.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); if(!sendBtn.disabled) doSend(); }});
+/* ---------- Composer-Events ---------- */
+function autoGrow(){input.style.height="auto";input.style.height=Math.min(input.scrollHeight,120)+"px";}
+input.addEventListener("input",()=>{autoGrow();sendBtn.disabled=input.value.trim()===""||input.disabled;});
+input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();if(!sendBtn.disabled)doSend();}});
 sendBtn.addEventListener("click",doSend);
-function doSend(){ const v=input.value; if(!v.trim())return; acceptTyped(v); }
+function doSend(){const v=input.value;if(v.trim())acceptTyped(v);}
 
-/* ---- Start ---- */
-run();
+/* ---------- Sprache ---------- */
+function startFlow(){
+  idx=0;records.length=0;active=null;openerText="";
+  thread.innerHTML=`<div class="page-title">${t("title")}</div>`;
+  composer.style.display="";
+  renderChecklist();
+  flow=buildFlow();
+  run();
+}
+function setLang(l){if(l===lang||!I18N[l])return;lang=l;applyStaticI18n();startFlow();}
+document.getElementById("langs").addEventListener("click",e=>{const s=e.target.closest("span[data-lang]");if(!s||s.classList.contains("disabled"))return;setLang(s.dataset.lang);});
+
+/* ---------- Start ---------- */
+applyStaticI18n();
+startFlow();
 </script>
 </body>
 </html>
