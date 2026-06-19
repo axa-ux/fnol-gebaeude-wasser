@@ -485,10 +485,10 @@ function renderInput(node){
     c.appendChild(chip({label:"Letzte Woche"},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
     // "Datum wählen": Chip mit Kalender-Icon öffnet direkt den nativen Date-Picker; Auswahl übernimmt sofort.
     const wrap=document.createElement("span"); wrap.style.position="relative"; wrap.style.display="inline-flex";
-    const f=document.createElement("input"); f.type="date"; f.value=`${TODAY.getFullYear()}-${pad(TODAY.getMonth()+1)}-${pad(TODAY.getDate())}`;
+    const f=document.createElement("input"); f.type="date"; // kein Vorbelegen, damit auch "heute" ein change auslöst
     f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
     f.onchange=()=>{ if(!f.value)return; const[y,mo,d]=f.value.split("-"); commit(node,`${d}.${mo}.${y}`,`${d}.${mo}.${y}`); };
-    const dchip=chip({label:"Datum wählen",ic:CAL_ICON},()=>{ try{ f.showPicker(); }catch(e){ f.focus(); f.click(); } });
+    const dchip=chip({label:"Datum wählen",ic:CAL_ICON},()=>{ f.value=""; try{ f.showPicker(); }catch(e){ f.focus(); f.click(); } });
     wrap.appendChild(dchip); wrap.appendChild(f);
     c.appendChild(wrap);
     z.appendChild(c);
@@ -772,6 +772,7 @@ const flow=[
   {
     id:"final", phase:"fertig",
     bot: async ()=>{
+      document.querySelectorAll(".edit-btn").forEach(b=>b.remove()); // nach Absenden keine Korrekturen mehr
       await botSay(`<p class="lead">Vielen Dank für Ihre Schadenmeldung.</p>
         <p style="margin-top:10px">Schadennummer: <strong>${CONFIG.claimNo}</strong></p>
         <p><span class="dl" id="dlLink">
