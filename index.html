@@ -231,10 +231,10 @@ const I18N={
   opener_ph:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …",
   ex_analyze:"Ich analysiere Ihre Schilderung …",
   ex_intro:"Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.", ex_entnehme:"Aus Ihrer Schilderung entnehme ich:",
-  ex_artlabel:"Schadenart:", ex_unbekannt:"Ursache noch unbekannt", ex_bekannt:"Ursache bekannt", ex_mehrere:"mehrere Bereiche betroffen", ex_einbereich:"betroffener Bereich erkannt", ex_stimmt:"Stimmt das so?",
+  ex_artlabel:"Schadenart:", ex_datelabel:"Zeitpunkt:", ex_ortlabel:"Ort:", ex_floorslabel:"Betroffene Stockwerke:", ex_unbekannt:"Ursache noch unbekannt", ex_bekannt:"Ursache bekannt", ex_mehrere:"mehrere Bereiche betroffen", ex_einbereich:"betroffener Bereich erkannt", ex_stimmt:"Stimmt das so?",
   yes_right:"Ja, das stimmt", adjust:"Etwas anpassen",
-  datum_q:`<p>Alles klar. Wann ist der Schaden <strong>ungefähr</strong> passiert? Eine grobe Angabe genügt.</p>`,
-  d_thisweek:"Diese Woche", d_lastweek:"Letzte Woche", d_2_3weeks:"Vor 2–3 Wochen", d_month:"Vor etwa einem Monat", d_choose:"Genaues Datum wählen",
+  datum_q:`<p>Alles klar. Wann ist der Schaden ungefähr passiert?</p>`,
+  d_choose:"Datum wählen",
   ort_q:`<p>Danke. Und wo ist der Schaden passiert – an Ihrer hinterlegten Adresse?</p>`, ort_sub:"Ihre hinterlegte Adresse", ort_yes:"Ja, dort", ort_other:"An einem anderen Ort",
   ursache_q:`<p>Verstanden. Wodurch wurde der Schaden verursacht?</p>`,
   cause_1:"Leitungsbruch innerhalb des Gebäudes", cause_2:"Leitungsbruch ausserhalb des Gebäudes", cause_3:"Undichtigkeit bei Dusche/Badewanne/Lavabo", cause_4:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten", cause_5:"Eindringen von Regen/Schnee/Schmelzwasser", cause_6:"Rückstau oder Grundwasser", cause_7:"Frostschaden", cause_8:"Sonstiges oder unbekannt",
@@ -289,10 +289,10 @@ const I18N={
   opener_ph:"Example: Yesterday the dishwasher broke and water leaked out …",
   ex_analyze:"Analysing your description …",
   ex_intro:"Thank you – that sounds stressful, I'm sorry. I'll take care of it.", ex_entnehme:"From your description, I understand:",
-  ex_artlabel:"Type of damage:", ex_unbekannt:"Cause still unknown", ex_bekannt:"Cause known", ex_mehrere:"several areas affected", ex_einbereich:"one affected area identified", ex_stimmt:"Is that correct?",
+  ex_artlabel:"Type of damage:", ex_datelabel:"Date:", ex_ortlabel:"Location:", ex_floorslabel:"Affected floors:", ex_unbekannt:"Cause still unknown", ex_bekannt:"Cause known", ex_mehrere:"several areas affected", ex_einbereich:"one affected area identified", ex_stimmt:"Is that correct?",
   yes_right:"Yes, that's right", adjust:"Adjust something",
-  datum_q:`<p>Got it. Roughly when did the damage <strong>occur</strong>? A rough indication is enough.</p>`,
-  d_thisweek:"This week", d_lastweek:"Last week", d_2_3weeks:"2–3 weeks ago", d_month:"About a month ago", d_choose:"Choose exact date",
+  datum_q:`<p>Got it. Roughly when did the damage occur?</p>`,
+  d_choose:"Choose a date",
   ort_q:`<p>Thanks. And where did it happen – at your registered address?</p>`, ort_sub:"Your registered address", ort_yes:"Yes, there", ort_other:"Somewhere else",
   ursache_q:`<p>Understood. What caused the damage?</p>`,
   cause_1:"Burst pipe inside the building", cause_2:"Burst pipe outside the building", cause_3:"Leak at shower/bathtub/basin", cause_4:"Liquids from pipes/appliances/devices", cause_5:"Ingress of rain/snow/meltwater", cause_6:"Backflow or groundwater", cause_7:"Frost damage", cause_8:"Other or unknown",
@@ -347,10 +347,10 @@ const I18N={
   opener_ph:"Exemple : Hier, le lave-vaisselle est tombé en panne et de l'eau s'est répandue …",
   ex_analyze:"J'analyse votre description …",
   ex_intro:"Merci – cela semble pénible, j'en suis désolé. Je m'en occupe.", ex_entnehme:"D'après votre description, je comprends :",
-  ex_artlabel:"Type de sinistre :", ex_unbekannt:"Cause encore inconnue", ex_bekannt:"Cause connue", ex_mehrere:"plusieurs zones touchées", ex_einbereich:"une zone touchée identifiée", ex_stimmt:"Est-ce correct ?",
+  ex_artlabel:"Type de sinistre :", ex_datelabel:"Date :", ex_ortlabel:"Lieu :", ex_floorslabel:"Étages concernés :", ex_unbekannt:"Cause encore inconnue", ex_bekannt:"Cause connue", ex_mehrere:"plusieurs zones touchées", ex_einbereich:"une zone touchée identifiée", ex_stimmt:"Est-ce correct ?",
   yes_right:"Oui, c'est exact", adjust:"Modifier",
-  datum_q:`<p>Très bien. Quand le sinistre s'est-il <strong>approximativement</strong> produit ? Une indication approximative suffit.</p>`,
-  d_thisweek:"Cette semaine", d_lastweek:"La semaine dernière", d_2_3weeks:"Il y a 2–3 semaines", d_month:"Il y a environ un mois", d_choose:"Choisir une date exacte",
+  datum_q:`<p>Très bien. Quand le sinistre s'est-il approximativement produit ?</p>`,
+  d_choose:"Choisir une date",
   ort_q:`<p>Merci. Et où le sinistre s'est-il produit – à votre adresse enregistrée ?</p>`, ort_sub:"Votre adresse enregistrée", ort_yes:"Oui, à cette adresse", ort_other:"À un autre endroit",
   ursache_q:`<p>Compris. Quelle est la cause du sinistre ?</p>`,
   cause_1:"Rupture de conduite à l'intérieur du bâtiment", cause_2:"Rupture de conduite à l'extérieur du bâtiment", cause_3:"Fuite à la douche/baignoire/lavabo", cause_4:"Liquides provenant de conduites/appareils/installations", cause_5:"Infiltration de pluie/neige/eau de fonte", cause_6:"Refoulement ou eaux souterraines", cause_7:"Dégât dû au gel", cause_8:"Autre ou inconnu",
@@ -440,23 +440,45 @@ function addUser(display,rec){
 }
 
 /* ---------- Zustand ---------- */
-let idx=0, flow=[], active=null, openerText="", facts={artKey:"wasser",ursacheBekannt:false,mehrere:true};
+let idx=0, flow=[], active=null, openerText="", facts={artKey:"wasser",ursacheBekannt:false,causeUnknownStated:false,causeKnownStated:false,mehrere:true,date:"",floors:"",home:false};
 const records=[];
 
 /* ---------- leichte "NLU" ---------- */
+function extractDateFromText(s){
+  s=(s||"").toLowerCase();
+  const rel=d=>{const x=new Date(TODAY);x.setDate(x.getDate()-d);return fmtDate(x);};
+  let m=s.match(/(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{2,4})/);
+  if(m){let d=+m[1],mo=+m[2],y=m[3];if(y.length===2)y="20"+y;return `${pad(d)}.${pad(mo)}.${y}`;}
+  if(/\b(heute|today|aujourd)/.test(s)) return fmtDate(TODAY);
+  if(/vorgestern|day before yesterday|avant-hier/.test(s)) return rel(2);
+  if(/\b(gestern|yesterday|hier)\b/.test(s)) return rel(1);
+  m=s.match(/vor\s+(\d+)\s+tag|(\d+)\s+days?\s+ago|il y a\s+(\d+)\s+jour/); if(m) return rel(+(m[1]||m[2]||m[3]));
+  m=s.match(/vor\s+(\d+)\s+woche|(\d+)\s+weeks?\s+ago|il y a\s+(\d+)\s+semaine/); if(m) return rel((+(m[1]||m[2]||m[3]))*7);
+  if(/letzte woche|last week|semaine dernière/.test(s)) return rel(7);
+  m=s.match(/vor\s+(\d+)\s+monat|(\d+)\s+months?\s+ago|il y a\s+(\d+)\s+mois/); if(m){const x=new Date(TODAY);x.setMonth(x.getMonth()-(+(m[1]||m[2]||m[3])));return fmtDate(x);}
+  return "";
+}
+function extractFloors(s){
+  s=(s||"").toLowerCase();
+  if(!/stockwerk|etage|geschoss|floor|étage|niveau/.test(s)) return "";
+  if(/mehrere|zwei|drei|several|multiple|plusieurs|beide|both|\b[2-9]\b/.test(s)) return "yes";
+  if(/\b(ein|eine|einzig|nur ein|one|single|un seul|seul|rez)\b/.test(s)) return "no";
+  return "unknown";
+}
 function extract(text){
-  const t2=(text||"").toLowerCase();
+  const s=(text||"").toLowerCase();
   let artKey="wasser";
-  if(/feuer|brand|brennt|rauch|fire|burn|smoke|incendie|feu|fumée|flamme/.test(t2)) artKey="feuer";
-  else if(/einbruch|diebstahl|gestohlen|theft|burglar|stolen|vol|cambriol/.test(t2)) artKey="diebstahl";
-  else if(/sturm|unwetter|hagel|storm|hail|flood|tempête|grêle|inondation|orage/.test(t2)) artKey="natur";
-  else if(/glas|scheibe|glass|window pane|vitre|verre|bris/.test(t2)) artKey="glas";
-  else if(/wasser|nass|feucht|decke|leck|tropf|rohr|water|wet|leak|ceiling|damp|pipe|eau|mouill|plafond|fuite|humide|infiltr/.test(t2)) artKey="wasser";
-  const uncertain=/unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|unknown|not sure|no idea|don'?t know|inconnu|incertain|sais pas|aucune idée/.test(t2);
-  const known=/\b(weil|wegen|aufgrund|verursacht|because|due to|caused by|parce que|à cause)\b|rohrbruch|leitungsbruch|burst pipe|waschmaschine|spülmaschine|dishwasher|washing machine|boiler|machine à laver|lave-vaisselle|chauffe-eau|frost|gel|undicht|leaking|fuite/.test(t2);
+  if(/feuer|brand|brennt|rauch|fire|burn|smoke|incendie|feu|fumée|flamme/.test(s)) artKey="feuer";
+  else if(/einbruch|diebstahl|gestohlen|theft|burglar|stolen|vol|cambriol/.test(s)) artKey="diebstahl";
+  else if(/sturm|unwetter|hagel|storm|hail|flood|tempête|grêle|inondation|orage/.test(s)) artKey="natur";
+  else if(/glas|scheibe|glass|window pane|vitre|verre|bris/.test(s)) artKey="glas";
+  else if(/wasser|nass|feucht|decke|leck|tropf|rohr|water|wet|leak|ceiling|damp|pipe|eau|mouill|plafond|fuite|humide|infiltr/.test(s)) artKey="wasser";
+  const causeUnknownStated=/unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|unknown|not sure|no idea|don'?t know|inconnu|incertain|sais pas|aucune idée/.test(s);
+  const causeKnownStated=/\b(weil|wegen|aufgrund|verursacht|because|due to|caused by|parce que|à cause)\b|rohrbruch|leitungsbruch|burst pipe|waschmaschine|spülmaschine|dishwasher|washing machine|boiler|machine à laver|lave-vaisselle|chauffe-eau|frost|gel|undicht|leaking/.test(s);
   const areas=["decke","wand","wände","boden","fassade","badezimmer","bad","küche","keller","dach","mauer","ceiling","wall","floor","bathroom","kitchen","facade","basement","roof","plafond","mur","sol","salle de bain","cuisine","façade","cave","toit"];
-  const hits=[...new Set(areas.filter(a=>t2.includes(a)))];
-  return {artKey, ursacheBekannt:(!uncertain&&known), mehrere:hits.length>=2};
+  const hits=[...new Set(areas.filter(a=>s.includes(a)))];
+  const home=/zu hause|zuhause|daheim|at home|my house|my home|chez moi|à la maison|à domicile|meiner wohnung|in meinem haus/.test(s);
+  return {artKey, ursacheBekannt:(!causeUnknownStated&&causeKnownStated), causeUnknownStated, causeKnownStated, mehrere:hits.length>=2, date:extractDateFromText(s), floors:extractFloors(s), home};
 }
 function parseDate(text){
   const s=(text||"").toLowerCase().trim();
@@ -490,23 +512,26 @@ function buildFlow(){
    { id:"extract", phase:"schaden", editable:false,
      bot: async ()=>{
        await analyze(t("ex_analyze"),1300);
-       const u=facts.ursacheBekannt?t("ex_bekannt"):t("ex_unbekannt");
-       const m=facts.mehrere?t("ex_mehrere"):t("ex_einbereich");
-       await botSay(`<p>${t("ex_intro")}</p><p>${t("ex_entnehme")}</p>
-         <ul class="info-list"><li><strong>${t("ex_artlabel")}</strong> ${t("art_"+facts.artKey)}</li><li><strong>${u}</strong></li><li><strong>${m}</strong></li></ul>
-         <p>${t("ex_stimmt")}</p>`);
+       const L=[`<li><strong>${t("ex_artlabel")}</strong> ${t("art_"+facts.artKey)}</li>`];
+       if(facts.date) L.push(`<li><strong>${t("ex_datelabel")}</strong> ${facts.date}</li>`);
+       if(facts.home) L.push(`<li><strong>${t("ex_ortlabel")}</strong> Untere Bahnhofstrasse 12, 9500 Wil SG</li>`);
+       if(facts.causeUnknownStated) L.push(`<li><strong>${t("ex_unbekannt")}</strong></li>`);
+       else if(facts.causeKnownStated) L.push(`<li><strong>${t("ex_bekannt")}</strong></li>`);
+       if(facts.floors) L.push(`<li><strong>${t("ex_floorslabel")}</strong> ${t("o_"+facts.floors)}</li>`);
+       else L.push(`<li><strong>${facts.mehrere?t("ex_mehrere"):t("ex_einbereich")}</strong></li>`);
+       await botSay(`<p>${t("ex_intro")}</p><p>${t("ex_entnehme")}</p><ul class="info-list">${L.join("")}</ul><p>${t("ex_stimmt")}</p>`);
      },
      input:{kind:"extraction-confirm"},
      summary:()=>[{key:"art",val:t("art_"+facts.artKey)}] },
-   { id:"datum", phase:"schaden", bot:[t("datum_q")], input:{kind:"date"}, summary:v=>[{key:"datum",val:v}] },
-   { id:"ort", phase:"schaden", bot:[t("ort_q")],
+   { id:"datum", phase:"schaden", skip:()=>facts.date||"", bot:[t("datum_q")], input:{kind:"date"}, summary:v=>[{key:"datum",val:v}] },
+   { id:"ort", phase:"schaden", skip:()=>facts.home?"Untere Bahnhofstrasse 12, 9500 Wil SG":"", bot:[t("ort_q")],
      input:{kind:"confirm", card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:t("ort_sub")}, options:[{label:t("ort_yes"),value:"here"},{label:t("ort_other"),value:"other"}]},
      summary:v=>[{key:"ort",val:(v==="other"?t("ort_other"):"Untere Bahnhofstrasse 12, 9500 Wil SG")}] },
-   { id:"ursache", phase:"schaden", bot:[t("ursache_q")], input:{kind:"chips", options:CAUSE}, summary:v=>[{key:"ursache-kat",val:v}] },
+   { id:"ursache", phase:"schaden", skip:()=>facts.causeUnknownStated?t("cause_8"):"", bot:[t("ursache_q")], input:{kind:"chips", options:CAUSE}, summary:v=>[{key:"ursache-kat",val:v}] },
    { id:"gebaeude", phase:"schaden", bot:[t("geb_q")],
      input:{kind:"confirm", card:{title:t("geb_title"), sub:t("geb_sub")}, options:[{label:t("geb_yes"),value:"yes"},{label:t("geb_no"),value:"no"}]},
      summary:()=>[{key:"gebaeude",val:t("geb_title")+" · 1950"}] },
-   { id:"stockwerke", phase:"schaden", bot:[t("stock_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"stockwerke",val:d}] },
+   { id:"stockwerke", phase:"schaden", skip:()=>facts.floors?t("o_"+facts.floors):"", bot:[t("stock_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"stockwerke",val:d}] },
    { id:"renoviert", phase:"schaden", bot:[t("reno_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"reno",val:d}] },
    { id:"reparatur", phase:"schaden", bot:[t("rep_q")], input:{kind:"chips", options:yesno}, summary:(v,d)=>[{key:"reparatur",val:d}] },
    { id:"schaetzung", phase:"schaden", bot:[t("est_q")],
@@ -563,7 +588,6 @@ function renderInput(node){
     z.appendChild(c);
   } else if(k==="date"){
     const c=document.createElement("div");c.className="chips";
-    ["d_thisweek","d_lastweek","d_2_3weeks","d_month"].forEach(key=>{const lab=t(key);c.appendChild(chip({label:lab},()=>commit(node,lab,lab)));});
     const wrap=document.createElement("span");wrap.style.position="relative";wrap.style.display="inline-flex";
     const f=document.createElement("input");f.type="date";
     f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
@@ -652,7 +676,15 @@ function restoreBubble(rec){rec.bubbleEl.innerHTML=`<button class="edit-btn" tit
 function editOpener(){const rec=records.find(r=>r.node.id==="opener");if(rec){rec.bubbleEl.scrollIntoView({behavior:"smooth",block:"center"});editRecord(rec);}}
 
 /* ---------- Engine ---------- */
-async function run(){const node=flow[idx];if(!node)return;setPhase(node.phase);active=null;if(typeof node.bot==="function"){await node.bot();}else{for(const block of node.bot){await botSay(block);await wait(100);}}renderInput(node);}
+async function run(){
+  let node=flow[idx];
+  // Bereits aus dem Freitext bekannte Fragen automatisch überspringen + links abhaken
+  while(node&&node.skip){const v=node.skip();if(!v)break;if(node.summary)node.summary(v,v).forEach(s=>checkOff(s.key,s.val));idx++;node=flow[idx];}
+  if(!node)return;
+  setPhase(node.phase);active=null;
+  if(typeof node.bot==="function"){await node.bot();}else{for(const block of node.bot){await botSay(block);await wait(100);}}
+  renderInput(node);
+}
 
 function downloadSummary(){
   const lines=["BYB · "+t("dl_name"),t("final_claim")+" "+CONFIG.claimNo,fmtDate(TODAY),"",t("dl_for")+" Corinna Naville","Untere Bahnhofstrasse 12, 9500 Wil SG",""];
