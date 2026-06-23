@@ -140,7 +140,29 @@
   @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  @media (max-width:1080px){ .rail{display:none} .thread,.composer-inner{max-width:640px} }
+  @media (max-width:1080px){ .rail{display:none} .thread,.composer-inner{max-width:720px} }
+  @media (max-width:640px){
+    :root{--header-h:56px;--footer-h:42px}
+    .topbar{padding:0 16px}
+    .logo .mark{width:32px;height:32px}
+    .logo .word{font-size:18px}
+    .thread{padding:10px 14px 150px}
+    .page-title{font-size:15px;margin:2px 0 18px}
+    .msg{margin-bottom:15px}
+    .msg.bot{gap:8px}
+    .avatar{width:26px;height:26px}
+    .bot .body{max-width:100%}
+    .bot .body .lead{font-size:20px}
+    .bubble{max-width:90%}
+    .inputzone{padding-left:0;margin-bottom:16px}
+    .chip{max-width:100%;font-size:14.5px;padding:9px 16px}
+    .opt,.card,.drop,.stack,.filelist,.composer-inner{max-width:100%}
+    .composer{padding:10px 12px 12px}
+    .composer textarea{font-size:16px}
+    .footer{padding:0 14px;font-size:11.5px}
+    .footer .legal{display:none}
+    .footer .langs span{margin-right:12px}
+  }
 </style>
 </head>
 <body>
