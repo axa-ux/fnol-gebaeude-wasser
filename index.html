@@ -53,6 +53,7 @@
   .scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
   .thread{max-width:var(--col);margin:0 auto;padding:12px 24px 150px}
   .page-title{text-align:center;font-family:var(--font-body);font-weight:400;color:#5b5b63;font-size:16px;margin:0 0 26px}
+  .mprogress{display:none}
 
   .msg{display:flex;margin:0 0 18px;animation:fadeUp .4s ease both}
   .msg.bot{align-items:flex-start;gap:12px}
@@ -162,6 +163,10 @@
     .footer{padding:0 14px;font-size:11.5px}
     .footer .legal{display:none}
     .footer .langs span{margin-right:12px}
+    .mprogress{display:flex;align-items:center;gap:9px;position:sticky;top:0;z-index:5;background:#fff;margin:-10px -14px 14px;padding:9px 14px;border-bottom:1px solid var(--line)}
+    .mprogress .bar{flex:1;height:5px;border-radius:3px;background:#ececf1;overflow:hidden}
+    .mprogress .bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .35s}
+    .mprogress .txt{font-size:12px;color:var(--muted);white-space:nowrap;font-weight:600}
   }
 </style>
 </head>
@@ -239,7 +244,7 @@ function toast(m){toastEl.textContent=m;toastEl.classList.add("show");setTimeout
 /* ---------- Übersetzungen ---------- */
 const I18N={
  de:{
-  htmlLang:"de", title:"Schadenmeldung", clTitle:"Benötigte Angaben",
+  htmlLang:"de", title:"Schadenmeldung", clTitle:"Benötigte Angaben", progress:"{x} von {y} erledigt",
   placeholder:"Antwort eingeben …",
   fallback:"Das habe ich nicht ganz verstanden. Tippen Sie es gern anders – oder wählen Sie direkt eine der Optionen oben.",
   step_ident:"Identifikation", step_schaden:"Schadenhergang", step_vorgehen:"Weiteres Vorgehen", step_fertig:"Fertig",
@@ -297,7 +302,7 @@ const I18N={
   dl_name:"Schadenmeldung", dl_for:"Versicherungsnehmerin:", dl_hergang:"Schadenhergang:"
  },
  en:{
-  htmlLang:"en", title:"Claim report", clTitle:"Required information",
+  htmlLang:"en", title:"Claim report", clTitle:"Required information", progress:"{x} of {y} completed",
   placeholder:"Type your answer …",
   fallback:"I didn't quite get that. Feel free to rephrase – or simply pick one of the options above.",
   step_ident:"Identification", step_schaden:"Incident details", step_vorgehen:"Next steps", step_fertig:"Done",
@@ -355,7 +360,7 @@ const I18N={
   dl_name:"Claim report", dl_for:"Policyholder:", dl_hergang:"Description:"
  },
  fr:{
-  htmlLang:"fr", title:"Déclaration de sinistre", clTitle:"Informations requises",
+  htmlLang:"fr", title:"Déclaration de sinistre", clTitle:"Informations requises", progress:"{x} sur {y} complétés",
   placeholder:"Saisir votre réponse …",
   fallback:"Je n'ai pas tout à fait compris. N'hésitez pas à reformuler – ou choisissez simplement l'une des options ci-dessus.",
   step_ident:"Identification", step_schaden:"Détails du sinistre", step_vorgehen:"Prochaines étapes", step_fertig:"Terminé",
@@ -440,7 +445,14 @@ function renderChecklist(){
     checklistEl.appendChild(it);
   });
 }
-function checkOff(key,val){const it=checklistEl.querySelector(`.check-item[data-key="${key}"]`);if(!it)return;it.classList.add("done");const v=it.querySelector(".ct-val");if(v&&val){v.textContent=val;v.style.display="block";}}
+function checkOff(key,val){const it=checklistEl.querySelector(`.check-item[data-key="${key}"]`);if(!it)return;it.classList.add("done");const v=it.querySelector(".ct-val");if(v&&val){v.textContent=val;v.style.display="block";}updateProgress();}
+function updateProgress(){
+  const el=document.getElementById("mprogress");if(!el)return;
+  const total=checklistEl.querySelectorAll(".check-item").length;
+  const done=checklistEl.querySelectorAll(".check-item.done").length;
+  const pct=total?Math.round(done/total*100):0;
+  el.innerHTML=`<span class="bar"><i style="width:${pct}%"></i></span><span class="txt">${t("progress").replace("{x}",done).replace("{y}",total)}</span>`;
+}
 
 /* ---------- Bot / User Nachrichten ---------- */
 function updateLatestAvatar(){const bots=thread.querySelectorAll(".msg.bot");bots.forEach((m,i)=>m.classList.toggle("show-avatar",i===bots.length-1));}
@@ -727,9 +739,10 @@ function doSend(){const v=input.value;if(v.trim())acceptTyped(v);}
 /* ---------- Sprache ---------- */
 function startFlow(){
   idx=0;records.length=0;active=null;openerText="";
-  thread.innerHTML=`<div class="page-title">${t("title")}</div>`;
+  thread.innerHTML=`<div class="mprogress" id="mprogress"></div><div class="page-title">${t("title")}</div>`;
   composer.style.display="";
   renderChecklist();
+  updateProgress();
   flow=buildFlow();
   run();
 }
