@@ -40,7 +40,7 @@
   .stepper li.active{color:var(--ink);font-weight:700}
   .stepper li.active .dot{background:#fff;border:4px solid var(--blue)}
 
-  .summary{border:1px solid var(--line);border-radius:12px;padding:14px 14px 8px;background:#fcfcff}
+  .summary{padding:2px 0 0;background:none;border:0}
   .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
   .check-item{display:flex;gap:9px;padding:0 0 12px;align-items:flex-start;animation:fadeUp .3s ease both}
   .check-item .box{width:16px;height:19px;flex:0 0 auto;background:no-repeat center;background-size:7px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='4' fill='%23b9b9c4'/%3E%3C/svg%3E")}
@@ -157,12 +157,6 @@
   </header>
 
   <nav class="rail" aria-label="Fortschritt">
-    <ul class="stepper" id="stepper">
-      <li data-phase="ident"><span class="dot"></span><span class="lbl"></span></li>
-      <li data-phase="schaden"><span class="dot"></span><span class="lbl"></span></li>
-      <li data-phase="vorgehen"><span class="dot"></span><span class="lbl"></span></li>
-      <li data-phase="fertig"><span class="dot"></span><span class="lbl"></span></li>
-    </ul>
     <div class="summary">
       <h3 id="clTitle"></h3>
       <div id="checklist"></div>
@@ -239,8 +233,8 @@ const I18N={
   ex_intro:"Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.", ex_entnehme:"Aus Ihrer Schilderung entnehme ich:",
   ex_artlabel:"Schadenart:", ex_unbekannt:"Ursache noch unbekannt", ex_bekannt:"Ursache bekannt", ex_mehrere:"mehrere Bereiche betroffen", ex_einbereich:"betroffener Bereich erkannt", ex_stimmt:"Stimmt das so?",
   yes_right:"Ja, das stimmt", adjust:"Etwas anpassen",
-  datum_q:`<p>Alles klar. Wann ist der Schaden <strong>ungefähr</strong> passiert? Das genaue Datum müssen Sie nicht kennen – «gestern» genügt auch.</p>`,
-  d_yesterday:"Gestern", d_lastweek:"Letzte Woche", d_choose:"Datum wählen",
+  datum_q:`<p>Alles klar. Wann ist der Schaden <strong>ungefähr</strong> passiert? Eine grobe Angabe genügt.</p>`,
+  d_thisweek:"Diese Woche", d_lastweek:"Letzte Woche", d_2_3weeks:"Vor 2–3 Wochen", d_month:"Vor etwa einem Monat", d_choose:"Genaues Datum wählen",
   ort_q:`<p>Danke. Und wo ist der Schaden passiert – an Ihrer hinterlegten Adresse?</p>`, ort_sub:"Ihre hinterlegte Adresse", ort_yes:"Ja, dort", ort_other:"An einem anderen Ort",
   ursache_q:`<p>Verstanden. Wodurch wurde der Schaden verursacht?</p>`,
   cause_1:"Leitungsbruch innerhalb des Gebäudes", cause_2:"Leitungsbruch ausserhalb des Gebäudes", cause_3:"Undichtigkeit bei Dusche/Badewanne/Lavabo", cause_4:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten", cause_5:"Eindringen von Regen/Schnee/Schmelzwasser", cause_6:"Rückstau oder Grundwasser", cause_7:"Frostschaden", cause_8:"Sonstiges oder unbekannt",
@@ -297,8 +291,8 @@ const I18N={
   ex_intro:"Thank you – that sounds stressful, I'm sorry. I'll take care of it.", ex_entnehme:"From your description, I understand:",
   ex_artlabel:"Type of damage:", ex_unbekannt:"Cause still unknown", ex_bekannt:"Cause known", ex_mehrere:"several areas affected", ex_einbereich:"one affected area identified", ex_stimmt:"Is that correct?",
   yes_right:"Yes, that's right", adjust:"Adjust something",
-  datum_q:`<p>Got it. Roughly when did the damage <strong>occur</strong>? You don't need the exact date – "yesterday" is fine too.</p>`,
-  d_yesterday:"Yesterday", d_lastweek:"Last week", d_choose:"Choose a date",
+  datum_q:`<p>Got it. Roughly when did the damage <strong>occur</strong>? A rough indication is enough.</p>`,
+  d_thisweek:"This week", d_lastweek:"Last week", d_2_3weeks:"2–3 weeks ago", d_month:"About a month ago", d_choose:"Choose exact date",
   ort_q:`<p>Thanks. And where did it happen – at your registered address?</p>`, ort_sub:"Your registered address", ort_yes:"Yes, there", ort_other:"Somewhere else",
   ursache_q:`<p>Understood. What caused the damage?</p>`,
   cause_1:"Burst pipe inside the building", cause_2:"Burst pipe outside the building", cause_3:"Leak at shower/bathtub/basin", cause_4:"Liquids from pipes/appliances/devices", cause_5:"Ingress of rain/snow/meltwater", cause_6:"Backflow or groundwater", cause_7:"Frost damage", cause_8:"Other or unknown",
@@ -355,8 +349,8 @@ const I18N={
   ex_intro:"Merci – cela semble pénible, j'en suis désolé. Je m'en occupe.", ex_entnehme:"D'après votre description, je comprends :",
   ex_artlabel:"Type de sinistre :", ex_unbekannt:"Cause encore inconnue", ex_bekannt:"Cause connue", ex_mehrere:"plusieurs zones touchées", ex_einbereich:"une zone touchée identifiée", ex_stimmt:"Est-ce correct ?",
   yes_right:"Oui, c'est exact", adjust:"Modifier",
-  datum_q:`<p>Très bien. Quand le sinistre s'est-il <strong>approximativement</strong> produit ? Vous n'avez pas besoin de la date exacte – « hier » suffit aussi.</p>`,
-  d_yesterday:"Hier", d_lastweek:"La semaine dernière", d_choose:"Choisir une date",
+  datum_q:`<p>Très bien. Quand le sinistre s'est-il <strong>approximativement</strong> produit ? Une indication approximative suffit.</p>`,
+  d_thisweek:"Cette semaine", d_lastweek:"La semaine dernière", d_2_3weeks:"Il y a 2–3 semaines", d_month:"Il y a environ un mois", d_choose:"Choisir une date exacte",
   ort_q:`<p>Merci. Et où le sinistre s'est-il produit – à votre adresse enregistrée ?</p>`, ort_sub:"Votre adresse enregistrée", ort_yes:"Oui, à cette adresse", ort_other:"À un autre endroit",
   ursache_q:`<p>Compris. Quelle est la cause du sinistre ?</p>`,
   cause_1:"Rupture de conduite à l'intérieur du bâtiment", cause_2:"Rupture de conduite à l'extérieur du bâtiment", cause_3:"Fuite à la douche/baignoire/lavabo", cause_4:"Liquides provenant de conduites/appareils/installations", cause_5:"Infiltration de pluie/neige/eau de fonte", cause_6:"Refoulement ou eaux souterraines", cause_7:"Dégât dû au gel", cause_8:"Autre ou inconnu",
@@ -519,10 +513,11 @@ function buildFlow(){
      input:{kind:"amount", placeholder:t("est_ph"), options:[{label:t("est_1"),value:t("est_1")},{label:t("est_2"),value:t("est_2")},{label:t("est_3"),value:t("est_3")},{label:t("est_dontknow"),value:t("est_dontknow")}]},
      summary:v=>[{key:"hoehe",val:v}] },
    { id:"dateien", phase:"schaden", bot:[t("files_q")], input:{kind:"upload"}, summary:(v,d)=>[{key:"dateien",val:d}] },
-   { id:"deckung", phase:"vorgehen", bot:[t("deck_body")],
-     input:{kind:"stack", options:[{label:t("deck_1"),value:"arrange"},{label:t("deck_2"),value:"self"},{label:t("deck_3"),value:"decline"}]},
+   { id:"deckung", phase:"vorgehen", editable:false,
+     bot: async ()=>{ document.querySelectorAll(".edit-btn").forEach(b=>b.remove()); await botSay(t("deck_body")); },
+     input:{kind:"stack", options:[{label:t("deck_1"),value:"arrange"},{label:t("deck_2"),value:"self"}]},
      summary:(v,d)=>[{key:"vorgehen",val:d}] },
-   { id:"payout", phase:"vorgehen", bot:[t("pay_q")],
+   { id:"payout", phase:"vorgehen", editable:false, bot:[t("pay_q")],
      input:{kind:"chips", options:[{label:"Robert Naville",value:"Robert Naville"},{label:"Corinna Naville",value:"Corinna Naville"},{label:t("pay_other"),value:t("pay_other")},{label:t("pay_later"),value:t("pay_later")}]},
      summary:(v,d)=>[{key:"konto",val:d}] },
    { id:"final", phase:"fertig",
@@ -568,8 +563,7 @@ function renderInput(node){
     z.appendChild(c);
   } else if(k==="date"){
     const c=document.createElement("div");c.className="chips";
-    c.appendChild(chip({label:t("d_yesterday")},()=>commit(node,parseDate("gestern"),parseDate("gestern"))));
-    c.appendChild(chip({label:t("d_lastweek")},()=>commit(node,parseDate("letzte woche"),parseDate("letzte woche"))));
+    ["d_thisweek","d_lastweek","d_2_3weeks","d_month"].forEach(key=>{const lab=t(key);c.appendChild(chip({label:lab},()=>commit(node,lab,lab)));});
     const wrap=document.createElement("span");wrap.style.position="relative";wrap.style.display="inline-flex";
     const f=document.createElement("input");f.type="date";
     f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
