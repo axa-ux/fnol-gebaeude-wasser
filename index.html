@@ -141,7 +141,14 @@
   @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  @media (max-width:1080px){ .rail{display:none} .thread,.composer-inner{max-width:720px} }
+  @media (max-width:1080px){
+    .rail{display:none}
+    .thread,.composer-inner{max-width:720px}
+    .mprogress{display:flex;align-items:center;gap:9px;position:sticky;top:0;z-index:5;background:#fff;margin:-12px -24px 16px;padding:11px 24px;border-bottom:1px solid var(--line)}
+    .mprogress .bar{flex:1;height:5px;border-radius:3px;background:#ececf1;overflow:hidden}
+    .mprogress .bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .35s}
+    .mprogress .txt{font-size:12.5px;color:var(--muted);white-space:nowrap;font-weight:600}
+  }
   @media (max-width:640px){
     :root{--header-h:56px;--footer-h:42px}
     .topbar{padding:0 16px}
@@ -163,10 +170,7 @@
     .footer{padding:0 14px;font-size:11.5px}
     .footer .legal{display:none}
     .footer .langs span{margin-right:12px}
-    .mprogress{display:flex;align-items:center;gap:9px;position:sticky;top:0;z-index:5;background:#fff;margin:-10px -14px 14px;padding:9px 14px;border-bottom:1px solid var(--line)}
-    .mprogress .bar{flex:1;height:5px;border-radius:3px;background:#ececf1;overflow:hidden}
-    .mprogress .bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .35s}
-    .mprogress .txt{font-size:12px;color:var(--muted);white-space:nowrap;font-weight:600}
+    .mprogress{margin:-10px -14px 14px;padding:9px 14px}
   }
 </style>
 </head>
@@ -554,9 +558,14 @@ function buildFlow(){
        if(facts.floors) L.push(`<li><strong>${t("ex_floorslabel")}</strong> ${t("o_"+facts.floors)}</li>`);
        else L.push(`<li><strong>${facts.mehrere?t("ex_mehrere"):t("ex_einbereich")}</strong></li>`);
        await botSay(`<p>${t("ex_intro")}</p><p>${t("ex_entnehme")}</p><ul class="info-list">${L.join("")}</ul><p>${t("ex_stimmt")}</p>`);
+       // erkannte Angaben sofort links abhaken
+       checkOff("art", t("art_"+facts.artKey));
+       if(facts.date) checkOff("datum", facts.date);
+       if(facts.home) checkOff("ort", "Untere Bahnhofstrasse 12, 9500 Wil SG");
+       if(facts.causeUnknownStated) checkOff("ursache-kat", t("cause_8"));
+       if(facts.floors) checkOff("stockwerke", t("o_"+facts.floors));
      },
-     input:{kind:"extraction-confirm"},
-     summary:()=>[{key:"art",val:t("art_"+facts.artKey)}] },
+     input:{kind:"extraction-confirm"} },
    { id:"datum", phase:"schaden", skip:()=>facts.date||"", bot:[t("datum_q")], input:{kind:"date"}, summary:v=>[{key:"datum",val:v}] },
    { id:"ort", phase:"schaden", skip:()=>facts.home?"Untere Bahnhofstrasse 12, 9500 Wil SG":"", bot:[t("ort_q")],
      input:{kind:"confirm", card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:t("ort_sub")}, options:[{label:t("ort_yes"),value:"here"},{label:t("ort_other"),value:"other"}]},
