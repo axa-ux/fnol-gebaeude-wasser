@@ -41,13 +41,14 @@
   .stepper li.active .dot{background:#fff;border:4px solid var(--blue)}
 
   .summary{padding:2px 0 0;background:none;border:0}
-  .summary h3{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
-  .check-item{display:flex;gap:9px;padding:0 0 12px;align-items:flex-start;animation:fadeUp .3s ease both}
-  .check-item .box{width:16px;height:19px;flex:0 0 auto;background:no-repeat center;background-size:7px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='4' fill='%23b9b9c4'/%3E%3C/svg%3E")}
-  .check-item.done .box{background-size:15px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233aa55f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")}
-  .check-item .ct-label{font-size:13px;color:var(--muted);line-height:19px}
+  .summary h3{font-family:var(--font-body);font-size:14px;font-weight:400;color:#000;margin:0 0 14px}
+  .check-item{padding:0 0 12px;animation:fadeUp .3s ease both}
+  .ci-main{display:flex;align-items:center;gap:8px}
+  .check-item .box{width:14px;height:14px;flex:0 0 auto;background:no-repeat center;background-size:5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='4' fill='%23b9b9c4'/%3E%3C/svg%3E")}
+  .check-item.done .box{background-size:13px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233aa55f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")}
+  .check-item .ct-label{font-size:13px;color:var(--muted);line-height:1.3}
   .check-item.done .ct-label{color:var(--ink)}
-  .check-item .ct-val{font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.3;display:none}
+  .check-item .ct-val{font-size:12.5px;color:var(--ink);font-weight:700;line-height:1.35;display:none;margin-left:22px}
 
   .stage{position:fixed;top:var(--header-h);bottom:var(--footer-h);left:0;right:0}
   .scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
@@ -146,7 +147,7 @@
     .thread,.composer-inner{max-width:720px}
     .mprogress{display:flex;align-items:center;gap:9px;position:sticky;top:0;z-index:5;background:#fff;margin:-12px -24px 16px;padding:11px 24px}
     .mprogress .bar{flex:1;height:5px;border-radius:3px;background:#ececf1;overflow:hidden}
-    .mprogress .bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .35s}
+    .mprogress .bar i{display:block;height:100%;background:var(--footer);border-radius:3px;transition:width .35s}
     .mprogress .txt{font-size:12.5px;color:var(--muted);white-space:nowrap;font-weight:600}
   }
   @media (max-width:640px){
@@ -445,7 +446,7 @@ function renderChecklist(){
   checklistEl.innerHTML="";
   CHECKLIST.forEach(([key,lblKey])=>{
     const it=document.createElement("div"); it.className="check-item"; it.dataset.key=key;
-    it.innerHTML=`<span class="box"></span><span><span class="ct-label">${t(lblKey)}</span><span class="ct-val"></span></span>`;
+    it.innerHTML=`<div class="ci-main"><span class="box"></span><span class="ct-label">${t(lblKey)}</span></div><span class="ct-val"></span>`;
     checklistEl.appendChild(it);
   });
 }
@@ -563,7 +564,7 @@ function buildFlow(){
    { id:"opener", phase:"schaden",
      bot:[t("opener_q")], input:{kind:"freetext", placeholder:t("opener_ph")},
      onCommit:r=>{openerText=r.raw;facts=extract(r.raw);},
-     summary:v=>[{key:"hergang",val:(v.length>40?v.slice(0,38)+"…":v)}] },
+     summary:v=>[{key:"hergang",val:v}] },
    { id:"extract", phase:"schaden", editable:false,
      bot: async ()=>{
        await analyze(t("ex_analyze"),1300);
