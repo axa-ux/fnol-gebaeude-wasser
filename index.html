@@ -97,6 +97,14 @@
   .opt{font-family:var(--font-body);font-size:15px;background:#fff;border:1.5px solid var(--field-bd);color:var(--text);padding:14px 22px;border-radius:24px;cursor:pointer;transition:.15s;text-align:center;display:flex;justify-content:center;align-items:center;gap:10px}
   .opt:hover{border-color:var(--blue);color:var(--blue);background:#fafaff}
 
+  .slider{position:relative;width:100%;max-width:430px;height:54px;border-radius:27px;background:#eef0f6;border:1.5px solid var(--field-bd);overflow:hidden;user-select:none;touch-action:none}
+  .slider .fill{position:absolute;left:0;top:0;bottom:0;width:54px;background:var(--footer);opacity:.22}
+  .slider .slabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600;pointer-events:none}
+  .slider .handle{position:absolute;left:3px;top:3px;width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;cursor:grab;box-shadow:0 2px 8px rgba(20,20,60,.22);touch-action:none;z-index:2}
+  .slider .handle:active{cursor:grabbing}
+  .slider.confirmed .handle{background:var(--green);cursor:default}
+  .slider.confirmed .slabel{color:var(--green)}
+
   .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;max-width:430px;margin-bottom:14px;background:#fcfcff;box-shadow:var(--shadow)}
   .card .ct{font-weight:700;color:var(--ink);font-size:16px;margin-bottom:3px}
   .card .cs{color:var(--text);font-size:14px}
@@ -165,7 +173,7 @@
     .bubble{max-width:90%}
     .inputzone{padding-left:0;margin-bottom:16px}
     .chip{max-width:100%;font-size:14.5px;padding:9px 16px}
-    .opt,.card,.drop,.stack,.filelist,.composer-inner{max-width:100%}
+    .opt,.card,.drop,.stack,.filelist,.composer-inner,.slider{max-width:100%}
     .composer{padding:10px 12px 12px}
     .composer textarea{font-size:16px}
     .footer{padding:0 14px;font-size:11.5px}
@@ -239,6 +247,8 @@ const AVATAR=`<svg class="avatar" viewBox="0 0 36 36" xmlns="http://www.w3.org/2
 const PENCIL=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
 const CAL_ICON=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
 const DL_ICON=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+const ARROW_ICON=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="18" y2="12"/><polyline points="12 6 18 12 12 18"/></svg>`;
+const CHECK_ICON=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
 const pad=n=>String(n).padStart(2,"0");
 const fmtDate=d=>`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
@@ -255,10 +265,11 @@ const I18N={
   step_ident:"Identifikation", step_schaden:"Schadenhergang", step_vorgehen:"Weiteres Vorgehen", step_fertig:"Fertig",
   ft_terms:"Nutzungshinweise", ft_privacy:"Datenschutz / Cookie Policy", ft_company:"© 2026 BYB Versicherungen AG",
   toast_dl:"Schadenmeldung heruntergeladen ✓", toast_detail:"Prototyp: Die Schadendetailseite würde sich hier öffnen.", toast_edit:"Antwort aktualisiert ✓",
-  cl_hergang:"Was ist passiert", cl_art:"Schadenart", cl_datum:"Schadendatum (ungefähr)", cl_ort:"Ort des Schadens", cl_ursache:"Ursache",
+  cl_reporter:"Meldende Person", cl_hergang:"Was ist passiert", cl_art:"Schadenart", cl_datum:"Schadendatum (ungefähr)", cl_ort:"Ort des Schadens", cl_ursache:"Ursache",
   cl_gebaeude:"Betroffenes Gebäude", cl_stockwerke:"Mehrere Stockwerke", cl_reno:"Renovation (letzte 5 J.)", cl_reparatur:"Bereits Reparaturen",
   cl_hoehe:"Geschätzte Schadenhöhe", cl_dateien:"Dateien / Belege", cl_vorgehen:"Weiteres Vorgehen", cl_konto:"Rückzahlungskonto",
-  art_wasser:"Wasser", art_feuer:"Feuer", art_diebstahl:"Diebstahl", art_natur:"Naturereignis", art_glas:"Glasbruch",
+  art_wasser:"Wasser", art_feuer:"Feuer", art_diebstahl:"Diebstahl", art_natur:"Naturereignis (z.B. Unwetter)", art_glas:"Glasbruch", art_ausfall:"Ausfall Gebäudetechnik", art_sonstiges:"Sonstiges",
+  reporter_q:`<p>Wer meldet uns den Schadenfall?</p>`, attest_q:`<p>Bitte versichern Sie uns, dass der Schaden tatsächlich passiert ist.</p>`, attest_hint:"Zum Bestätigen schieben", attest_done:"Bestätigt", schadenart_q:`<p>Wie ist der Schaden entstanden?</p>`,
   opener_q:`<p><strong>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist.</strong> Ein, zwei Sätze genügen.</p>`,
   opener_ph:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …",
   ex_analyze:"Ich analysiere Ihre Schilderung …",
@@ -313,10 +324,11 @@ const I18N={
   step_ident:"Identification", step_schaden:"Incident details", step_vorgehen:"Next steps", step_fertig:"Done",
   ft_terms:"Terms of use", ft_privacy:"Privacy / Cookie Policy", ft_company:"© 2026 BYB Insurance Ltd",
   toast_dl:"Claim report downloaded ✓", toast_detail:"Prototype: the claim details page would open here.", toast_edit:"Answer updated ✓",
-  cl_hergang:"What happened", cl_art:"Type of damage", cl_datum:"Date of damage (approx.)", cl_ort:"Location", cl_ursache:"Cause",
+  cl_reporter:"Reporting person", cl_hergang:"What happened", cl_art:"Type of damage", cl_datum:"Date of damage (approx.)", cl_ort:"Location", cl_ursache:"Cause",
   cl_gebaeude:"Affected building", cl_stockwerke:"Multiple floors", cl_reno:"Renovation (last 5 yrs)", cl_reparatur:"Repairs already done",
   cl_hoehe:"Estimated amount", cl_dateien:"Files / documents", cl_vorgehen:"Next step", cl_konto:"Refund account",
-  art_wasser:"Water", art_feuer:"Fire", art_diebstahl:"Theft", art_natur:"Natural event", art_glas:"Glass breakage",
+  art_wasser:"Water", art_feuer:"Fire", art_diebstahl:"Theft", art_natur:"Natural event (e.g. storm)", art_glas:"Glass breakage", art_ausfall:"Building-services failure", art_sonstiges:"Other",
+  reporter_q:`<p>Who is reporting the claim?</p>`, attest_q:`<p>Please confirm that the damage actually occurred.</p>`, attest_hint:"Slide to confirm", attest_done:"Confirmed", schadenart_q:`<p>How did the damage occur?</p>`,
   opener_q:`<p><strong>In your own words, briefly describe what happened.</strong> One or two sentences are enough.</p>`,
   opener_ph:"Example: Yesterday the dishwasher broke and water leaked out …",
   ex_analyze:"Analysing your description …",
@@ -371,10 +383,11 @@ const I18N={
   step_ident:"Identification", step_schaden:"Détails du sinistre", step_vorgehen:"Prochaines étapes", step_fertig:"Terminé",
   ft_terms:"Conditions d'utilisation", ft_privacy:"Confidentialité / Cookies", ft_company:"© 2026 BYB Assurances SA",
   toast_dl:"Déclaration téléchargée ✓", toast_detail:"Prototype : la page de détail du sinistre s'ouvrirait ici.", toast_edit:"Réponse mise à jour ✓",
-  cl_hergang:"Ce qui s'est passé", cl_art:"Type de sinistre", cl_datum:"Date du sinistre (approx.)", cl_ort:"Lieu du sinistre", cl_ursache:"Cause",
+  cl_reporter:"Personne déclarante", cl_hergang:"Ce qui s'est passé", cl_art:"Type de sinistre", cl_datum:"Date du sinistre (approx.)", cl_ort:"Lieu du sinistre", cl_ursache:"Cause",
   cl_gebaeude:"Bâtiment concerné", cl_stockwerke:"Plusieurs étages", cl_reno:"Rénovation (5 dern. ans)", cl_reparatur:"Réparations déjà faites",
   cl_hoehe:"Montant estimé", cl_dateien:"Fichiers / justificatifs", cl_vorgehen:"Prochaine étape", cl_konto:"Compte de remboursement",
-  art_wasser:"Eau", art_feuer:"Feu", art_diebstahl:"Vol", art_natur:"Événement naturel", art_glas:"Bris de glace",
+  art_wasser:"Eau", art_feuer:"Feu", art_diebstahl:"Vol", art_natur:"Événement naturel (p. ex. tempête)", art_glas:"Bris de glace", art_ausfall:"Panne d'installations techniques", art_sonstiges:"Autre",
+  reporter_q:`<p>Qui nous déclare le sinistre ?</p>`, attest_q:`<p>Veuillez nous confirmer que le sinistre s'est réellement produit.</p>`, attest_hint:"Glisser pour confirmer", attest_done:"Confirmé", schadenart_q:`<p>Comment le sinistre s'est-il produit ?</p>`,
   opener_q:`<p><strong>Décrivez brièvement, dans vos propres mots, ce qui s'est passé.</strong> Une ou deux phrases suffisent.</p>`,
   opener_ph:"Exemple : Hier, le lave-vaisselle est tombé en panne et de l'eau s'est répandue …",
   ex_analyze:"J'analyse votre description …",
@@ -441,7 +454,7 @@ function applyStaticI18n(){
 }
 
 /* ---------- Checkliste ---------- */
-const CHECKLIST=[["hergang","cl_hergang"],["art","cl_art"],["datum","cl_datum"],["ort","cl_ort"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"]];
+const CHECKLIST=[["reporter","cl_reporter"],["art","cl_art"],["hergang","cl_hergang"],["datum","cl_datum"],["ort","cl_ort"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"]];
 function renderChecklist(){
   checklistEl.innerHTML="";
   CHECKLIST.forEach(([key,lblKey])=>{
@@ -560,15 +573,26 @@ function buildFlow(){
   const yesno=[{label:t("o_yes"),value:"yes"},{label:t("o_no"),value:"no"}];
   const yesnounk=[{label:t("o_yes"),value:"yes"},{label:t("o_no"),value:"no"},{label:t("o_unknown"),value:"unknown"}];
   const CAUSE=[1,2,3,4,5,6,7,8].map(i=>({label:t("cause_"+i),value:t("cause_"+i)}));
+  const ART=[["wasser","art_wasser"],["natur","art_natur"],["diebstahl","art_diebstahl"],["glas","art_glas"],["feuer","art_feuer"],["ausfall","art_ausfall"],["sonstiges","art_sonstiges"]].map(([v,k])=>({label:t(k),value:v}));
   return [
+   { id:"reporter", phase:"schaden",
+     bot:[t("reporter_q")],
+     input:{kind:"chips", options:[{label:"Robert Naville",value:"Robert Naville"},{label:"Corinna Naville",value:"Corinna Naville"},{label:t("pay_other"),value:t("pay_other")}]},
+     summary:(v,d)=>[{key:"reporter",val:d}] },
+   { id:"attest", phase:"schaden", editable:false,
+     bot:[t("attest_q")], input:{kind:"attest"} },
+   { id:"schadenart", phase:"schaden",
+     bot:[t("schadenart_q")], input:{kind:"chips", options:ART},
+     onCommit:(rec)=>{facts.artKey=rec.value;},
+     summary:(v,d)=>[{key:"art",val:d}] },
    { id:"opener", phase:"schaden",
      bot:[t("opener_q")], input:{kind:"freetext", placeholder:t("opener_ph")},
-     onCommit:r=>{openerText=r.raw;facts=extract(r.raw);},
+     onCommit:r=>{openerText=r.raw;const keepArt=facts.artKey;facts=extract(r.raw);facts.artKey=keepArt;},
      summary:v=>[{key:"hergang",val:v}] },
    { id:"extract", phase:"schaden", editable:false,
      bot: async ()=>{
        await analyze(t("ex_analyze"),1300);
-       const L=[`<li><strong>${t("ex_artlabel")}</strong> ${t("art_"+facts.artKey)}</li>`];
+       const L=[];
        if(facts.date) L.push(`<li><strong>${t("ex_datelabel")}</strong> ${facts.date}</li>`);
        if(facts.home) L.push(`<li><strong>${t("ex_ortlabel")}</strong> Untere Bahnhofstrasse 12, 9500 Wil SG</li>`);
        if(facts.causeUnknownStated) L.push(`<li><strong>${t("ex_unbekannt")}</strong></li>`);
@@ -577,7 +601,6 @@ function buildFlow(){
        if(facts.reno) L.push(`<li><strong>${facts.reno==="yes"?t("ex_reno_yes"):t("ex_reno_no")}</strong></li>`);
        await botSay(`<p>${t("ex_intro")}</p><p>${t("ex_entnehme")}</p><ul class="info-list">${L.join("")}</ul><p>${t("ex_stimmt")}</p>`);
        // erkannte Angaben sofort links abhaken
-       checkOff("art", t("art_"+facts.artKey));
        if(facts.date) checkOff("datum", facts.date);
        if(facts.home) checkOff("ort", "Untere Bahnhofstrasse 12, 9500 Wil SG");
        if(facts.causeUnknownStated) checkOff("ursache-kat", t("cause_8"));
@@ -666,6 +689,20 @@ function renderInput(node){
     c.appendChild(chip({label:t("files_estimates")},()=>openUpload(node,z)));
     c.appendChild(chip({label:t("files_later")},()=>commit(node,"later",t("files_later"))));
     z.appendChild(c);
+  } else if(k==="attest"){
+    const sl=document.createElement("div");sl.className="slider";
+    sl.innerHTML=`<div class="fill"></div><div class="slabel">${t("attest_hint")}</div><div class="handle" tabindex="0" role="button" aria-label="${t("attest_hint")}">${ARROW_ICON}</div>`;
+    z.appendChild(sl);
+    const handle=sl.querySelector(".handle"),fill=sl.querySelector(".fill");
+    let dragging=false,offset=0,maxX=0,x=0,done=false;
+    const px=v=>{x=Math.max(0,Math.min(maxX,v));handle.style.left=(3+x)+"px";fill.style.width=(54+x)+"px";};
+    const complete=()=>{if(done)return;done=true;maxX=sl.clientWidth-52;sl.classList.add("confirmed");handle.style.transition="left .25s";fill.style.transition="width .25s";px(maxX);handle.innerHTML=CHECK_ICON;sl.querySelector(".slabel").textContent=t("attest_done");setTimeout(()=>commit(node,"confirmed",t("attest_done")),420);};
+    const snap=()=>{handle.style.transition="left .2s";fill.style.transition="width .2s";px(0);setTimeout(()=>{handle.style.transition="";fill.style.transition="";},210);};
+    handle.addEventListener("pointerdown",e=>{if(done)return;dragging=true;maxX=sl.clientWidth-52;offset=e.clientX-x;handle.style.transition="";fill.style.transition="";try{handle.setPointerCapture(e.pointerId);}catch(_){}});
+    handle.addEventListener("pointermove",e=>{if(dragging)px(e.clientX-offset);});
+    const end=()=>{if(!dragging||done)return;dragging=false;(x>=maxX-6)?complete():snap();};
+    handle.addEventListener("pointerup",end);handle.addEventListener("pointercancel",end);
+    handle.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();complete();}});
   } else if(k==="final"){
     composer.style.display="none";
   }
