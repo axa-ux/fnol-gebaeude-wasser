@@ -530,10 +530,14 @@ function extractFloors(s){
 function extractReno(s){
   s=(" "+(s||"").toLowerCase()+" ").normalize("NFD").replace(/[̀-ͯ]/g,"");
   if(!/renov|sanier|umbau|umgebaut|refurbish|remodel|travaux|umgestalt/.test(s)) return "";
-  if(/\b(?:keine?|kein|nicht|no|aucune?|niemals|never|jamais|pas)\b(?:\s+de)?(?:\s+\w+)?\s+(?:renov|sanier|umbau|umgebaut|refurbish|remodel|travaux)/.test(s)) return "no";
-  const m=s.match(/vor\s+(\d+)\s+jahr|(\d+)\s+years?\s+ago|il y a\s+(\d+)\s+an/);
-  if(m){const y=+(m[1]||m[2]||m[3]); return y<=5?"yes":"no";}
-  if(/letztes jahr|dieses jahr|vor kurzem|kurzlich|neulich|last year|this year|recently|recemment|annee derni|cette annee/.test(s)) return "yes";
+  if(/\b(?:keine?|kein|nicht|nie|niemals|no|aucune?|never|jamais|pas)\b(?:\s+de)?(?:\s+\w+){0,2}?\s+(?:renov|sanier|umbau|umgebaut|refurbish|remodel|travaux)/.test(s)) return "no";
+  const NUM={ein:1,eine:1,einem:1,einen:1,einer:1,eins:1,zwei:2,drei:3,vier:4,funf:5,sechs:6,sieben:7,acht:8,neun:9,zehn:10,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,un:1,une:1,deux:2,trois:3,quatre:4,cinq:5,sept:7,huit:8,neuf:9,dix:10};
+  const fill="(?:ca\\.?|etwa|rund|ungefahr|circa|about|roughly|approx\\.?|environ)\\s+";
+  let y=null, m=s.match(new RegExp("(?:vor|seit)\\s+(?:"+fill+")?(\\d+)\\s+jahr|(\\d+)\\s+years?\\s+ago|il y a\\s+(?:"+fill+")?(\\d+)\\s+an"));
+  if(m){y=+(m[1]||m[2]||m[3]);}
+  else{const w=s.match(new RegExp("(?:vor|seit)\\s+(?:"+fill+")?([a-z]+)\\s+jahr|([a-z]+)\\s+years?\\s+ago|il y a\\s+(?:"+fill+")?([a-z]+)\\s+an"));if(w){const word=w[1]||w[2]||w[3];if(NUM[word]!=null)y=NUM[word];}}
+  if(y!=null) return y<=5?"yes":"no";
+  if(/letztes jahr|dieses jahr|vor kurzem|kurzlich|neulich|gerade erst|soeben|frisch|last year|this year|recently|just now|newly|freshly|recemment|fraichement|annee derni|cette annee/.test(s)) return "yes";
   return "";
 }
 function extract(text){
