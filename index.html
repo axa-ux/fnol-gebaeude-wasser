@@ -67,6 +67,10 @@
   .bot .body strong{color:var(--ink)}
   .bot .body h4{font-family:var(--font-body);font-size:16px;color:var(--ink);margin:14px 0 8px}
   .bot .body .lead{font-family:var(--font-head);font-size:22px;font-weight:600;color:var(--ink);line-height:1.25}
+  .bot .body .final-thanks{display:flex;align-items:center;gap:12px;margin:2px 0 4px}
+  .bot .body .final-thanks .ft-check{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center}
+  .bot .body .final-thanks .ft-check svg{width:20px;height:20px}
+  .bot .body .final-thanks .ft-text{font-family:var(--font-body);font-weight:700;font-size:22px;color:var(--ink);line-height:1.25}
   .benefits{list-style:none;margin:6px 0 0;padding:0}
   .benefits li{position:relative;padding:0 0 12px 28px;line-height:1.45}
   .benefits li::before{content:"";position:absolute;left:0;top:3px;width:18px;height:18px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233aa55f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")}
@@ -170,6 +174,8 @@
     .avatar{width:26px;height:26px}
     .bot .body{max-width:100%}
     .bot .body .lead{font-size:20px}
+    .bot .body .final-thanks .ft-text{font-size:20px}
+    .bot .body .final-thanks .ft-check{width:30px;height:30px}
     .bubble{max-width:90%}
     .inputzone{padding-left:0;margin-bottom:16px}
     .chip{max-width:100%;font-size:14.5px;padding:9px 16px}
@@ -473,7 +479,7 @@ function updateProgress(){
 }
 
 /* ---------- Bot / User Nachrichten ---------- */
-function updateLatestAvatar(){const bots=thread.querySelectorAll(".msg.bot");bots.forEach((m,i)=>m.classList.toggle("show-avatar",i===bots.length-1));}
+function updateLatestAvatar(){const msgs=[...thread.children].filter(el=>el.classList&&el.classList.contains("msg"));let prevBot=false;msgs.forEach(m=>{const isBot=m.classList.contains("bot");m.classList.toggle("show-avatar",isBot&&!prevBot);prevBot=isBot;});}
 function addBot(html){const m=document.createElement("div");m.className="msg bot";m.innerHTML=`${AVATAR}<div class="body">${html}</div>`;thread.appendChild(m);updateLatestAvatar();toBottom();return m;}
 async function botSay(html){
   const tp=document.createElement("div");tp.className="msg bot";tp.innerHTML=`${AVATAR}<div class="typing"><span></span><span></span><span></span></div>`;
@@ -587,7 +593,7 @@ function buildFlow(){
      onCommit:r=>{openerText=r.raw;facts=extract(r.raw);},
      summary:v=>[{key:"hergang",val:v}] },
    { id:"ack", phase:"schaden", editable:false,
-     bot: async ()=>{ await analyze(t("ex_analyze"),1100); await botSay(`<p>${t("ex_intro")}</p>`); },
+     bot: async ()=>{ await analyze(t("ex_analyze"),1100); await botSay(`<p>${t("ex_intro")}</p>`); suppressFiller=true; },
      input:{kind:"auto"} },
    { id:"schadenart", phase:"schaden",
      skip:()=>facts.artDetected?t("art_"+facts.artKey):"",
@@ -616,7 +622,7 @@ function buildFlow(){
    { id:"final", phase:"fertig",
      bot: async ()=>{
        document.querySelectorAll(".edit-btn").forEach(b=>b.remove());
-       await botSay(`<p class="lead">${t("final_thanks")}</p>
+       await botSay(`<div class="final-thanks"><span class="ft-check">${CHECK_ICON}</span><span class="ft-text">${t("final_thanks")}</span></div>
          <p style="margin-top:10px">${t("final_claim")} <strong>${CONFIG.claimNo}</strong></p>
          <p><span class="dl" id="dlLink">${DL_ICON} ${t("final_dl")}</span></p>
          <h4>${t("final_next")}</h4>
@@ -761,13 +767,21 @@ function restoreBubble(rec){rec.bubbleEl.innerHTML=`<button class="edit-btn" tit
 function editOpener(){const rec=records.find(r=>r.node.id==="opener");if(rec){rec.bubbleEl.scrollIntoView({behavior:"smooth",block:"center"});editRecord(rec);}}
 
 /* ---------- Engine ---------- */
+let suppressFiller=false;
+const FILLERS=["Alles klar. ","Verstanden. ","Got it. ","Understood. ","Très bien. ","Compris. "];
+function stripFiller(html){
+  if(!suppressFiller)return html;
+  suppressFiller=false;
+  for(const f of FILLERS){ if(html.startsWith("<p>"+f)) return "<p>"+html.slice(3+f.length); }
+  return html;
+}
 async function run(){
   let node=flow[idx];
   // Bereits aus dem Freitext bekannte Fragen automatisch überspringen + links abhaken
   while(node&&node.skip){const v=node.skip();if(!v)break;if(node.summary)node.summary(v,v).forEach(s=>checkOff(s.key,s.val));idx++;node=flow[idx];}
   if(!node)return;
   setPhase(node.phase);active=null;
-  if(typeof node.bot==="function"){await node.bot();}else{for(const block of node.bot){await botSay(block);await wait(100);}}
+  if(typeof node.bot==="function"){await node.bot();}else{let first=true;for(const block of node.bot){await botSay(first?stripFiller(block):block);first=false;await wait(100);}}
   renderInput(node);
 }
 
