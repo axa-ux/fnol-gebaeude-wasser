@@ -67,10 +67,7 @@
   .bot .body strong{color:var(--ink)}
   .bot .body h4{font-family:var(--font-body);font-size:16px;color:var(--ink);margin:14px 0 8px}
   .bot .body .lead{font-family:var(--font-head);font-size:22px;font-weight:600;color:var(--ink);line-height:1.25}
-  .bot .body .final-thanks{display:flex;align-items:center;gap:12px;margin:2px 0 4px}
-  .bot .body .final-thanks .ft-check{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center}
-  .bot .body .final-thanks .ft-check svg{width:20px;height:20px}
-  .bot .body .final-thanks .ft-text{font-family:var(--font-body);font-weight:700;font-size:22px;color:var(--ink);line-height:1.25}
+  .bot .body .final-thanks{font-family:var(--font-body);font-weight:700;font-size:22px;color:var(--ink);line-height:1.25;margin:2px 0 4px}
   .benefits{list-style:none;margin:6px 0 0;padding:0}
   .benefits li{position:relative;padding:0 0 12px 28px;line-height:1.45}
   .benefits li::before{content:"";position:absolute;left:0;top:3px;width:18px;height:18px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233aa55f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")}
@@ -174,8 +171,7 @@
     .avatar{width:26px;height:26px}
     .bot .body{max-width:100%}
     .bot .body .lead{font-size:20px}
-    .bot .body .final-thanks .ft-text{font-size:20px}
-    .bot .body .final-thanks .ft-check{width:30px;height:30px}
+    .bot .body .final-thanks{font-size:20px}
     .bubble{max-width:90%}
     .inputzone{padding-left:0;margin-bottom:16px}
     .chip{max-width:100%;font-size:14.5px;padding:9px 16px}
@@ -622,7 +618,7 @@ function buildFlow(){
    { id:"final", phase:"fertig",
      bot: async ()=>{
        document.querySelectorAll(".edit-btn").forEach(b=>b.remove());
-       await botSay(`<div class="final-thanks"><span class="ft-check">${CHECK_ICON}</span><span class="ft-text">${t("final_thanks")}</span></div>
+       await botSay(`<p class="final-thanks">${t("final_thanks")}</p>
          <p style="margin-top:10px">${t("final_claim")} <strong>${CONFIG.claimNo}</strong></p>
          <p><span class="dl" id="dlLink">${DL_ICON} ${t("final_dl")}</span></p>
          <h4>${t("final_next")}</h4>
