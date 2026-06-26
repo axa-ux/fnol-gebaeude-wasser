@@ -273,15 +273,15 @@ const I18N={
   opener_q:`<p>Schildern Sie mir kurz in Ihren eigenen Worten, was passiert ist. Ein, zwei Sätze genügen.</p>`,
   opener_ph:"Beispiel: Gestern ist die Spülmaschine kaputtgegangen, worauf Wasser auslief …",
   ex_analyze:"Ich analysiere Ihre Schilderung …",
-  ex_intro:"Danke – das klingt unangenehm, das tut mir leid. Ich kümmere mich darum.", ex_entnehme:"Aus Ihrer Schilderung entnehme ich:",
+  ex_intro:"Danke – das klingt unangenehm, das tut mir leid.", ex_entnehme:"Aus Ihrer Schilderung entnehme ich:",
   ex_artlabel:"Schadenart:", ex_datelabel:"Zeitpunkt:", ex_ortlabel:"Ort:", ex_floors_multi:"mehrere Stockwerke betroffen", ex_floors_single:"nur ein Stockwerk betroffen", ex_reno_yes:"in den letzten 5 Jahren renoviert", ex_reno_no:"keine Renovation in den letzten 5 Jahren", ex_unbekannt:"Ursache noch unbekannt", ex_bekannt:"Ursache bekannt", ex_mehrere:"mehrere Bereiche betroffen", ex_einbereich:"betroffener Bereich erkannt", ex_stimmt:"Stimmt das so?",
   yes_right:"Ja, das stimmt", adjust:"Etwas anpassen",
   datum_q:`<p>Alles klar. Wann ist der Schaden ungefähr passiert?</p>`,
-  d_choose:"Datum wählen",
+  d_today:"Heute", d_yesterday:"Gestern", d_aboutweek:"Vor ca. 1 Woche", d_choose:"Datum wählen",
   ort_q:`<p>Danke. Und wo ist der Schaden passiert – an Ihrer hinterlegten Adresse?</p>`, ort_sub:"Ihre hinterlegte Adresse", ort_yes:"Ja, dort", ort_other:"An einem anderen Ort",
   ursache_q:`<p>Verstanden. Wodurch wurde der Schaden verursacht?</p>`,
   cause_1:"Leitungsbruch innerhalb des Gebäudes", cause_2:"Leitungsbruch ausserhalb des Gebäudes", cause_3:"Undichtigkeit bei Dusche/Badewanne/Lavabo", cause_4:"Flüssigkeiten aus Leitungsanlagen/Geräte/Apparaten", cause_5:"Eindringen von Regen/Schnee/Schmelzwasser", cause_6:"Rückstau oder Grundwasser", cause_7:"Frostschaden", cause_8:"Sonstiges oder unbekannt",
-  geb_q:`<p>Geht es um dieses Gebäude?</p>`, geb_title:"Einfamilienhaus", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950", geb_yes:"Ja, das stimmt", geb_no:"Nein",
+  geb_q:`<p>Geht es um dieses Gebäude?</p><p><strong>Einfamilienhaus</strong><br>Untere Bahnhofstrasse 12, 9500 Wil SG · Baujahr 1950</p>`, geb_title:"Einfamilienhaus", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Baujahr 1950", geb_yes:"Ja, das stimmt", geb_no:"Nein",
   stock_q:`<p>Danke. Sind vom Wasseraustritt mehrere Stockwerke betroffen?</p>`,
   reno_q:`<p>Und wurde an der betroffenen Stelle in den letzten 5 Jahren renoviert oder etwas daran gemacht?</p>`,
   rep_q:`<p>Alles klar. Haben Sie bereits Reparaturen ausführen lassen?</p>`,
@@ -309,9 +309,9 @@ const I18N={
   deck_1:"Leckortungsfirma aufbieten lassen", deck_2:"Leckortungsfirma selber organisieren", deck_3:"Auf Leckortung verzichten",
   pay_q:`<p>Eine letzte Frage: Auf wessen Konto sollen wir eine allfällige Rückzahlung überweisen, falls Sie einmal eine Rechnung selbst bezahlt haben?</p>`, pay_other:"Andere Person", pay_later:"Später angeben",
   final_thanks:"Vielen Dank für Ihre Schadenmeldung.", final_claim:"Schadennummer:", final_dl:"Schadenmeldung herunterladen", final_next:"So geht es weiter",
-  final_b1:"Wir informieren Sie per Mail, sobald die Empfangsbestätigung auf Ihrer Schadendetailseite hinterlegt ist.",
+  final_b1:"Wir informieren Sie per Mail, sobald die Empfangsbestätigung mit den nächsten Schritten auf Ihrer Schadendetailseite hinterlegt ist.",
   final_b2:"Die Leckortungsfirma meldet sich bei Ihnen für eine Terminvereinbarung.",
-  final_b3:"Wir prüfen Ihren gemeldeten Schaden und melden uns so rasch als möglich mit den nächsten Schritten.",
+  final_b3:"Damit wir den Schadenfall weiter bearbeiten können, übermitteln Sie uns bitte über die Schadendetailseite auf myBYB noch Folgendes: Schadenfotos, Reparaturofferte und Zahlungsverbindung.",
   final_b4:"Wir bitten Sie jetzt schon, drei bis vier aussagekräftige Fotos des Schadens zu machen – Sie können diese über die Schadendetailseite hochladen.",
   final_b5:"Sobald Sie einen Kostenvoranschlag erhalten haben, reichen Sie ihn uns bitte über die Schadendetailseite nach.",
   final_detail:"Weiter zur Schadendetailseite",
@@ -332,15 +332,15 @@ const I18N={
   opener_q:`<p>In your own words, briefly describe what happened. One or two sentences are enough.</p>`,
   opener_ph:"Example: Yesterday the dishwasher broke and water leaked out …",
   ex_analyze:"Analysing your description …",
-  ex_intro:"Thank you – that sounds stressful, I'm sorry. I'll take care of it.", ex_entnehme:"From your description, I understand:",
+  ex_intro:"Thank you – that sounds stressful, I'm sorry.", ex_entnehme:"From your description, I understand:",
   ex_artlabel:"Type of damage:", ex_datelabel:"Date:", ex_ortlabel:"Location:", ex_floors_multi:"several floors affected", ex_floors_single:"only one floor affected", ex_reno_yes:"renovated within the last 5 years", ex_reno_no:"no renovation in the last 5 years", ex_unbekannt:"Cause still unknown", ex_bekannt:"Cause known", ex_mehrere:"several areas affected", ex_einbereich:"one affected area identified", ex_stimmt:"Is that correct?",
   yes_right:"Yes, that's right", adjust:"Adjust something",
   datum_q:`<p>Got it. Roughly when did the damage occur?</p>`,
-  d_choose:"Choose a date",
+  d_today:"Today", d_yesterday:"Yesterday", d_aboutweek:"About 1 week ago", d_choose:"Choose a date",
   ort_q:`<p>Thanks. And where did it happen – at your registered address?</p>`, ort_sub:"Your registered address", ort_yes:"Yes, there", ort_other:"Somewhere else",
   ursache_q:`<p>Understood. What caused the damage?</p>`,
   cause_1:"Burst pipe inside the building", cause_2:"Burst pipe outside the building", cause_3:"Leak at shower/bathtub/basin", cause_4:"Liquids from pipes/appliances/devices", cause_5:"Ingress of rain/snow/meltwater", cause_6:"Backflow or groundwater", cause_7:"Frost damage", cause_8:"Other or unknown",
-  geb_q:`<p>Is this the building in question?</p>`, geb_title:"Single-family house", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Built 1950", geb_yes:"Yes, that's right", geb_no:"No",
+  geb_q:`<p>Is this the building in question?</p><p><strong>Single-family house</strong><br>Untere Bahnhofstrasse 12, 9500 Wil SG · Built 1950</p>`, geb_title:"Single-family house", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Built 1950", geb_yes:"Yes, that's right", geb_no:"No",
   stock_q:`<p>Thanks. Are several floors affected by the water?</p>`,
   reno_q:`<p>And in the last 5 years, was anything renovated or worked on at the affected spot?</p>`,
   rep_q:`<p>Got it. Have any repairs already been carried out?</p>`,
@@ -368,9 +368,9 @@ const I18N={
   deck_1:"Have BYB arrange leak detection", deck_2:"Arrange leak detection myself", deck_3:"Decline leak detection",
   pay_q:`<p>One last question: into whose account should we transfer any refund, in case you ever pay an invoice yourself?</p>`, pay_other:"Another person", pay_later:"Provide later",
   final_thanks:"Thank you for your claim report.", final_claim:"Claim number:", final_dl:"Download claim report", final_next:"What happens next",
-  final_b1:"We'll notify you by email as soon as the confirmation of receipt is available on your claim details page.",
+  final_b1:"We'll notify you by email as soon as the confirmation of receipt with the next steps is available on your claim details page.",
   final_b2:"The leak-detection company will contact you to arrange an appointment.",
-  final_b3:"We'll review your reported claim and get back to you with the next steps as soon as possible.",
+  final_b3:"So that we can process your claim further, please submit the following via the claim details page on myBYB: photos of the damage, repair quote and payment details.",
   final_b4:"We'd already ask you to take three to four meaningful photos of the damage – you can upload them via the claim details page.",
   final_b5:"As soon as you receive a cost estimate, please submit it to us via the claim details page.",
   final_detail:"Go to claim details page",
@@ -391,15 +391,15 @@ const I18N={
   opener_q:`<p>Décrivez brièvement, dans vos propres mots, ce qui s'est passé. Une ou deux phrases suffisent.</p>`,
   opener_ph:"Exemple : Hier, le lave-vaisselle est tombé en panne et de l'eau s'est répandue …",
   ex_analyze:"J'analyse votre description …",
-  ex_intro:"Merci – cela semble pénible, j'en suis désolé. Je m'en occupe.", ex_entnehme:"D'après votre description, je comprends :",
+  ex_intro:"Merci – cela semble pénible, j'en suis désolé.", ex_entnehme:"D'après votre description, je comprends :",
   ex_artlabel:"Type de sinistre :", ex_datelabel:"Date :", ex_ortlabel:"Lieu :", ex_floors_multi:"plusieurs étages touchés", ex_floors_single:"un seul étage touché", ex_reno_yes:"rénové au cours des 5 dernières années", ex_reno_no:"pas de rénovation au cours des 5 dernières années", ex_unbekannt:"Cause encore inconnue", ex_bekannt:"Cause connue", ex_mehrere:"plusieurs zones touchées", ex_einbereich:"une zone touchée identifiée", ex_stimmt:"Est-ce correct ?",
   yes_right:"Oui, c'est exact", adjust:"Modifier",
   datum_q:`<p>Très bien. Quand le sinistre s'est-il approximativement produit ?</p>`,
-  d_choose:"Choisir une date",
+  d_today:"Aujourd'hui", d_yesterday:"Hier", d_aboutweek:"Il y a env. 1 semaine", d_choose:"Choisir une date",
   ort_q:`<p>Merci. Et où le sinistre s'est-il produit – à votre adresse enregistrée ?</p>`, ort_sub:"Votre adresse enregistrée", ort_yes:"Oui, à cette adresse", ort_other:"À un autre endroit",
   ursache_q:`<p>Compris. Quelle est la cause du sinistre ?</p>`,
   cause_1:"Rupture de conduite à l'intérieur du bâtiment", cause_2:"Rupture de conduite à l'extérieur du bâtiment", cause_3:"Fuite à la douche/baignoire/lavabo", cause_4:"Liquides provenant de conduites/appareils/installations", cause_5:"Infiltration de pluie/neige/eau de fonte", cause_6:"Refoulement ou eaux souterraines", cause_7:"Dégât dû au gel", cause_8:"Autre ou inconnu",
-  geb_q:`<p>S'agit-il de ce bâtiment ?</p>`, geb_title:"Maison individuelle", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Construit en 1950", geb_yes:"Oui, c'est exact", geb_no:"Non",
+  geb_q:`<p>S'agit-il de ce bâtiment ?</p><p><strong>Maison individuelle</strong><br>Untere Bahnhofstrasse 12, 9500 Wil SG · Construit en 1950</p>`, geb_title:"Maison individuelle", geb_sub:"Untere Bahnhofstrasse 12, 9500 Wil SG &nbsp;|&nbsp; Construit en 1950", geb_yes:"Oui, c'est exact", geb_no:"Non",
   stock_q:`<p>Merci. Plusieurs étages sont-ils touchés par l'eau ?</p>`,
   reno_q:`<p>Et au cours des 5 dernières années, l'endroit concerné a-t-il été rénové ou modifié ?</p>`,
   rep_q:`<p>Très bien. Des réparations ont-elles déjà été effectuées ?</p>`,
@@ -427,9 +427,9 @@ const I18N={
   deck_1:"Faire intervenir une entreprise de recherche de fuite", deck_2:"Organiser la recherche de fuite moi-même", deck_3:"Renoncer à la recherche de fuite",
   pay_q:`<p>Une dernière question : sur quel compte devons-nous verser un éventuel remboursement, au cas où vous régleriez vous-même une facture ?</p>`, pay_other:"Une autre personne", pay_later:"Indiquer plus tard",
   final_thanks:"Merci pour votre déclaration de sinistre.", final_claim:"Numéro de sinistre :", final_dl:"Télécharger la déclaration", final_next:"Prochaines étapes",
-  final_b1:"Nous vous informerons par e-mail dès que l'accusé de réception sera disponible sur la page de détail de votre sinistre.",
+  final_b1:"Nous vous informerons par e-mail dès que l'accusé de réception avec les prochaines étapes sera disponible sur la page de détail de votre sinistre.",
   final_b2:"L'entreprise de recherche de fuite vous contactera pour convenir d'un rendez-vous.",
-  final_b3:"Nous examinons le sinistre déclaré et reviendrons vers vous dès que possible avec les prochaines étapes.",
+  final_b3:"Afin que nous puissions poursuivre le traitement du sinistre, veuillez nous transmettre via la page de détail du sinistre sur myBYB : photos du sinistre, devis de réparation et coordonnées de paiement.",
   final_b4:"Nous vous invitons déjà à prendre trois à quatre photos parlantes du sinistre – vous pouvez les téléverser via la page de détail du sinistre.",
   final_b5:"Dès que vous recevez un devis, merci de nous le transmettre via la page de détail du sinistre.",
   final_detail:"Accéder à la page du sinistre",
@@ -454,7 +454,7 @@ function applyStaticI18n(){
 }
 
 /* ---------- Checkliste ---------- */
-const CHECKLIST=[["reporter","cl_reporter"],["art","cl_art"],["hergang","cl_hergang"],["datum","cl_datum"],["ort","cl_ort"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"]];
+const CHECKLIST=[["reporter","cl_reporter"],["hergang","cl_hergang"],["art","cl_art"],["datum","cl_datum"],["ursache-kat","cl_ursache"],["gebaeude","cl_gebaeude"],["stockwerke","cl_stockwerke"],["reno","cl_reno"],["reparatur","cl_reparatur"],["hoehe","cl_hoehe"],["dateien","cl_dateien"]];
 function renderChecklist(){
   checklistEl.innerHTML="";
   CHECKLIST.forEach(([key,lblKey])=>{
@@ -492,7 +492,7 @@ function addUser(display,rec){
 }
 
 /* ---------- Zustand ---------- */
-let idx=0, flow=[], active=null, openerText="", facts={artKey:"wasser",ursacheBekannt:false,causeUnknownStated:false,causeKnownStated:false,mehrere:true,date:"",floors:"",reno:"",home:false};
+let idx=0, flow=[], active=null, openerText="", facts={artKey:"wasser",artDetected:false,ursacheBekannt:false,causeUnknownStated:false,causeKnownStated:false,mehrere:true,date:"",floors:"",reno:"",home:false};
 const records=[];
 
 /* ---------- leichte "NLU" ---------- */
@@ -536,18 +536,19 @@ function extractReno(s){
 }
 function extract(text){
   const s=(text||"").toLowerCase();
-  let artKey="wasser";
+  let artKey="wasser", artDetected=true;
   if(/feuer|brand|brennt|rauch|fire|burn|smoke|incendie|feu|fumée|flamme/.test(s)) artKey="feuer";
   else if(/einbruch|diebstahl|gestohlen|theft|burglar|stolen|vol|cambriol/.test(s)) artKey="diebstahl";
   else if(/sturm|unwetter|hagel|storm|hail|flood|tempête|grêle|inondation|orage/.test(s)) artKey="natur";
   else if(/glas|scheibe|glass|window pane|vitre|verre|bris/.test(s)) artKey="glas";
   else if(/wasser|nass|feucht|decke|leck|tropf|rohr|water|wet|leak|ceiling|damp|pipe|eau|mouill|plafond|fuite|humide|infiltr/.test(s)) artKey="wasser";
+  else artDetected=false;
   const causeUnknownStated=/(?:ursache|grund|cause|raison|woher|warum|wodurch|why|pourquoi)[^.!?]{0,40}(?:unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|unknown|not sure|no idea|don'?t know|inconnu|incertain|sais pas|aucune idée)|(?:unbekannt|unklar|weiss nicht|weiß nicht|keine ahnung|unknown|not sure|no idea|don'?t know|inconnu|incertain|sais pas|aucune idée)[^.!?]{0,30}(?:ursache|grund|cause|raison|woher|warum|wodurch|why|pourquoi)/.test(s);
   const causeKnownStated=/\b(weil|wegen|aufgrund|verursacht|because|due to|caused by|parce que|à cause)\b|rohrbruch|leitungsbruch|burst pipe|waschmaschine|spülmaschine|dishwasher|washing machine|boiler|machine à laver|lave-vaisselle|chauffe-eau|frost|gel|undicht|leaking/.test(s);
   const areas=["decke","wand","wände","boden","fassade","badezimmer","bad","küche","keller","dach","mauer","ceiling","wall","floor","bathroom","kitchen","facade","basement","roof","plafond","mur","sol","salle de bain","cuisine","façade","cave","toit"];
   const hits=[...new Set(areas.filter(a=>s.includes(a)))];
   const home=/zu hause|zuhause|daheim|at home|my house|my home|chez moi|à la maison|à domicile|meiner wohnung|in meinem haus/.test(s);
-  return {artKey, ursacheBekannt:(!causeUnknownStated&&causeKnownStated), causeUnknownStated, causeKnownStated, mehrere:hits.length>=2, date:extractDateFromText(s), floors:extractFloors(s), reno:extractReno(s), home};
+  return {artKey, artDetected, ursacheBekannt:(!causeUnknownStated&&causeKnownStated), causeUnknownStated, causeKnownStated, mehrere:hits.length>=2, date:extractDateFromText(s), floors:extractFloors(s), reno:extractReno(s), home};
 }
 function parseDate(text){
   const s=(text||"").toLowerCase().trim();
@@ -581,40 +582,22 @@ function buildFlow(){
      summary:(v,d)=>[{key:"reporter",val:d}] },
    { id:"attest", phase:"schaden", editable:false,
      bot:[t("attest_q")], input:{kind:"attest"} },
+   { id:"opener", phase:"schaden",
+     bot:[t("opener_q")], input:{kind:"freetext", placeholder:t("opener_ph")},
+     onCommit:r=>{openerText=r.raw;facts=extract(r.raw);},
+     summary:v=>[{key:"hergang",val:v}] },
+   { id:"ack", phase:"schaden", editable:false,
+     bot: async ()=>{ await analyze(t("ex_analyze"),1100); await botSay(`<p>${t("ex_intro")}</p>`); },
+     input:{kind:"auto"} },
    { id:"schadenart", phase:"schaden",
+     skip:()=>facts.artDetected?t("art_"+facts.artKey):"",
      bot:[t("schadenart_q")], input:{kind:"chips", options:ART},
      onCommit:(rec)=>{facts.artKey=rec.value;},
      summary:(v,d)=>[{key:"art",val:d}] },
-   { id:"opener", phase:"schaden",
-     bot:[t("opener_q")], input:{kind:"freetext", placeholder:t("opener_ph")},
-     onCommit:r=>{openerText=r.raw;const keepArt=facts.artKey;facts=extract(r.raw);facts.artKey=keepArt;},
-     summary:v=>[{key:"hergang",val:v}] },
-   { id:"extract", phase:"schaden", editable:false,
-     bot: async ()=>{
-       await analyze(t("ex_analyze"),1300);
-       const L=[];
-       if(facts.date) L.push(`<li><strong>${t("ex_datelabel")}</strong> ${facts.date}</li>`);
-       if(facts.home) L.push(`<li><strong>${t("ex_ortlabel")}</strong> Untere Bahnhofstrasse 12, 9500 Wil SG</li>`);
-       if(facts.causeUnknownStated) L.push(`<li><strong>${t("ex_unbekannt")}</strong></li>`);
-       if(facts.floors) L.push(`<li><strong>${facts.floors==="yes"?t("ex_floors_multi"):t("ex_floors_single")}</strong></li>`);
-       else L.push(`<li><strong>${facts.mehrere?t("ex_mehrere"):t("ex_einbereich")}</strong></li>`);
-       if(facts.reno) L.push(`<li><strong>${facts.reno==="yes"?t("ex_reno_yes"):t("ex_reno_no")}</strong></li>`);
-       await botSay(`<p>${t("ex_intro")}</p><p>${t("ex_entnehme")}</p><ul class="info-list">${L.join("")}</ul><p>${t("ex_stimmt")}</p>`);
-       // erkannte Angaben sofort links abhaken
-       if(facts.date) checkOff("datum", facts.date);
-       if(facts.home) checkOff("ort", "Untere Bahnhofstrasse 12, 9500 Wil SG");
-       if(facts.causeUnknownStated) checkOff("ursache-kat", t("cause_8"));
-       if(facts.floors) checkOff("stockwerke", t("o_"+facts.floors));
-       if(facts.reno) checkOff("reno", t("o_"+facts.reno));
-     },
-     input:{kind:"extraction-confirm"} },
    { id:"datum", phase:"schaden", skip:()=>facts.date||"", bot:[t("datum_q")], input:{kind:"date"}, summary:v=>[{key:"datum",val:v}] },
-   { id:"ort", phase:"schaden", skip:()=>facts.home?"Untere Bahnhofstrasse 12, 9500 Wil SG":"", bot:[t("ort_q")],
-     input:{kind:"confirm", card:{title:"Untere Bahnhofstrasse 12, 9500 Wil SG", sub:t("ort_sub")}, options:[{label:t("ort_yes"),value:"here"},{label:t("ort_other"),value:"other"}]},
-     summary:v=>[{key:"ort",val:(v==="other"?t("ort_other"):"Untere Bahnhofstrasse 12, 9500 Wil SG")}] },
    { id:"ursache", phase:"schaden", skip:()=>facts.causeUnknownStated?t("cause_8"):"", bot:[t("ursache_q")], input:{kind:"chips", options:CAUSE}, summary:v=>[{key:"ursache-kat",val:v}] },
    { id:"gebaeude", phase:"schaden", bot:[t("geb_q")],
-     input:{kind:"confirm", card:{title:t("geb_title"), sub:t("geb_sub")}, options:[{label:t("geb_yes"),value:"yes"},{label:t("geb_no"),value:"no"}]},
+     input:{kind:"confirm", options:[{label:t("geb_yes"),value:"yes"},{label:t("geb_no"),value:"no"}]},
      summary:()=>[{key:"gebaeude",val:t("geb_title")+" · 1950"}] },
    { id:"stockwerke", phase:"schaden", skip:()=>facts.floors?t("o_"+facts.floors):"", bot:[t("stock_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"stockwerke",val:d}] },
    { id:"renoviert", phase:"schaden", skip:()=>facts.reno?t("o_"+facts.reno):"", bot:[t("reno_q")], input:{kind:"chips", options:yesnounk}, summary:(v,d)=>[{key:"reno",val:d}] },
@@ -637,7 +620,7 @@ function buildFlow(){
          <p style="margin-top:10px">${t("final_claim")} <strong>${CONFIG.claimNo}</strong></p>
          <p><span class="dl" id="dlLink">${DL_ICON} ${t("final_dl")}</span></p>
          <h4>${t("final_next")}</h4>
-         <ul class="info-list"><li>${t("final_b1")}</li><li>${t("final_b2")}</li><li>${t("final_b3")}</li><li>${t("final_b4")}</li><li>${t("final_b5")}</li></ul>
+         <ul class="info-list"><li>${t("final_b1")}</li><li>${t("final_b2")}</li><li>${t("final_b3")}</li></ul>
          <p><button class="btn-out" id="detailBtn">${t("final_detail")}</button></p>`);
        document.getElementById("dlLink").onclick=downloadSummary;
        document.getElementById("detailBtn").onclick=()=>toast(t("toast_detail"));
@@ -652,7 +635,9 @@ function zone(){const z=document.createElement("div");z.className="inputzone";th
 function chip(o,onClick){const b=document.createElement("button");b.className="chip";b.innerHTML=`${o.ic?`<span class="ic">${o.ic}</span>`:""}${o.label}`;b.onclick=onClick;return b;}
 
 function renderInput(node){
-  const k=node.input.kind, z=zone(); active={node,zoneEl:z}; setComposer(node);
+  const k=node.input.kind;
+  if(k==="auto"){ idx++; run(); return; }
+  const z=zone(); active={node,zoneEl:z}; setComposer(node);
   if(k==="extraction-confirm"){
     const c=document.createElement("div");c.className="chips";
     c.appendChild(chip({label:t("yes_right")},()=>commit(node,"ok",t("yes_right"))));
@@ -673,6 +658,7 @@ function renderInput(node){
     z.appendChild(c);
   } else if(k==="date"){
     const c=document.createElement("div");c.className="chips";
+    [t("d_today"),t("d_yesterday"),t("d_aboutweek")].forEach(lab=>c.appendChild(chip({label:lab},()=>commit(node,lab,lab))));
     const wrap=document.createElement("span");wrap.style.position="relative";wrap.style.display="inline-flex";
     const f=document.createElement("input");f.type="date";
     f.style.cssText="position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;";
